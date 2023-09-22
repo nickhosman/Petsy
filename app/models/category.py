@@ -1,0 +1,1 @@
+# __tablename__ = "categories"
