@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA
 
-class Revew(db.Model):
+class Review(db.Model):
   __tablename__ = 'reviews'
 
   if environment == "production":
