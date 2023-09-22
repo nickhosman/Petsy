@@ -31,19 +31,8 @@ class Product(db.Model):
       "name":self.name,
       "description":self.description,
       "price":self.price,
-      "seller_id":self.seller_id,
-      "category_id":self.category_id,
-      "created_at":self.created_at,
-      "updated_at":self.updated_at
+      "sellerId":self.seller_id,
+      "categoryId":self.category_id,
+      "createdAt":self.created_at,
+      "updatedAt":self.updated_at
     }
-
-
-
-
-
-
-
-
-
-
-
