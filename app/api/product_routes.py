@@ -39,7 +39,7 @@ def get_products_detail(productId):
     product = Product.query.get(productId)
 
     if not product:
-        return {'errors': {"Product": "Product not found"}}
+        return {'errors': {"Product": "Product not found"}}, 404
 
     reviews = product.reviews
     images = product.product_images
@@ -113,7 +113,7 @@ def get_reviews(productId):
     """
     product = Product.query.get(productId)
     if not product:
-        return {'errors': {"Product": "Product not found"}}
+        return {'errors': {"Product": "Product not found"}}, 404
 
     reviews = Review.query.filter_by(product_id=productId).all()
     review_dict = {}
@@ -129,14 +129,17 @@ def get_reviews(productId):
 @product_routes.route("/<int:productId>", methods=["DELETE"])
 @login_required
 def delete_reviews(productId):
-    """Delete a product"""
-
+    """
+    Delete a product
+    """
     product = Product.query.get(productId)
     if not product :
-        return {'errors': {"Product": "Product not found"}}
+        return {'errors': {"Product": "Product not found"}}, 404
 
     if product.userId != current_user.id:
        return {"error": ['Unauthorized']}, 401
 
     db.session.delete(product)
     db.session.commit()
+
+    return {"message": "Successfully deleted product."}
