@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from flask_login import current_user, login_required
+from flask_login import login_required, current_user
 from app.models import Product, ProductImage, db, Review, User
 from app.forms import ProductForm
 from app.api.auth_routes import validation_errors_to_error_messages
@@ -125,3 +125,18 @@ def get_reviews(productId):
         review_dict[str(review.id)] = data
 
     return {"Reviews": review_dict}
+
+@product_routes.route("/<int:productId>", methods=["DELETE"])
+@login_required
+def delete_reviews(productId):
+    """Delete a product"""
+
+    product = Product.query.get(productId)
+    if not product :
+        return {'errors': {"Product": "Product not found"}}
+
+    if product.userId != current_user.id:
+       return {"error": ['Unauthorized']}, 401
+
+    db.session.delete(product)
+    db.session.commit()
