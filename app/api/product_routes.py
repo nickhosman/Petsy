@@ -15,3 +15,10 @@ def get_products():
                     for product in all_products]
 
     return {"Products": dict(product_dict)}
+
+
+@product_routes.route("/new", methods=["POST"])
+def create_product():
+    """
+    Adds a product to the database
+    """
