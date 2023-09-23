@@ -33,7 +33,7 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "price": self.price,
+            "price": str(self.price),
             "sellerId": self.seller_id,
             "categoryId": self.category_id,
             "createdAt": self.created_at,
