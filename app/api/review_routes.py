@@ -1,6 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from app.models import Review, db
 from flask_login import login_required, current_user
+from app.forms import ReviewForm
+from app.api.auth_routes import validation_errors_to_error_messages
 
 review_routes = Blueprint("reviews", __name__)
 
@@ -30,4 +32,13 @@ def edit_review(reviewId):
   if review.user_id != current_user.id:
     return {"error": ['Unauthorized']}, 401
 
+  form = ReviewForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if form.validate.on_submit():
+    review.stars = form.data['stars']
+    review.details = form.data['details']
 
+    db.session.commit()
+    return review.to_dict()
+
+  return {'errors': validation_errors_to_error_messages(form.errors)}, 400
