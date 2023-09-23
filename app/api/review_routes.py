@@ -14,7 +14,7 @@ def delete_review(reviewId):
   if review.user_id == current_user.id:
     db.session.delete(review)
     db.session.commit()
-  return {'errors': ['Unauthorized']}
+  return {'errors': ['Unauthorized']}, 401
 
 
 @review_routes.route("/<int:reviewId>", methods=["PUT"])
@@ -24,5 +24,10 @@ def edit_review(reviewId):
   Updates a review in the database by id
   """
   review = Review.query.get(reviewId)
-  if review.user_id == current_user.id:
+  if not review:
+    return {"error": "Review could not be found"}, 404
+
+  if review.user_id != current_user.id:
+    return {"error": ['Unauthorized']}, 401
+
 
