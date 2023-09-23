@@ -20,7 +20,9 @@ class User(db.Model, UserMixin):
 
     # relationships
     reviews = db.relationship("Review", back_populates="users")
-    product = db.relationship("Product", back_populates="users") #! confirm later with product model
+    products = db.relationship("Product", back_populates="seller")
+    fav_products = db.relationship(
+        "Product", secondary="favorites", back_populates="users")
 
     @property
     def password(self):
@@ -38,6 +40,6 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'firstName' : self.first_name,
-            'lastName' : self.last_name,
+            'firstName': self.first_name,
+            'lastName': self.last_name,
         }
