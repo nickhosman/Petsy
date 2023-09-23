@@ -13,6 +13,5 @@ def get_categories():
     category_dict = {}
     for category in all_categories:
         data=category.to_dict()
-        category_names=category.name
         category_dict[str(category.id)] = data
-    return {"Category": category_dict}
+    return {"Categories": category_dict}
