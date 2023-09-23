@@ -18,7 +18,7 @@ class Review(db.Model):
 
   #relationship
   product = db.relationship("Product", back_populates="reviews") #!CONNECT RELATIONSHIP ON PRODUCT MODEL
-  user = db.relationship("User", back_populates="reviews") #!CONNECT RELATIONSHIP ON USER MODEL
+  users = db.relationship("User", back_populates="reviews") #!CONNECT RELATIONSHIP ON USER MODEL
 
   def to_dict(self):
       return {

@@ -1,21 +1,33 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
+from faker import Faker
 
+fake = Faker()
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    demo = User(
-        username='Demo', email='demo@aa.io', password='password')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+  users = []
 
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
-    db.session.commit()
+  usernames = ["DemoUser", "MeowMeow", "PoodleProducts", "AquaticAndy", "ExoticOnly", "DoggoPoggo", "KittyCity", "ReptileRandys", "FishTanksRUs", "CashmereCat", "Balencidoga", "SillySnakeSales", "BenniesProducts", "CassiesCatnips", "Catsco", "DecemberShop", "MilkyToys", "BuyingNemo", "MayaGoods", "Zardys"]
 
+  emails = ["demouser@appacademy.io", "meowmeow@appacademy.io", "poodleproducts@appacademy.io", "aquaticandy@appacademy.io", "exoticonly@appacademy.io", "doggopoggo@appacademy.io", "kittycity@appacademy.io", "repitlerandys@appacademy.io", "fishtanksrus@appacademy.io", "cashmerecat@appacademy.io", "balencidoga@appacademy.io", "sillysnakesales@appacademy.io", "benniesproducts@appacademy.io", "cassiescatnips@appacademy.io", "catsco@appacademy.io", "decembershop@appacademy.io", "milkytoys@appacademy.io", "buyingnemo@appacademy.io", "mayagoods@appacademy.io", "zardys@appacademy.io"]
+
+  for i in range(20):
+    random_date = fake.date_between(start_date='-1y', end_date='today')
+
+    user = User(
+    username = usernames[i],
+    password = "password",
+    first_name = fake.first_name(),
+    last_name = fake.last_name(),
+    email = emails[i],
+    created_at = random_date,
+    updated_at = random_date
+    )
+    users.append(user)
+
+  db.session.add_all(users)
+  db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
 # have a built in function to do this. With postgres in production TRUNCATE
@@ -28,5 +40,5 @@ def undo_users():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
-        
+
     db.session.commit()
