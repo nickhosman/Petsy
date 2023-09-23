@@ -1,11 +1,10 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import Product, ProductImage, db, Review
+from app.models import Product, ProductImage, db, Review, User
 from app.forms import ProductForm
 from app.api.auth_routes import validation_errors_to_error_messages
 
 product_routes = Blueprint("products", __name__)
-
 
 @product_routes.route("/")
 def get_products():
@@ -17,7 +16,6 @@ def get_products():
     for product in all_products:
         data = product.to_dict()
         images = product.product_images
-        print("IMAGES:", images)
         reviews = product.reviews
         total_review = len(reviews)
         if total_review == 0:
@@ -33,26 +31,23 @@ def get_products():
 
     return {"Products": product_dict}
 
-@product_routes.route("/<int:id>", methods=['GET'])
-def get_products_detail(id):
+@product_routes.route("/<int:productId>", methods=['GET'])
+def get_products_detail(productId):
     """
     Returns a dictionary containing details product by its id
     """
-    product = Product.query.get(id)
+    product = Product.query.get(productId)
 
     if not product:
-        raise AssertionError('Product could not be found')
+        return {'errors': {"Product": "Product not found"}}
 
     reviews = product.reviews
     images = product.product_images
-    seller = product.seller
-    # print('REVIEWS', reviews)
     total_review = len(reviews)
     if total_review == 0:
         average_rating = 'No reviews'
     else:
         average_rating = sum([review.stars for review in reviews]) / total_review
-    # print('AVG REVIEW', average_rating)
     data = {
         "id": product.id,
         "name": product.name,
@@ -69,9 +64,6 @@ def get_products_detail(id):
     }
 
     return data
-
-
-
 
 @product_routes.route("/new", methods=["POST"])
 @login_required
@@ -94,7 +86,6 @@ def create_product():
         return product.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-
 @product_routes.route("/<int:productId>", methods=["PUT"])
 @login_required
 def edit_product(productId):
@@ -113,3 +104,24 @@ def edit_product(productId):
         db.session.commit()
         return product.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+@product_routes.route("/<int:productId>/reviews")
+def get_reviews(productId):
+    """
+    Gets all the reviews for a product
+    """
+    product = Product.query.get(productId)
+    if not product:
+        return {'errors': {"Product": "Product not found"}}
+
+    reviews = Review.query.filter_by(product_id=productId).all()
+    review_dict = {}
+
+    for review in reviews:
+        data = review.to_dict()
+        user = User.query.get(review.user_id)
+        data['User'] = user.to_dict()
+        review_dict[str(review.id)] = data
+
+    return {"Reviews": review_dict}
