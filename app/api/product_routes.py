@@ -13,10 +13,25 @@ def get_products():
     Returns a dictionary containing all products
     """
     all_products = Product.query.all()
-    product_dict = [(product.id, product.to_dict())
-                    for product in all_products]
+    product_dict = {}
+    for product in all_products:
+        data = product.to_dict()
+        images = product.product_images
+        print("IMAGES:", images)
+        reviews = product.reviews
+        total_review = len(reviews)
+        if total_review == 0:
+            average_rating = 'No reviews'
+        else:
+            average_rating = sum([review.stars for review in reviews]) / total_review
+        data["averageRating"] = round(average_rating, 1)
+        for image in images:
+            if image.preview:
+                data["previewImage"] = image.image_url
+                break
+        product_dict[str(product.id)] = data
 
-    return {"Products": dict(product_dict)}
+    return {"Products": product_dict}
 
 @product_routes.route("/<int:id>", methods=['GET'])
 def get_products_detail(id):
@@ -35,7 +50,8 @@ def get_products_detail(id):
     total_review = len(reviews)
     if total_review == 0:
         average_rating = 'No reviews'
-    average_rating = sum([review.stars for review in reviews]) / total_review
+    else:
+        average_rating = sum([review.stars for review in reviews]) / total_review
     # print('AVG REVIEW', average_rating)
     data = {
         "id": product.id,
