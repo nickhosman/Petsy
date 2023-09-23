@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import Product, ProductImage, db
+from app.models import Product, ProductImage, db, Review
 from app.forms import ProductForm
 from app.api.auth_routes import validation_errors_to_error_messages
 
@@ -17,6 +17,44 @@ def get_products():
                     for product in all_products]
 
     return {"Products": dict(product_dict)}
+
+@product_routes.route("/<int:id>", methods=['GET'])
+def get_products_detail(id):
+    """
+    Returns a dictionary containing details product by its id
+    """
+    product = Product.query.get(id)
+
+    if not product:
+        raise AssertionError('Product could not be found')
+
+    reviews = product.reviews
+    images = product.product_images
+    seller = product.seller
+    # print('REVIEWS', reviews)
+    total_review = len(reviews)
+    if total_review == 0:
+        average_rating = 'No reviews'
+    average_rating = sum([review.stars for review in reviews]) / total_review
+    # print('AVG REVIEW', average_rating)
+    data = {
+        "id": product.id,
+        "name": product.name,
+        "description": product.description,
+        "price": float(product.price),
+        "sellerId": product.seller_id,
+        "categoryId": product.category_id,
+        "createdAt": product.created_at,
+        "updatedAt": product.updated_at,
+        "totalReviews": total_review,
+        "averageRating": average_rating,
+        "ProductImages": [image.to_dict() for image in images],
+        "Seller": product.seller.to_dict()
+    }
+
+    return data
+
+
 
 
 @product_routes.route("/new", methods=["POST"])
