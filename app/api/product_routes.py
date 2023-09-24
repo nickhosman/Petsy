@@ -222,23 +222,6 @@ def edit_product(productId):
         return product.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
-@product_routes.route("/<int:productId>/favorites/delete",methods=["DELETE"])
-@login_required
-def delete_favorite(productId):
-    """
-    delete a favorite product for a user
-    """
-    product=Product.query.get(productId)
-    if not product :
-        return {'errors': "Product not found"}, 404
-    if current_user not in product.users:
-       return {"error": 'Favorite product not found'}, 401
-  
-    product.users.remove(current_user)
-    db.session.commit()
-
-    return {"message":"Successfully deleted the favorite product."}
-    
 
 
 @product_routes.route("/<int:productId>", methods=["DELETE"])
