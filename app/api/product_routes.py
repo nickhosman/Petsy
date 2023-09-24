@@ -37,6 +37,8 @@ def post_review(productId):
     Create a review for a product
     """
     product = Product.query.get(productId)
+    user = User.query.get(current_user.id)
+    print(user)
     if not product:
         return {'errors': {"Product": "Product not found"}}, 404
 
@@ -45,7 +47,9 @@ def post_review(productId):
     if form.validate_on_submit():
         new_review = Review(
             stars = form.data['stars'],
-            details = form.data['details']
+            details = form.data['details'],
+            product_id = productId,
+            user_id = user.id
         )
         db.session.add(new_review)
         db.session.commit()
@@ -62,7 +66,7 @@ def post_product(productId):
     if not product:
         return {'errors': {"Product": "Product not found"}}, 404
 
-    if product.userId != current_user.id:
+    if product.seller_id != current_user.id:
        return {"error": ['Unauthorized']}, 401
 
     form = ProductImageForm()
@@ -76,7 +80,7 @@ def post_product(productId):
         db.session.add(new_image)
         db.session.commit()
         return new_image.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+    return {"errors": validation_errors_to_error_messages(form.errors)}, 400
 
 @product_routes.route("/<int:productId>/tags", methods=['POST'])
 @login_required
@@ -205,7 +209,7 @@ def delete_product(productId):
     if not product :
         return {'errors': {"Product": "Product not found"}}, 404
 
-    if product.userId != current_user.id:
+    if product.seller_id != current_user.id:
        return {"error": ['Unauthorized']}, 401
 
     db.session.delete(product)

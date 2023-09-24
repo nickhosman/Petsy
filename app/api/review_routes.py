@@ -26,11 +26,12 @@ def edit_review(reviewId):
   Updates a review in the database by id
   """
   review = Review.query.get(reviewId)
+
   if not review:
     return {"error": "Review could not be found"}, 404
 
   if review.user_id != current_user.id:
-    return {"error": ['Unauthorized']}, 401
+    return {"error": "Unauthorized"}, 401
 
   form = ReviewForm()
   form['csrf_token'].data = request.cookies['csrf_token']
