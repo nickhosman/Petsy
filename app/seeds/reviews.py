@@ -71,8 +71,8 @@ def seed_reviews():
     ]
 
     for productId, userId, stars, details in data:
-        created_at_date = fake.date_between(start_date='-1y', end_date='today')
-        updated_at_date = fake.date_between(start_date=created_at_date, end_date='today')
+        created_at_date = fake.date_time_between(start_date='-1y', end_date='today')
+        updated_at_date = fake.date_time_between(start_date=created_at_date, end_date='today')
 
         review = Review(product_id=productId, user_id=userId, stars=stars, details=details, created_at=created_at_date, updated_at=updated_at_date)
         reviews.append(review)

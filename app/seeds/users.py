@@ -13,7 +13,7 @@ def seed_users():
   emails = ["demouser@appacademy.io", "meowmeow@appacademy.io", "poodleproducts@appacademy.io", "aquaticandy@appacademy.io", "exoticonly@appacademy.io", "doggopoggo@appacademy.io", "kittycity@appacademy.io", "repitlerandys@appacademy.io", "fishtanksrus@appacademy.io", "cashmerecat@appacademy.io", "balencidoga@appacademy.io", "sillysnakesales@appacademy.io", "benniesproducts@appacademy.io", "cassiescatnips@appacademy.io", "catsco@appacademy.io", "decembershop@appacademy.io", "milkytoys@appacademy.io", "buyingnemo@appacademy.io", "mayagoods@appacademy.io", "zardys@appacademy.io"]
 
   for i in range(20):
-    random_date = fake.date_between(start_date='-1y', end_date='today')
+    random_date_time = fake.date_time_between(start_date='-1y', end_date='today')
 
     user = User(
     username = usernames[i],
@@ -21,8 +21,8 @@ def seed_users():
     first_name = fake.first_name(),
     last_name = fake.last_name(),
     email = emails[i],
-    created_at = random_date,
-    updated_at = random_date
+    created_at = random_date_time,
+    updated_at = random_date_time
     )
     users.append(user)
 
