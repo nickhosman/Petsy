@@ -162,6 +162,8 @@ def edit_product(productId):
     form = ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        #filter_by returns base query class obj that cannot be serialized into JSON, doing .first()
+        #will grab the dictionary that can be serialized into JSON
         product = Product.query.filter_by(id=productId).first()
         product.name = form.data["name"]
         product.description = form.data["description"]
@@ -174,10 +176,9 @@ def edit_product(productId):
 
 
 
-
 @product_routes.route("/<int:productId>", methods=["DELETE"])
 @login_required
-def delete_reviews(productId):
+def delete_product(productId):
     """
     Delete a product
     """
