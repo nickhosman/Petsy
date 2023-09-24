@@ -3,7 +3,7 @@ from .db import db
 
 favorites = db.Table(
     "favorites",
-  
+
     db.Column(
         "user_id",
         db.Integer,
