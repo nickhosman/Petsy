@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Product, ProductImage, db, Review, User,Tag
-from app.forms import ProductForm,TagForm
+from app.forms import ProductForm,TagForm, ProductImageForm
 from app.api.auth_routes import validation_errors_to_error_messages
 
 product_routes = Blueprint("products", __name__)
@@ -9,7 +9,7 @@ product_routes = Blueprint("products", __name__)
 @product_routes.route("/")
 def get_products():
     """
-    Returns a dictionary containing all products
+    Get all products
     """
     all_products = Product.query.all()
     product_dict = {}
@@ -31,6 +31,32 @@ def get_products():
 
     return {"Products": product_dict}
 
+@product_routes.route("/<int:productId>/images", methods=['POST'])
+@login_required
+def post_product(productId):
+    """
+    Create an image for a product
+    """
+    product = Product.query.get(productId)
+    if not product:
+        return {'errors': {"Product": "Product not found"}}, 404
+
+    if product.userId != current_user.id:
+       return {"error": ['Unauthorized']}, 401
+
+    form = ProductImageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_image = ProductImage(
+            preview = form.data['preview'],
+            image_url = form.data['image_url'],
+            product_id = productId
+        )
+        db.session.add(new_image)
+        db.session.commit()
+        return new_image.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
 @product_routes.route("/<int:productId>/reviews")
 def get_reviews(productId):
     """
@@ -51,22 +77,26 @@ def get_reviews(productId):
 
     return {"Reviews": review_dict}
 
-@product_routes.route("/<int:productId>/tags",methods=['POST'])
+@product_routes.route("/<int:productId>/tags", methods=['POST'])
 @login_required
 def post_tags(productId):
     """
     Create a tag for a product
     """
+    product = Product.query.get(productId)
+    if not product:
+        return {'errors': {"Product": "Product not found"}}, 404
+
     form = TagForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        tag = Tag(
+        new_tag = Tag(
             name = form.data["name"],
         )
-        db.session.add(tag)
+        db.session.add(new_tag)
         db.session.commit()
-        return tag.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return new_tag.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 @product_routes.route("/<int:productId>", methods=['GET'])
 def get_products_detail(productId):
@@ -121,7 +151,7 @@ def create_product():
         db.session.add(product)
         db.session.commit()
         return product.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 @product_routes.route("/<int:productId>", methods=["PUT"])
 @login_required
@@ -140,7 +170,7 @@ def edit_product(productId):
 
         db.session.commit()
         return product.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 
