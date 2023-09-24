@@ -239,3 +239,18 @@ def delete_product(productId):
     db.session.commit()
 
     return {"message": "Successfully deleted product."}
+
+@product_routes.route("/<int:productId>/favorites", methods=["POST"])
+@login_required
+def add_favorite(productId):
+    """
+    Add a favorite for a user
+    """
+    product = Product.query.get(productId)
+    if product.seller_id == current_user.id:
+        return {"errors": "User cannot favorite a product they have listed"}, 500
+    if product in current_user.fav_products:
+        return {"errors": "User already favorited product"}, 500
+    product.users.append(current_user)
+    db.session.commit()
+    return {"message": "Successfully added to favorites"}
