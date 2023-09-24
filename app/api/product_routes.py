@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Product, ProductImage, db, Review, User,Tag
-from app.forms import ProductForm,TagForm, ProductImageForm
+from app.forms import ProductForm,TagForm, ProductImageForm, ReviewForm
 from app.api.auth_routes import validation_errors_to_error_messages
 
 product_routes = Blueprint("products", __name__)
@@ -28,8 +28,29 @@ def get_products():
                 data["previewImage"] = image.image_url
                 break
         product_dict[str(product.id)] = data
-
     return {"Products": product_dict}
+
+@product_routes.route("/<int:productId>/reviews", methods=['POST'])
+@login_required
+def post_review(productId):
+    """
+    Create a review for a product
+    """
+    product = Product.query.get(productId)
+    if not product:
+        return {'errors': {"Product": "Product not found"}}, 404
+
+    form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_review = Review(
+            stars = form.data['stars'],
+            details = form.data['details']
+        )
+        db.session.add(new_review)
+        db.session.commit()
+        return new_review.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 @product_routes.route("/<int:productId>/images", methods=['POST'])
 @login_required
@@ -57,26 +78,6 @@ def post_product(productId):
         return new_image.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
-@product_routes.route("/<int:productId>/reviews")
-def get_reviews(productId):
-    """
-    Gets all the reviews for a product
-    """
-    product = Product.query.get(productId)
-    if not product:
-        return {'errors': {"Product": "Product not found"}}, 404
-
-    reviews = Review.query.filter_by(product_id=productId).all()
-    review_dict = {}
-
-    for review in reviews:
-        data = review.to_dict()
-        user = User.query.get(review.user_id)
-        data['User'] = user.to_dict()
-        review_dict[str(review.id)] = data
-
-    return {"Reviews": review_dict}
-
 @product_routes.route("/<int:productId>/tags", methods=['POST'])
 @login_required
 def post_tags(productId):
@@ -97,6 +98,26 @@ def post_tags(productId):
         db.session.commit()
         return new_tag.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+@product_routes.route("/<int:productId>/reviews")
+def get_reviews(productId):
+    """
+    Gets all the reviews for a product
+    """
+    product = Product.query.get(productId)
+    if not product:
+        return {'errors': {"Product": "Product not found"}}, 404
+
+    reviews = Review.query.filter_by(product_id=productId).all()
+    review_dict = {}
+
+    for review in reviews:
+        data = review.to_dict()
+        user = User.query.get(review.user_id)
+        data['User'] = user.to_dict()
+        review_dict[str(review.id)] = data
+
+    return {"Reviews": review_dict}
 
 @product_routes.route("/<int:productId>", methods=['GET'])
 def get_products_detail(productId):
@@ -173,8 +194,6 @@ def edit_product(productId):
         db.session.commit()
         return product.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
-
-
 
 @product_routes.route("/<int:productId>", methods=["DELETE"])
 @login_required
