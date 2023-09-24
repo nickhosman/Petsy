@@ -48,11 +48,12 @@ def post_favorite(id):
     """
     Create a favorite for a user
     """
-
-    product = Product.query.get(request.productId)
     curr_user = User.query.get(id)
+    product = Product.query.get(request.productId)
     curr_user.fav_products.append(product)
     db.session.commit()
+    return {"message": "Successfully added to favorites"}
+
 
 @user_routes.route('/<int:id>')
 @login_required

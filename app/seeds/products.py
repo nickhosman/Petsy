@@ -54,7 +54,8 @@ def seed_products(all_users):
             seller_id=4,
             category_id=3,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[15], all_users[9]]
         ),
         Product(
             name="Premium Pot Bonsai Lotus Bowl",
@@ -63,7 +64,8 @@ def seed_products(all_users):
             seller_id=4,
             category_id=3,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[15], all_users[9]]
         ),
         Product(
             name="Hedgie Pouch",
@@ -72,7 +74,8 @@ def seed_products(all_users):
             seller_id=5,
             category_id=5,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[11], all_users[19]]
         ),
         Product(
             name="Rainbow Zebra Mini Hammock",
@@ -81,7 +84,8 @@ def seed_products(all_users):
             seller_id=5,
             category_id=5,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[11], all_users[19]]
         ),
         Product(
             name="All Natural Dog Treats",
@@ -90,7 +94,8 @@ def seed_products(all_users):
             seller_id=6,
             category_id=1,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[2], all_users[7], all_users[17]]
         ),
         Product(
             name="Cat Grass Fish Bones Treat",
@@ -99,7 +104,8 @@ def seed_products(all_users):
             seller_id=7,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[4], all_users[18]]
         ),
         Product(
             name="Lizard Shark Costume",
@@ -108,7 +114,8 @@ def seed_products(all_users):
             seller_id=8,
             category_id=4,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[11], all_users[19]]
         ),
         # 12
         Product(
@@ -118,7 +125,8 @@ def seed_products(all_users):
             seller_id=9,
             category_id=3,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[2], all_users[7], all_users[17]]
         ),
         Product(
             name="Bunny Cat Hoodie",
@@ -127,7 +135,8 @@ def seed_products(all_users):
             seller_id=10,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[0]]
         ),
         Product(
             name="Stylish Dog Sweater",
@@ -136,7 +145,8 @@ def seed_products(all_users):
             seller_id=11,
             category_id=1,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[4], all_users[18]]
         ),
         Product(
             name="Python Playground EPIC",
@@ -145,7 +155,8 @@ def seed_products(all_users):
             seller_id=12,
             category_id=4,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[4], all_users[18]]
         ),
         Product(
             name="Sisal Swing",
@@ -154,7 +165,8 @@ def seed_products(all_users):
             seller_id=13,
             category_id=5,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[2], all_users[7], all_users[17]]
         ),
         # 17
         Product(
@@ -164,7 +176,8 @@ def seed_products(all_users):
             seller_id=14,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[2], all_users[7], all_users[17]]
         ),
         Product(
             name="Cat Toy Frog Catnip",
@@ -173,7 +186,8 @@ def seed_products(all_users):
             seller_id=15,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[0]]
         ),
         Product(
             name="Cupcake Dog Plushy",
@@ -182,7 +196,8 @@ def seed_products(all_users):
             seller_id=16,
             category_id=1,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[1]]
         ),
         Product(
             name="12 Pack Kitten Spring",
@@ -191,7 +206,8 @@ def seed_products(all_users):
             seller_id=17,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[1], all_users[3]]
         ),
         Product(
             name="The Fish Bridge",
@@ -200,7 +216,8 @@ def seed_products(all_users):
             seller_id=18,
             category_id=3,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[1], all_users[3]]
         ),
         Product(
             name="Bearded Dragon Wizard Outfit",
@@ -209,7 +226,8 @@ def seed_products(all_users):
             seller_id=19,
             category_id=4,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[1], all_users[3]]
         ),
         Product(
             name="Crabby Dragon Outfit",
@@ -220,6 +238,132 @@ def seed_products(all_users):
             created_at=current_date,
             updated_at=current_date
         ),
+        Product(
+            name="Meowbucks Outfit",
+            description="Parody Starbucks inspired outfit. All you need in life is a venti catpuchino~",
+            price=19.00,
+            seller_id=10,
+            category_id=2,
+            created_at=current_date,
+            updated_at=current_date
+        ),
+        Product(
+            name="Meowasaur Outfit",
+            description="RAWWWWWWWR!!! A dinosaur outfit for you fierce cat to wear whenever they are feeling dangerous.",
+            price=19.45,
+            seller_id=10,
+            category_id=2,
+            created_at=current_date,
+            updated_at=current_date
+        ),
+        Product(
+            name="Pupper Mouse Costume",
+            description="We are delighted to welcome you to our store! Remember to visit the store to update the latest products every day. Have a nice day and if you like this product, don't forget to rate it 5 stars. ",
+            price=16.45,
+            seller_id=11,
+            category_id=1,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[0]]
+        ),
+        Product(
+            name="Pupper Octopus Costume",
+            description="Aesthetic three-dimensional octopus design, interesting hilarious clothing. There is a strong festival vibe and a straightforward, generous overall design.",
+            price=13.47,
+            seller_id=11,
+            category_id=1,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[15], all_users[9]]
+        ),
+        Product(
+            name="Dipped Peanut Butter Dog Bones",
+            description="Every pup deserves to be pampered! Each order contains six 3 treats - 3 dipped in carob and 3 dipped in yogurt then sprinkled with unsalted roasted peanuts.",
+            price=8.00,
+            seller_id=6,
+            category_id=1,
+            created_at=current_date,
+            updated_at=current_date
+        ),
+        Product(
+            name="Homemade Egg Treats",
+            description="Homemade Pet Treats are carefully homemade in-home kitchen with limited quantity to ensure freshness & quality. 100% made with love by dog Lovers!",
+            price=12.99,
+            seller_id=6,
+            category_id=1,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[0]]
+        ),
+        Product(
+            name="Cat Blueberry Bites",
+            description="Homemade Pet Treats are carefully homemade in-home kitchen with limited quantity to ensure freshness & quality. 100% made with love by dog Lovers!",
+            price=14.99,
+            seller_id=7,
+            category_id=2,
+            created_at=current_date,
+            updated_at=current_date
+        ),
+        Product(
+            name="Waterproof Dog Raincoat",
+            description="The waterproof polyester material can keep your dogs dry and warm in rainy and snowy days. Hole design, convenient for you to attach the leash for outdoor walking.",
+            price=14.99,
+            seller_id=16,
+            category_id=1,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[1], all_users[3]]
+        ),
+        Product(
+            name="Furry Zip-Up Coat",
+            description="Our furry coats are thoughtfully designed with your pups comfort in mind. Recommended use with collar, or harness with adjustable zipper.",
+            price=33.99,
+            seller_id=16,
+            category_id=1,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[10], all_users[13]]
+        ),
+        Product(
+            name="Sphynx Cotton Onesie",
+            description="Look no further for the perfect outfit for your beloved Sphynx cat! This Sphynx Cat Clothes Baby Soft Cotton Fall Winter Kitten outfit is perfect for keeping your fluffy companion warm during chilly seasons.",
+            price=13.99,
+            seller_id=17,
+            category_id=2,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[10], all_users[13]]
+        ),
+        Product(
+            name="Vintage Cat Hat",
+            description="Vintage-style crochet hats for cats. Color is blue.",
+            price=8.99,
+            seller_id=17,
+            category_id=2,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[5], all_users[14]]
+        ),
+        Product(
+            name="Artisinal Cat Sweater",
+            description="Our sweaters are made in small batches using high-end materials and crafted with love and care. The turtleneck design ensures that your cat will stay warm and cozy all winter long.",
+            price=34.99,
+            seller_id=17,
+            category_id=2,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[5], all_users[14]]
+        ),
+        Product(
+            name="Trendy Designer Essentials",
+            description="This soft, breathable, and warm sweater is perfect for your furry friend all throughout Spring, Fall and Winter!",
+            price=18.63,
+            seller_id=11,
+            category_id=1,
+            created_at=current_date,
+            updated_at=current_date,
+            users=[all_users[15], all_users[5]]
+        )
     ]
 
     db.session.add_all(products)
