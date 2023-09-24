@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User,favorites
+from app.models import User, Product, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -23,10 +23,10 @@ def get_favorites(id):
     Get all favorites of a user
     """
     curr_user=User.query.get(id)
-    
+
     if not curr_user:
         return {'errors': {"User": "User not found"}}, 404
-    
+
     user_fav_products=curr_user.fav_products
 
     fav_dict={}
@@ -42,6 +42,17 @@ def get_favorites(id):
 
     return fav_dict
 
+@user_routes.route('/<int:id>/favorites', methods=['POST'])
+@login_required
+def post_favorite(id):
+    """
+    Create a favorite for a user
+    """
+
+    product = Product.query.get(request.productId)
+    curr_user = User.query.get(id)
+    curr_user.fav_products.append(product)
+    db.session.commit()
 
 @user_routes.route('/<int:id>')
 @login_required
