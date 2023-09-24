@@ -1,5 +1,5 @@
-# "products"
 from .db import db, environment, SCHEMA
+from datetime import datetime
 
 
 class Product(db.Model):
@@ -16,8 +16,8 @@ class Product(db.Model):
         db.Integer, db.ForeignKey('users.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey(
         'categories.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     product_images = db.relationship('ProductImage', back_populates='product')
     category = db.relationship("Category", back_populates="products")
