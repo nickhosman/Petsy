@@ -1,8 +1,8 @@
-"""create database
+"""seeded more data
 
-Revision ID: 9149afbca758
+Revision ID: 4147dc9fdf49
 Revises: 
-Create Date: 2023-09-23 19:10:34.736660
+Create Date: 2023-09-24 00:56:09.588097
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9149afbca758'
+revision = '4147dc9fdf49'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,9 +25,8 @@ def upgrade():
     )
     op.create_table('tags',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=255), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name')
+    sa.Column('name', sa.String(length=255), nullable=True),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
