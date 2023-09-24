@@ -248,9 +248,9 @@ def add_favorite(productId):
     """
     product = Product.query.get(productId)
     if product.seller_id == current_user.id:
-        return {"errors": "User cannot favorite a product they have listed"}, 500
+        return {"errors": "User cannot favorite a product they have listed"}, 400
     if product in current_user.fav_products:
-        return {"errors": "User already favorited product"}, 500
+        return {"errors": "User already favorited product"}, 400
     product.users.append(current_user)
     db.session.commit()
     return {"message": "Successfully added to favorites"}

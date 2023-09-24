@@ -1,8 +1,8 @@
-"""seeded more data
+"""initial migrate
 
-Revision ID: 4147dc9fdf49
+Revision ID: 57bd6325266a
 Revises: 
-Create Date: 2023-09-24 00:56:09.588097
+Create Date: 2023-09-24 14:59:52.482624
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4147dc9fdf49'
+revision = '57bd6325266a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,7 +26,8 @@ def upgrade():
     op.create_table('tags',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
