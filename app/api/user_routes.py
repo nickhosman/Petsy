@@ -17,20 +17,30 @@ def users():
 
 
 @user_routes.route('/<int:id>/favorites')
-# @login_required
+@login_required
 def get_favorites(id):
     """
     Get all favorites of a user
     """
     curr_user=User.query.get(id)
     
+    if not curr_user:
+        return {'errors': {"User": "User not found"}}, 404
+    
     user_fav_products=curr_user.fav_products
-   
-    
-    print(user_fav_products)
-    
 
-    # return {"UserFavoriteProducts":}
+    fav_dict={}
+
+    for fav in user_fav_products:
+        data=fav.to_dict()
+        images=fav.product_images
+        for image in images:
+            if image.preview:
+                data["previewImage"] = image.image_url
+                break
+        fav_dict[str(fav.id)]=data
+
+    return fav_dict
 
 
 @user_routes.route('/<int:id>')
