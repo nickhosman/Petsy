@@ -54,13 +54,12 @@ def post_favorite(id):
         return {"error": "Must log in to add to favorites"}
 
     form = AddToFavorite()
-    
+
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         product_id = form.data["product_id"]
         user_id = form.data["user_id"]
 
-    #get the product
     product = Product.query.get(product_id)
 
      # Check if the product is already in the user's favs
