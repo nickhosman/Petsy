@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Product, ProductImage, db, Review, User,Tag
+from app.models import Product, ProductImage, db, Review, User, Tag, product_tags
 from app.forms import ProductForm,TagForm, ProductImageForm, ReviewForm
 from app.api.auth_routes import validation_errors_to_error_messages
 
@@ -19,10 +19,10 @@ def get_products():
         reviews = product.reviews
         total_review = len(reviews)
         if total_review == 0:
-            average_rating = 'No reviews'
+            data["averageRating"] = 'No reviews'
         else:
             average_rating = sum([review.stars for review in reviews]) / total_review
-        data["averageRating"] = round(average_rating, 1)
+            data["averageRating"] = round(average_rating, 1)
         for image in images:
             if image.preview:
                 data["previewImage"] = image.image_url
@@ -71,10 +71,10 @@ def post_product(productId):
     """
     product = Product.query.get(productId)
     if not product:
-        return {'errors': {"Product": "Product not found"}}, 404
+        return {'errors': "Product not found"}, 404
 
     if product.seller_id != current_user.id:
-       return {"error": ['Unauthorized']}, 401
+       return {"error": 'Unauthorized'}, 401
 
     form = ProductImageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -99,19 +99,28 @@ def post_tags(productId):
     if not product:
         return {"errors": "Product not found"}, 404
 
+    product_tags = product.all_tags
+    print("FIRST", product_tags)
     form = TagForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
         existing_tag = Tag.query.filter_by(name=form.data["name"]).first()
-        if existing_tag:
-            return {"errors": "Tag already exists for this product"}, 403
 
-        new_tag = Tag(
-            name = form.data["name"],
-        )
-        db.session.add(new_tag)
-        db.session.commit()
-        return new_tag.to_dict()
+        if existing_tag:
+            if existing_tag in product_tags:
+                return {"errors": "Tag already exists for this product"}, 400
+            product_tags.append(existing_tag)
+            db.session.commit()
+            return existing_tag.to_dict()
+
+        else:
+            new_tag = Tag(name = form.data["name"])
+            db.session.add(new_tag)
+            product_tags.append(new_tag)
+            db.session.commit()
+            print("SECOND", product_tags)
+            return new_tag.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 @product_routes.route("/<int:productId>/reviews")
@@ -195,12 +204,15 @@ def edit_product(productId):
     """
     Updates a product in the database
     """
+    #filter_by returns base query class obj that cannot be serialized into JSON, doing .first()
+    #will grab the dictionary that can be serialized into JSON
+    product = Product.query.filter_by(id=productId).first()
+    if product.seller_id != current_user.id:
+       return {"error": 'Unauthorized'}, 401
+
     form = ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        #filter_by returns base query class obj that cannot be serialized into JSON, doing .first()
-        #will grab the dictionary that can be serialized into JSON
-        product = Product.query.filter_by(id=productId).first()
         product.name = form.data["name"]
         product.description = form.data["description"]
         product.price = form.data["price"]
@@ -221,7 +233,7 @@ def delete_product(productId):
         return {'errors': "Product not found"}, 404
 
     if product.seller_id != current_user.id:
-       return {"error": ['Unauthorized']}, 401
+       return {"error": 'Unauthorized'}, 401
 
     db.session.delete(product)
     db.session.commit()
