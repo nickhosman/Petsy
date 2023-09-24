@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, Product, db
+from app.models import User, Product, db, favorites
 
 user_routes = Blueprint('users', __name__)
 
@@ -13,7 +13,6 @@ def users():
     """
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
-
 
 
 @user_routes.route('/<int:id>/favorites')
@@ -48,8 +47,27 @@ def post_favorite(id):
     """
     Create a favorite for a user
     """
+    # get current user
     curr_user = User.query.get(id)
-    product = Product.query.get(request.productId)
+    #if theres no logged in user...
+    if not curr_user:
+        return {"error": "Must log in to add to favorites"}
+
+    form = AddToFavorite()
+    
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        product_id = form.data["product_id"]
+        user_id = form.data["user_id"]
+
+    #get the product
+    product = Product.query.get(product_id)
+
+     # Check if the product is already in the user's favs
+    if product in curr_user.fav_products:
+        return {"message": "Product is already in favorites"}, 400
+
+    #add product to favs
     curr_user.fav_products.append(product)
     db.session.commit()
     return {"message": "Successfully added to favorites"}

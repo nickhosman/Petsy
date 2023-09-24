@@ -13,10 +13,20 @@ def delete_review(reviewId):
   Deletes a review from the database by id
   """
   review = Review.query.get(reviewId)
-  if review.user_id == current_user.id:
-    db.session.delete(review)
-    db.session.commit()
-  return {'errors': ['Unauthorized']}, 401
+  print("REVIEW", review)
+
+  if not review:
+    return {"error": "Review not found"}
+
+  if review.user_id != current_user.id:
+    return {"error": ['Unauthorized']}, 401
+
+  db.session.delete(review)
+  db.session.commit()
+
+  return {"message": "Successfully deleted review"}
+
+
 
 
 @review_routes.route("/<int:reviewId>", methods=["PUT"])
@@ -35,7 +45,7 @@ def edit_review(reviewId):
 
   form = ReviewForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-  if form.validate.on_submit():
+  if form.validate_on_submit():
     review.stars = form.data['stars']
     review.details = form.data['details']
 

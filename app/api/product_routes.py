@@ -40,7 +40,14 @@ def post_review(productId):
     user = User.query.get(current_user.id)
     print(user)
     if not product:
-        return {'errors': {"Product": "Product not found"}}, 404
+        return {"error": "Product not found"}, 404
+
+    if product.seller_id == user.id:
+        return {"error": "User cannot review a product they listed"}, 403
+
+    existing_review = Review.query.filter_by(product_id=productId, user_id=user.id).first()
+    if existing_review:
+        return {"error": "User already has a review for this product"}, 403
 
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -90,11 +97,15 @@ def post_tags(productId):
     """
     product = Product.query.get(productId)
     if not product:
-        return {'errors': {"Product": "Product not found"}}, 404
+        return {"errors": "Product not found"}, 404
 
     form = TagForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        existing_tag = Tag.query.filter_by(name=form.data["name"]).first()
+        if existing_tag:
+            return {"errors": "Tag already exists for this product"}, 403
+
         new_tag = Tag(
             name = form.data["name"],
         )
@@ -207,7 +218,7 @@ def delete_product(productId):
     """
     product = Product.query.get(productId)
     if not product :
-        return {'errors': {"Product": "Product not found"}}, 404
+        return {'errors': "Product not found"}, 404
 
     if product.seller_id != current_user.id:
        return {"error": ['Unauthorized']}, 401
