@@ -1,8 +1,8 @@
-"""initial migrate
+"""fixed tag
 
-Revision ID: 57bd6325266a
+Revision ID: 045e13ed847c
 Revises: 
-Create Date: 2023-09-24 14:59:52.482624
+Create Date: 2023-09-24 15:03:13.886353
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '57bd6325266a'
+revision = '045e13ed847c'
 down_revision = None
 branch_labels = None
 depends_on = None
