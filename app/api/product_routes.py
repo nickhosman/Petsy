@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Product, ProductImage, db, Review, User, Tag, product_tags
+from app.models import Product, ProductImage, db, Review, User, Tag, product_tags,favorites
 from app.forms import ProductForm,TagForm, ProductImageForm, ReviewForm
 from app.api.auth_routes import validation_errors_to_error_messages
 
@@ -222,6 +222,25 @@ def edit_product(productId):
         return product.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
+@product_routes.route("/<int:productId>/favorites/delete",methods=["DELETE"])
+@login_required
+def delete_favorite(productId):
+    """
+    delete a favorite product for a user
+    """
+    product=Product.query.get(productId)
+    if not product :
+        return {'errors': "Product not found"}, 404
+    if current_user not in product.users:
+       return {"error": 'Favorite product not found'}, 401
+  
+    product.users.remove(current_user)
+    db.session.commit()
+
+    return {"message":"Successfully deleted the favorite product."}
+    
+
+
 @product_routes.route("/<int:productId>", methods=["DELETE"])
 @login_required
 def delete_product(productId):
@@ -254,3 +273,5 @@ def add_favorite(productId):
     product.users.append(current_user)
     db.session.commit()
     return {"message": "Successfully added to favorites"}
+
+

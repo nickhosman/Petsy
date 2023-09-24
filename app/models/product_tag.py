@@ -3,6 +3,7 @@ from .db import db
 
 product_tags = db.Table(
     "product_tags",
+   
     db.Column(
         "product_id",
         db.Integer,
