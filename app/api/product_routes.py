@@ -162,7 +162,7 @@ def edit_product(productId):
     form = ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        product = Product.query.filter_by(id=productId)
+        product = Product.query.filter_by(id=productId).first()
         product.name = form.data["name"]
         product.description = form.data["description"]
         product.price = form.data["price"]
