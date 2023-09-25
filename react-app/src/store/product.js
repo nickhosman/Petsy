@@ -28,7 +28,7 @@ export const removeProduct = productId =>({
 })
 
 /** Thunk Action Creators: */
-export const thunkLoadProducts = () => async(dispatch) => {
+export const fetchAllProducts = () => async(dispatch) => {
   const response = await fetch('/api/products')
   if(response.ok) {
     const data = await response.json()
@@ -42,7 +42,7 @@ export const thunkLoadProducts = () => async(dispatch) => {
 
 
 export const fetchProductDetail = productId =>async(dispatch)=>{
-  const response = await fetch('/api/products/:productid')
+  const response = await fetch(`/api/products/${productId}`)
   if(response.ok){
     const productDetails= await response.json()
     dispatch(getProduct(productDetails))
@@ -124,6 +124,14 @@ const productReducer = (state = initialState, action) => {
     case LOAD_PRODUCTS:
       newState = {
          ...action.products
+      }
+      return newState
+    case GET_PRODUCT:
+      newState = {
+        ...state,
+        singleProduct : {
+          ...action.product
+        }
       }
       return newState
     default:
