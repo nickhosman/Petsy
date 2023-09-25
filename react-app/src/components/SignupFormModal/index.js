@@ -30,9 +30,9 @@ function SignupFormModal() {
 	};
 
 	return (
-		<>
+		<div id="signup-modal-div">
 			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
+			<form id="signup-modal-form" onSubmit={handleSubmit}>
 				<ul>
 					{errors.map((error, idx) => (
 						<li key={idx}>{error}</li>
@@ -74,9 +74,9 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
-				<button type="submit">Sign Up</button>
+				<button id="signup-form-submit-btn" type="submit">Sign Up</button>
 			</form>
-		</>
+		</div>
 	);
 }
 
