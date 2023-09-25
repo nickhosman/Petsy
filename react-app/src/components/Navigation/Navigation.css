@@ -1,7 +1,66 @@
 .profile-dropdown {
+  padding:0;
   position: absolute;
+  right:50px;
+  top:70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border:2px solid gray;
+  height: 150px;
+  width:150px;
+  border-radius: 15px;
+  
+}
+
+.profile-dropdown button{
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  margin-bottom: 15px;
 }
 
 .hidden {
   display: none;
 }
+
+#navigation-bar{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#navigation-bar li{
+  
+  list-style:none;
+}
+
+.nav-link{
+  text-decoration: none;
+  color:black;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+#search-bar-li{
+  width: 50%;
+}
+#search-bar-div{
+  width:100%;
+}
+#search-bar-input{
+  width:100%;
+  height:40px;
+  border-radius: 10px;
+}
+
+#prodile-btn{
+  border:none;
+  background-color: transparent;
+}
+
+#user-profile-li{
+  margin-right:40px;
+}
+
