@@ -9,7 +9,7 @@
   justify-content: center;
   border:2px solid gray;
   height: 150px;
-  width:150px;
+  width:200px;
   border-radius: 15px;
   background-color: white;
 }
@@ -32,7 +32,7 @@
   align-items: center;
 }
 #navigation-bar li{
-  
+
   list-style:none;
 }
 
@@ -71,4 +71,3 @@
 #user-profile-li{
   margin-right:40px;
 }
-
