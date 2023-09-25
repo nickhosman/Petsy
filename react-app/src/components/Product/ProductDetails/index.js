@@ -21,7 +21,7 @@ function ProductDetails() {
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
-        <Carousel useKeyboardArrows={true}>
+        <Carousel showStatus={false} useKeyboardArrows={true}>
         {product.ProductImages.map((product, index) => (
           <div className='productdetails-image-container'>
             <img className='productdetails-image' src={product.imageUrl} alt='' key={index}></img>
@@ -30,10 +30,11 @@ function ProductDetails() {
         </Carousel>
       </div>
         <div className='productdetails-information'>
-            <h4>${product.price}</h4>
-            <h4>{product.name}</h4>
-            <h4>{product.Seller.username}</h4>
-            <h4>{product.description}</h4>
+            <h4 id='productdetails-price'>${product.price}</h4>
+            <h4 id='productdetails-name'>{product.name}</h4>
+            <h4 id='productdetails-seller'>{product.Seller.username}</h4>
+            <h4 id='productdetails-rating'>{product.averageRating} STAR ICON</h4>
+            <h4 id='productdetails-desc'>{product.description}</h4>
         </div>
     </div>
   )
