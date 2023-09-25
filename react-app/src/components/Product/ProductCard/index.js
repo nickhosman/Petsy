@@ -9,7 +9,7 @@ function ProductCard({ product }) {
   const history = useHistory()
   const handleViewProductDetail = e => {
     e.preventDefault()
-    history.push(`/api/products/${product.id}`)
+    history.push(`/products/${product.id}`)
   }
   return (
     <div className="k-productcard-container" onClick={handleViewProductDetail}>
