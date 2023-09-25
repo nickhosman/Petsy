@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import ProductIndex from "./components/Product/ProductIndex";
 import ProductDetails from "./components/Product/ProductDetails";
 import ProductFormPage from "./components/Product/ProductForm";
+import ListingPage from "./components/Listing";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path='/users/:userId/products'>
+            <ListingPage />
+          </Route>
           <Route exact path='/products'>
             <ProductIndex/>
           </Route>

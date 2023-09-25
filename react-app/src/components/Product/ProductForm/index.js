@@ -86,6 +86,7 @@ function ProductFormPage() {
         </label>
         <label>
           Tags
+          <input />
           <ul>
             {tagList.map((tag, idx) => <li key={idx} value={tag} onClick={handleTagClick}>{tag}</li>)}
           </ul>
