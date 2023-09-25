@@ -16,7 +16,7 @@ function ProductIndex() {
   return (
     <div>
       {allProducts.map((product) => (
-         <h2>{product.name}</h2>
+         <ProductCard product={product}/>
        ))}
     </div>
   )
