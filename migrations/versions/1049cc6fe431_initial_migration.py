@@ -18,7 +18,7 @@ depends_on = None
 
 environment = os.environ.get('FLASK_ENV')
 SCHEMA = os.environ.get("SCHEMA")
-if environment== 'production':
+if environment == 'production':
     op.execute("CREATE SCHEMA IF NOT EXISTS petsy")
 
 
