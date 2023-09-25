@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 
@@ -10,12 +10,12 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(400), nullable=False)
     price = db.Column(db.Numeric(6, 2), nullable=False)
     seller_id = db.Column(
-        db.Integer, db.ForeignKey('users.id'), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey(
-        'categories.id'), nullable=False)
+        db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(
+        'categories.id')), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 

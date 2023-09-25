@@ -326,7 +326,7 @@ def seed_products(all_users):
         ),
         Product(
             name="Sphynx Cotton Onesie",
-            description="Look no further for the perfect outfit for your beloved Sphynx cat! This Sphynx Cat Clothes Baby Soft Cotton Fall Winter Kitten outfit is perfect for keeping your fluffy companion warm during chilly seasons.",
+            description=" ",
             price=13.99,
             seller_id=17,
             category_id=2,
