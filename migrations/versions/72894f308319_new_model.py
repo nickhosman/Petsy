@@ -24,14 +24,14 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     op.create_table('tags',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -45,7 +45,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -59,7 +59,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['category_id'], ['categories.id'], ),
     sa.ForeignKeyConstraint(['seller_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     op.create_table('favorites',
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -67,7 +67,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('user_id', 'product_id'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     op.create_table('product_images',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -78,7 +78,7 @@ def upgrade():
     sa.Column('product_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     op.create_table('product_tags',
     sa.Column('product_id', sa.Integer(), nullable=False),
@@ -86,7 +86,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.ForeignKeyConstraint(['tag_id'], ['tags.id'], ),
     sa.PrimaryKeyConstraint('product_id', 'tag_id'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -99,7 +99,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    schema = "petsy" if environment == "production" else None
+    "petsy" if environment == "production" else None
     )
     # ### end Alembic commands ###
 
