@@ -1,0 +1,79 @@
+#tag-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+#tag-text {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-right: 0;
+}
+
+#tag-text h3 {
+  color: black;
+}
+
+#tag-text h3:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: gray;
+}
+
+#category-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+}
+
+#category-card {
+  margin: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#category-card p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.category-img-card {
+  width: 130px;
+  background-color: #fff;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 2px 2px 5px gray;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.category-img-card img {
+  height: 160px;
+
+}
+
+#category-reptile-img {
+  height: 120px;
+}
+
+#category-cat-img {
+  height: 170px;
+  padding-right: 50px;
+}
+
+#category-aquatic-img {
+  height: 80px;
+}
+
+#category-guineapig-img {
+  height: 140px;
+}
