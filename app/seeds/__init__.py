@@ -30,7 +30,7 @@ def seed():
         undo_categories()
         undo_users()
     all_users = seed_users()
-    print("all_users:", all_users)
+    #print("all_users:", all_users)
     seed_categories()
     all_products = seed_products(all_users)
     seed_productimages()
