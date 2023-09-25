@@ -79,17 +79,44 @@ export const updateProduct = product => async (dispatch) =>{
   })
 
   if (response.ok) {
-    const newProduct = await response.json()
-    dispatch(getProduct(newProduct))
-    return newProduct
+    const updateProduct = await response.json()
+    dispatch(getProduct(updateProduct))
+    return updateProduct
   } else {
     let errors = await response.json()
     return errors
   }
 }
 
+export const deleteProduct = productId => async(dispatch)=>{
+  const response = await fetch(`/api/products/${productId}`,{
+    method:'DELETE'
+  })
+
+  if(response.ok){
+    dispatch(removeProduct())
+  } else {
+    const errors = await response.json()
+    return errors
+  }
+}
+
 
 // product reducer
+// products: {
+//   Products: {
+//     [productId]: {
+//          ...productData
+//     },
+//   },
+//   singleProduct: {
+//      ...productData,
+//       ProductImages: [...imagesData],
+//         Seller: {
+//        ...sellerData,
+//      },
+//   },
+// },
 const initialState = {}
 const productReducer = (state = initialState, action) => {
   let newState;
