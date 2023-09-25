@@ -10,7 +10,6 @@ const loadProducts = (products) => {
 
 export const thunkLoadProducts = () => async(dispatch) => {
   const response = await fetch('/api/products')
-  console.log('RESPONSEEE', response)
   if(response.ok) {
     const data = await response.json()
     dispatch(loadProducts(data))
@@ -29,7 +28,6 @@ const productReducer = (state = initialState, action) => {
       newState = {
          ...action.products
       }
-      console.log('NEW STATEEEEEE', newState)
       return newState
     default:
       return state

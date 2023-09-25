@@ -5,18 +5,19 @@ import { thunkLoadProducts } from "../../store/product";
 function ProductIndex() {
   const dispatch = useDispatch();
   const objProducts = useSelector((state) => state.products.Products);
-  console.log(objProducts)
-  const allProducts = Object.values(objProducts);
 
   useEffect(() => {
     dispatch(thunkLoadProducts())
   }, [dispatch])
 
+  if (!objProducts || Object.keys(objProducts).length === 0) return null;
+  const allProducts = Object.values(objProducts);
+
   return (
     <div>
       {allProducts.map((product) => (
-        <h2>{product.name}</h2>
-      ))}
+         <h2>{product.name}</h2>
+       ))}
     </div>
   )
 }
