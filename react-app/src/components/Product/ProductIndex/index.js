@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkLoadProducts } from "../../store/product";
+import { thunkLoadProducts } from "../../../store/product";
 
 function ProductIndex() {
   const dispatch = useDispatch();
