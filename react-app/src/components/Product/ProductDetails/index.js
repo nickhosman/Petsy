@@ -29,13 +29,16 @@ function ProductDetails() {
         ))}
         </Carousel>
       </div>
+      <div className='productdetails-sidebar-container'>
         <div className='productdetails-information'>
             <h4 id='productdetails-price'>${product.price}</h4>
             <h4 id='productdetails-name'>{product.name}</h4>
             <h4 id='productdetails-seller'>{product.Seller.username}</h4>
-            <h4 id='productdetails-rating'>{product.averageRating} STAR ICON</h4>
+            <h4 id='productdetails-rating'>{product.averageRating.toFixed(1)} STAR ICON</h4>
             <h4 id='productdetails-desc'>{product.description}</h4>
         </div>
+        <button className='productdetails-reviewbutton'>Leave a review</button>
+      </div>
     </div>
   )
 }
