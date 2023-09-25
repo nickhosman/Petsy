@@ -16,11 +16,17 @@ function ProductIndex() {
   const allProducts = Object.values(objProducts);
 
   return (
-    <div className="k-productindex-container">
+    <div id="all-products-div">
+      <div id="all-products-title">
+        <h1>PRODUCTS</h1>
+      </div>
+      <div className="k-productindex-container">
       {allProducts.map((product) => (
          <ProductCard product={product}/>
        ))}
     </div>
+    </div>
+    
   )
 }
 
