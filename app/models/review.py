@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 
@@ -15,8 +15,8 @@ class Review(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     # foreign keys
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     # relationship
     product = db.relationship("Product", back_populates="reviews")
