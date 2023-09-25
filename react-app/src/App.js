@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import ProductIndex from "./components/Product/ProductIndex";
 import ProductDetails from "./components/Product/ProductDetails";
+import ProductFormPage from "./components/Product/ProductForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +23,9 @@ function App() {
         <Switch>
           <Route exact path='/products'>
             <ProductIndex/>
+          </Route>
+          <Route exact path='/products/new'>
+            <ProductFormPage/>
           </Route>
           <Route exact path='/products/:productId'>
             <ProductDetails/>
