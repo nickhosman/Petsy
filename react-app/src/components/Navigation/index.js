@@ -10,8 +10,8 @@ function Navigation({ isLoaded }){
 
 	return (
 		<ul id="navigation-bar">
-			<li>
-				<NavLink className="nav-link" exact to="/"><i class="fa-solid fa-paw"></i>PETSY</NavLink>
+			<li id="logo">
+				<NavLink className="nav-link" exact to="/"><i class="fa-solid fa-paw"></i><p>PETSY</p></NavLink>
 			</li>
 			<li id="search-bar-li">
 				<SearchBar />

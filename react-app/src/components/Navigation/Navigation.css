@@ -36,11 +36,19 @@
   list-style:none;
 }
 
+
 .nav-link{
   text-decoration: none;
   color:black;
   cursor: pointer;
   font-size: 30px;
+  display: flex;
+}
+
+.nav-link i,.nav-link p{
+  height:fit-content;
+  margin: 0;
+  margin-right: 5px;
 }
 
 #search-bar-li{
