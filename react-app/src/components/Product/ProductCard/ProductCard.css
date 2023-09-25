@@ -1,0 +1,10 @@
+.k-productcard-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.k-productcard-image {
+  height: 190px;
+}

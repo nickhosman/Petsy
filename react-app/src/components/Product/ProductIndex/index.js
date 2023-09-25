@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkLoadProducts } from "../../../store/product";
+import ProductCard from "../ProductCard";
+import './ProductIndex.css'
 
 function ProductIndex() {
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ function ProductIndex() {
   const allProducts = Object.values(objProducts);
 
   return (
-    <div>
+    <div className="k-productindex-container">
       {allProducts.map((product) => (
          <ProductCard product={product}/>
        ))}
