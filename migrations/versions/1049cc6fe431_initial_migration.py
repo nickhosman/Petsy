@@ -77,7 +77,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('user_id', 'product_id')
     )
     if environment == "production":
-        op.execute(f"ALTER TABLE production SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE favorites SET SCHEMA {SCHEMA};")
     op.create_table('product_images',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('preview', sa.Boolean(), nullable=True),
