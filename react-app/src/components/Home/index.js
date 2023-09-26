@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import './home.css'
 import { fetchAllCategories } from '../../store/category';
 import { fetchAllProducts } from '../../store/product';
+import ProductsSelection from './ProductsSelection/ProductsSelection';
+import Trending from './Trending/Trending';
 
 
 
@@ -12,6 +14,7 @@ const Home = () => {
   const history = useHistory()
   const [isNavigated, setIsNavigated] = useState(false)
   const [filterCategoryId, setFilterCategoryId] = useState(null)
+
 
   // GET ALL CATEGORIES
   const allCategories = useSelector(state => state.categories.Categories && Object.values(state.categories.Categories).length ? state.categories.Categories : {})
@@ -48,7 +51,7 @@ const Home = () => {
         }
       })
       console.log(filterId)
-      if (filterId){
+      if (filterId) {
         setFilterCategoryId(filterId)
       }
     }
@@ -56,11 +59,40 @@ const Home = () => {
     console.log(filterCategoryId)
 
   }
+
+  // Our Selection Section
+  const productsInSelection = [];
+  for (let i = 0; i < 10; i++) {
+    if (productsInSelection.length < 5) {
+    const randomIdx = Math.floor(Math.random() * allProducts.length);
+
+    const selectRandomProduct = allProducts[randomIdx];
+    if (!productsInSelection.includes(selectRandomProduct)) {
+      productsInSelection.push(selectRandomProduct);
+    }
+    }
+  }
+// Trending Section
+  const productsInTrending = [];
+  for (let i = 0; i < 20; i++) {
+    if (productsInTrending.length<10){
+      const randomIdx = Math.floor(Math.random() * allProducts.length);
+      const selectRandomProduct = allProducts[randomIdx];
+      if (!productsInTrending.includes(selectRandomProduct)) {
+        productsInTrending.push(selectRandomProduct);
+      }
+
+    }
+
+  }
+
+
+
   useEffect(() => {
     const filteredItems = allProducts.filter(product => product.categoryId === filterCategoryId)
     console.log(filteredItems)
   }, [filterCategoryId, allProducts])
-  
+
   useEffect(() => {
     dispatch(fetchAllCategories())
     dispatch(fetchAllProducts())
@@ -112,8 +144,22 @@ const Home = () => {
           <p>Others</p>
         </div>
       </div>
-      <div id="shop-selections-div">
+      <div id="shop-selections-div" >
         <h2>Shop Our Selections</h2>
+        <div id="our-selection-div">
+          {productsInSelection.map(product => (
+            <ProductsSelection product={product} />
+          ))}
+        </div>
+
+      </div>
+      <div id="trending-section">
+        <h2>Trending</h2>
+        <div id="trending-div">
+          {productsInTrending.map(product => (
+            <Trending product={product} />
+          ))}
+        </div>
       </div>
     </div>
   )
