@@ -6,10 +6,7 @@ const DELETE_REVIEW = 'reviews/deleteReview'
 
 /** ACTION CREATORS: */
 
-export const createReview = (review, user) => ({
-  type: CREATE_REVIEW,
-  payload: {review, user}
-})
+
 
 export const deleteReview = (reviewId) => ({
   type: DELETE_REVIEW,
