@@ -10,15 +10,12 @@ const ShowReviews = ({productId}) => {
 
   const allReviews = useSelector(state => state.products.singleProduct?.ProductReviews)
   const product = useSelector(state => state.products?.singleProduct)
-  console.log('ALL REVIEWS', allReviews)
-  console.log(product)
-  const rating = product.averageRating
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getAllReviewsThunk(productId))
-    console.log('CALLING THUNK')
+
   }, [dispatch])
 
   const starArray = [...Array(5).keys()].map(star => star + 1)
@@ -35,7 +32,7 @@ const ShowReviews = ({productId}) => {
         <h3 className="review-count-avg-rating">{product.totalReviews} Reviews · ★ {product.averageRating} </h3>
         {Object.values(allReviews).map((review) => (
           <li className="reviews" key={review.id}>
-            <h6>{starRating(rating)}</h6>
+            <h6>{starRating(review.stars)}</h6>
             <p>{review.User?.username} | {review.createdAt}</p>
             <p>{review.details}</p>
           </li>
