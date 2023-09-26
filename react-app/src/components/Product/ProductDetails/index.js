@@ -6,6 +6,8 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import './ProductDetails.css'
 import ShowReviews from '../../Review/ShowReviews/index.js';
+import CreateReviewForm from '../../Review/CreateReviews';
+import OpenModalButton from '../../OpenModalButton';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -39,7 +41,10 @@ function ProductDetails() {
             <h4 id='productdetails-rating'>{product.averageRating.toFixed(1)} ★</h4>
             <h4 id='productdetails-desc'>{product.description}</h4>
         </div>
-        <button className='productdetails-reviewbutton'>Leave a review</button>
+        <OpenModalButton
+          buttonText= "Leave a review"
+          modalComponent={<CreateReviewForm/>}
+        />
       </div>
     </div>
   )
