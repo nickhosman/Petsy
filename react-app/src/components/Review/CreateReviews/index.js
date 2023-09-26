@@ -22,14 +22,12 @@ function CreateReviewForm({}) {
     e.preventDefault()
 
     dispatch(createReviewThunk(
-      stars,
-      details,
-      product.id,
-      user.id
+     product.id,
+     user.id,
+     stars,
+     details
     ))
     .then((review) => {
-      // const newTotalReviews = product.totalReviews + 1
-      // const newAverageRating = (product.averageRating * product.totalReviews + stars) / newTotalReviews
       dispatch(fetchAllProducts())
       dispatch(getAllReviewsThunk(product.id))
       closeModal()
