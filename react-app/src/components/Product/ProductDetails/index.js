@@ -5,7 +5,7 @@ import { fetchProductDetail } from '../../../store/product';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import './ProductDetails.css'
-import ShowReviews from '../../Review/ShowReviews';
+import ShowReviews from '../../Review/ShowReviews/index.js';
 
 function ProductDetails() {
   const { productId } = useParams();
