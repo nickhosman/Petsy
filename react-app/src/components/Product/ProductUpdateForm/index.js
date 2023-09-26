@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { fetchProductDetail, fetchUpdateProduct } from "../../../store/product";
+import { fetchProductDetail, fetchUpdateProduct, getAllReviewsThunk } from "../../../store/product";
 
 function ProductUpdateForm() {
   const history = useHistory();
@@ -33,6 +33,7 @@ const handleSubmit = async (e) => {
   console.log('PAYLOAAAD', payload)
   const updatedProduct = await dispatch(fetchUpdateProduct(payload, productId))
   if(updatedProduct) {
+    dispatch(getAllReviewsThunk(updatedProduct.id))
     dispatch(fetchProductDetail(updatedProduct.id))
     history.push(`/products/${updatedProduct.id}`)
   }
