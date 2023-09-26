@@ -9,6 +9,7 @@ import ProductIndex from "./components/Product/ProductIndex";
 import ProductDetails from "./components/Product/ProductDetails";
 import ProductFormPage from "./components/Product/ProductForm";
 import ListingPage from "./components/Listing";
+import Home from "./components/Home";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       )}
