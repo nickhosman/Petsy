@@ -2,7 +2,6 @@
 export const LOAD_PRODUCTS = 'products/LOAD_PRODUCTS'
 export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
-export const REMOVE_PRODUCT = 'products/REMOVE_PRODUCT'
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 
@@ -22,11 +21,6 @@ export const getProduct = product =>({
 export const editProduct = product =>({
   type:EDIT_PRODUCT,
   product
-})
-
-export const removeProduct = productId =>({
-  type:REMOVE_PRODUCT,
-  productId
 })
 
 export const loadReviews = reviews => ({
@@ -115,19 +109,6 @@ export const updateProduct = product => async (dispatch) =>{
     return updateProduct
   } else {
     let errors = await response.json()
-    return errors
-  }
-}
-
-export const deleteProduct = productId => async(dispatch)=>{
-  const response = await fetch(`/api/products/${productId}`,{
-    method:'DELETE'
-  })
-
-  if(response.ok){
-    dispatch(removeProduct())
-  } else {
-    const errors = await response.json()
     return errors
   }
 }
