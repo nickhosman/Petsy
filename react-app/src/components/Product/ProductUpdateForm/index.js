@@ -11,6 +11,7 @@ function ProductUpdateForm() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("1");
+  const [errors, setErrors] = useState({})
 
 
   useEffect(() => {
@@ -22,22 +23,35 @@ function ProductUpdateForm() {
     })
   }, [dispatch, productId])
 
-const handleSubmit = async (e) => {
-  e.preventDefault()
-  const payload = {
-    name,
-    description,
-    price,
-    category_id: Number(category)
-  }
-  console.log('PAYLOAAAD', payload)
-  const updatedProduct = await dispatch(fetchUpdateProduct(payload, productId))
-  if(updatedProduct) {
-    dispatch(getAllReviewsThunk(updatedProduct.id))
-    dispatch(fetchProductDetail(updatedProduct.id))
-    history.push(`/products/${updatedProduct.id}`)
-  }
-}
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const payload = {
+      name,
+      description,
+      price,
+      category_id: Number(category)
+    }
+
+    await dispatch(fetchUpdateProduct(payload, productId))
+      .then((updatedProduct) => {
+        if(updatedProduct && updatedProduct.id) {
+          dispatch(fetchProductDetail(updatedProduct.id))
+          dispatch(getAllReviewsThunk(updatedProduct.id))
+          history.push(`/products/${updatedProduct.id}`)
+        }
+      })
+      .catch(async(res) => {
+        console.error(res)
+        const data = await res.json()
+        if (data && data.errors) {
+          setErrors(data.errors)
+        }
+      })
+    }
+
+    // console.log('UPDATED PRODUCT', updatedProduct)
+    // }
+
 
   return(
     <div className="n-product-form-wrapper">
@@ -60,8 +74,8 @@ const handleSubmit = async (e) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-        >
-        </textarea>
+        />
+        {errors.description && <p>{errors.description}</p>}
       </label>
       <label>
         Price
