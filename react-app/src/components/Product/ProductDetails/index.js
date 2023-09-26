@@ -5,12 +5,13 @@ import { fetchProductDetail } from '../../../store/product';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import './ProductDetails.css'
+import ShowReviews from '../../Review/ShowReviews';
 
 function ProductDetails() {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.singleProduct)
-  console.log('x', product)
+  //console.log('x', product)
 
   useEffect(() => {
     dispatch(fetchProductDetail(productId))
@@ -28,6 +29,7 @@ function ProductDetails() {
           </div>
         ))}
         </Carousel>
+        <ShowReviews productId={productId}/>
       </div>
       <div className='productdetails-sidebar-container'>
         <div className='productdetails-information'>

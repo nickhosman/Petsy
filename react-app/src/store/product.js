@@ -3,6 +3,7 @@ export const LOAD_PRODUCTS = 'products/LOAD_PRODUCTS'
 export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
 export const REMOVE_PRODUCT = 'products/REMOVE_PRODUCT'
+export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 
 /**  Action Creators: */
 export const loadProducts = (products) => {
@@ -26,6 +27,12 @@ export const removeProduct = productId =>({
   type:REMOVE_PRODUCT,
   productId
 })
+
+export const loadReviews = reviews => ({
+  type: LOAD_REVIEWS,
+  reviews
+})
+
 
 /** Thunk Action Creators: */
 export const fetchAllProducts = () => async(dispatch) => {
@@ -101,6 +108,21 @@ export const deleteProduct = productId => async(dispatch)=>{
   }
 }
 
+// GET ALL REVIEWS
+export const getAllReviewsThunk = (productId) => async dispatch => {
+  const response = await fetch(`/api/products/${productId}/reviews`)
+
+  if(response.ok) {
+    const reviews = await response.json()
+    console.log('dasdasdasdasd', reviews)
+    dispatch(loadReviews(reviews))
+    return reviews
+  }else {
+    let errors = await response.json()
+    console.log(errors)
+    return errors
+  }
+}
 
 // product reducer
 // products: {
@@ -134,6 +156,10 @@ const productReducer = (state = initialState, action) => {
         }
       }
       return newState
+      case LOAD_REVIEWS:
+        newState = {...state, singleProduct: {...state.singleProduct, ProductReviews: action.reviews.Reviews}}
+        console.log('STATE',  action.reviews.Reviews)
+        return newState
     default:
       return state
   };
