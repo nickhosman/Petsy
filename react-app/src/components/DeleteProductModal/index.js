@@ -14,13 +14,19 @@ function DeleteProductModal({ listing }) {
     await dispatch(fetchDeleteListing(listing.id))
     closeModal()
   }
+
+  const handleCancel = async(e) => {
+    e.preventDefault()
+    closeModal()
+  }
+
   return (
     <div>
       <h1>Confirm Delete</h1>
       <h4>Are you sure you want to remove this listing?</h4>
 
       <button onClick={handleDeleteProduct}>Yes</button>
-      <button>No</button>
+      <button onClick={handleCancel}>No</button>
     </div>
   )
 }
