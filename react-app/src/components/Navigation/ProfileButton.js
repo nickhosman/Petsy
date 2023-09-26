@@ -57,7 +57,7 @@ function ProfileButton({ user }) {
             </li>
             <NavLink style={{ textDecoration: "none", color: "black" }}
                 onClick={closeMenu}
-                to={`users/${user.id}/products`}>
+                to={`/users/${user.id}/products`}>
             <div>View My Listings</div>
             </NavLink>
             <li>

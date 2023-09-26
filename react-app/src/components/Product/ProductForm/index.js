@@ -9,9 +9,16 @@ function ProductFormPage() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
-  const [tags, setTags] = useState([]);
-  const [errors, setErrors] = useState([]);
-  let tagList = ["clothing", "toys", "halloween", "food"]
+  const [previewImage, setPreviewImage] = useState("");
+  const [otherImage1, setOtherImage1] = useState("");
+  const [otherImage2, setOtherImage2] = useState("");
+  const [otherImage3, setOtherImage3] = useState("");
+  const [otherImage4, setOtherImage4] = useState("");
+
+
+  // const [tags, setTags] = useState([]);
+  // const [errors, setErrors] = useState([]);
+  // let tagList = ["clothing", "toys", "halloween", "food"]
 
   // useEffect(async () => {
   //   const theseTags = await fetch("/api/tags")
@@ -25,21 +32,21 @@ function ProductFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    alert("Feature in production")
+    dispatch()
   }
 
-  const handleTagClick = async (e) => {
-    if (tags.includes(e.target.value)) {
-      let thisTag, otherTags;
-      thisTag = e.target.value;
-      [thisTag, ...otherTags] = tags;
-      setTags([...otherTags]);
-    }
-    else {
-      setTags([...tags, e.target.value])
-    }
-    console.log("tags:", tags)
-  }
+  // const handleTagClick = async (e) => {
+  //   if (tags.includes(e.target.value)) {
+  //     let thisTag, otherTags;
+  //     thisTag = e.target.value;
+  //     [thisTag, ...otherTags] = tags;
+  //     setTags([...otherTags]);
+  //   }
+  //   else {
+  //     setTags([...tags, e.target.value])
+  //   }
+  //   console.log("tags:", tags)
+  // }
 
   return (
     <div className="n-product-form-wrapper">
@@ -75,7 +82,7 @@ function ProductFormPage() {
           />
         </label>
         <label>
-          Product Category
+          Category
           <select onChange={(e) => setCategory(e.target.value)}>
             <option value="Dog">Dog</option>
             <option value="Cat">Cat</option>
@@ -84,13 +91,21 @@ function ProductFormPage() {
             <option value="Others">Others</option>
           </select>
         </label>
-        <label>
+        <label>Add Images</label>
+        <input value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
+        <div>
+        <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
+        <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
+        <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)}  placeholder="(optional)"></input>
+        <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)}  placeholder="(optional)"></input>
+        </div>
+        {/* <label>
           Tags
           <input />
           <ul>
             {tagList.map((tag, idx) => <li key={idx} value={tag} onClick={handleTagClick}>{tag}</li>)}
           </ul>
-        </label>
+        </label> */}
         <button type="submit">Create Listing</button>
       </form>
     </div>

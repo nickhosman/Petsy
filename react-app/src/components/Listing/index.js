@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from "react-redux"
 import { useParams } from 'react-router-dom';
 import { fetchUserListings } from '../../store/user';
+import ProductManage from '../Product/ProductManage';
 
 function ListingPage() {
   const { userId } = useParams();
@@ -17,11 +18,14 @@ function ListingPage() {
   const listings = Object.values(listingObj)
   console.log(listings)
   return(
-    <>
-    {listings.map(listing => (
-      <h2>{listing.name}</h2>
-    ))}
-    </>
+    <div>
+        <h1>Listed Items</h1>
+      <div className='manageproduct-wrapper'>
+        {listings.map(listing => (
+        <ProductManage listing={listing}/>
+        ))}
+      </div>
+    </div>
   )
 }
 
