@@ -28,11 +28,11 @@ const ShowReviews = ({productId}) => {
 
   const reviewCount = () => {
     if(product.totalReviews === 1) {
-      return <h3 className="review-count-avg-rating">{product.totalReviews} Review · ★ {product.averageRating} </h3>
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Review · ★ {product.averageRating.toFixed(1)} </h3>
     }else if (product.totalReviews === 0) {
       return <h2>★ New</h2>
     }else {
-      return <h3 className="review-count-avg-rating">{product.totalReviews} Reviews · ★ {product.averageRating} </h3>
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Reviews · ★ {product.averageRating.toFixed(1)} </h3>
     }
   }
 
