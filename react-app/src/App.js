@@ -11,17 +11,19 @@ import ProductFormPage from "./components/Product/ProductForm";
 import ProductUpdateForm from "./components/Product/ProductUpdateForm";
 import ListingPage from "./components/Listing";
 import Home from "./components/Home";
+import Search from "./components/Search/Search";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+console.log(searchInput)
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded} searchInput={searchInput} setSearchInput={setSearchInput} />
       {isLoaded && (
         <Switch>
           <Route exact path='/users/:userId/products'>
@@ -44,6 +46,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path={`/search`} >
+            <Search searchInput={searchInput} />
           </Route>
           <Route path="/">
             <Home />

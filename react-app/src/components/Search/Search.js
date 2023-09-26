@@ -1,27 +1,32 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProducts } from "../../../store/product";
-import ProductCard from "../ProductCard";
-import './ProductIndex.css'
+import { fetchSearchedProducts } from "../../store/product";
+import ProductCard from "../Product/ProductCard";
 
-function ProductIndex() {
+
+function Search({ searchInput }) {
   const dispatch = useDispatch();
-  const objProducts = useSelector((state) => state.products.Products);
+  const objProducts = useSelector((state) => {
+    console.log(state)
+    // state.products.searchProducts
+  }
+    );
 
+  console.log(objProducts)
   useEffect(() => {
-    dispatch(fetchAllProducts())
+    dispatch(fetchSearchedProducts(searchInput))
   }, [dispatch])
 
   if (!objProducts || Object.keys(objProducts).length === 0) return null;
-  const allProducts = Object.values(objProducts);
+  const searchProducts = Object.values(objProducts);
 
   return (
-    <div id="all-products-div">
-      <div id="all-products-title">
+    <div id="search-products-div">
+      <div id="search-products-title">
         <h1>PRODUCTS</h1>
       </div>
-      <div className="k-productindex-container">
-        {allProducts.map((product) => (
+      <div className="">
+        {searchProducts.map((product) => (
           <ProductCard product={product} />
         ))}
       </div>
@@ -30,4 +35,4 @@ function ProductIndex() {
   )
 }
 
-export default ProductIndex
+export default Search

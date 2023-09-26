@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
-import { fetchAllProducts } from '../../store/product';
+import { fetchAllProducts, fetchSearchedProducts } from '../../store/product';
 
-const SearchBar = () => {
+const SearchBar = ({ searchInput,setSearchInput}) => {
   const dispatch = useDispatch();
   const history = useHistory()
   // GET ALL PRODUCTS
@@ -13,7 +13,8 @@ const SearchBar = () => {
   const allCategories = useSelector(state => state.categories.Categories && Object.values(state.categories.Categories).length ? state.categories.Categories : {})
   const categoryArr = Object.values(allCategories)
 
-  const [searchInput, setSearchInput] = useState('')
+  // const [searchInput, setSearchInput] = useState('')
+
 
   const handleInputChange = e => {
     e.preventDefault()
@@ -22,7 +23,13 @@ const SearchBar = () => {
   // navigate to /products/search on submit search
   const handleSubmit = async (e) => {
     e.preventDefault();
-    history.push(`/products/search`)
+    
+    // const data = dispatch(fetchSearchedProducts(searchInput)).then(res=>res.json()).then(data=>{
+    //   const sData = data.Search
+    //   return sData
+    // })
+
+    history.push(`/search?q=${searchInput}`)
   }
 
   // filtered product payload
