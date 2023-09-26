@@ -15,7 +15,7 @@ const ShowReviews = ({productId}) => {
 
   useEffect(() => {
     dispatch(getAllReviewsThunk(productId))
-  }, [dispatch])
+  }, [dispatch, productId])
 
   const starArray = [...Array(5).keys()].map(star => star + 1)
   const starRating = (rating) => starArray.map(star =>
