@@ -29,14 +29,14 @@
   padding-left: 10px;
 }
 
-#category-card {
+.category-card {
   margin: 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#category-card p:hover {
+.category-card p:hover {
   text-decoration: underline;
   cursor: pointer;
   font-weight: bold;
