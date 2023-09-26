@@ -13,14 +13,14 @@ function ProductDetails() {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.singleProduct)
-  //console.log('x', product)
+
 
   useEffect(() => {
     dispatch(fetchProductDetail(productId))
   }, [dispatch]);
 
   if(!product || Object.keys(product).length === 0) return null;
-
+  console.log(product)
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
@@ -38,12 +38,13 @@ function ProductDetails() {
             <h4 id='productdetails-price'>${product.price}</h4>
             <h4 id='productdetails-name'>{product.name}</h4>
             <h4 id='productdetails-seller'>{product.Seller.username}</h4>
-            <h4 id='productdetails-rating'>{product.averageRating.toFixed(1)} ★</h4>
+            {product.averageRating === 'No reviews' ? <h4>New Listing!</h4> : <h4>{product.averageRating.toFixed(1)} ★</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
         </div>
         <OpenModalButton
           buttonText= "Leave a review"
           modalComponent={<CreateReviewForm/>}
+          className='reviewbutton'
         />
       </div>
     </div>

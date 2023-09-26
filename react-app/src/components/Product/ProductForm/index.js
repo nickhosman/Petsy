@@ -48,7 +48,7 @@ function ProductFormPage() {
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
     if(newProduct) {
-      dispatch(fetchProductDetail(newProduct))
+      dispatch(fetchProductDetail(newProduct.id))
       history.push(`/products/${newProduct.id}`)
     }
   }
