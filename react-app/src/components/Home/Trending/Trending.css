@@ -1,0 +1,24 @@
+#trending-card-div {
+
+  border-radius: 10px;
+  margin: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+}
+
+#trending-img-div {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#trending-img {
+  width: 200px;
+}
+

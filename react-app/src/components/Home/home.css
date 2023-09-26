@@ -77,3 +77,18 @@
 #category-guineapig-img {
   height: 140px;
 }
+
+#our-selection-div {
+  display: flex;
+  justify-content: center;
+}
+
+#shop-selections-div h2 {
+  margin-left: 20px;
+}
+
+#trending-div {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  gap: 10px;
+}
