@@ -40,7 +40,6 @@ export const createReview = (review, user) => ({
 })
 
 
-
 /** Thunk Action Creators: */
 export const fetchAllProducts = () => async(dispatch) => {
   const response = await fetch('/api/products')
@@ -54,7 +53,6 @@ export const fetchAllProducts = () => async(dispatch) => {
   }
 };
 
-
 export const fetchProductDetail = productId =>async(dispatch)=>{
   const response = await fetch(`/api/products/${productId}`)
   if(response.ok){
@@ -67,8 +65,7 @@ export const fetchProductDetail = productId =>async(dispatch)=>{
   }
 }
 
-
-export const createProduct = product => async (dispatch) =>{
+export const fetchCreateProduct = product => async (dispatch) =>{
   const response = await fetch("/api/products/new",{
     method:"POST",
     headers: { 'Content-Type': 'application/json' },
@@ -81,6 +78,26 @@ export const createProduct = product => async (dispatch) =>{
     return newProduct
   } else {
     let errors = await response.json()
+    return errors
+  }
+}
+
+export const fetchAddImageToProduct = (productId, url, preview) => async(dispatch) => {
+  if(url === "") return null
+  const response = await fetch(`/api/products/${productId}/images`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+    "preview": preview,
+    "image_url" : url,
+     "product_id" : productId})
+  })
+
+  if (response.ok) {
+    const data = await response.json()
+    return data
+  } else {
+    const errors = await response.json()
     return errors
   }
 }

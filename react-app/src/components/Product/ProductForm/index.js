@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import './ProductForm.css'
+import { fetchCreateProduct, fetchAddImageToProduct, fetchProductDetail } from "../../../store/product";
 
 function ProductFormPage() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("1");
   const [previewImage, setPreviewImage] = useState("");
   const [otherImage1, setOtherImage1] = useState("");
   const [otherImage2, setOtherImage2] = useState("");
@@ -32,7 +35,22 @@ function ProductFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    dispatch()
+    const payload = {
+      name,
+      description,
+      price,
+      category_id: Number(category)
+    }
+    const newProduct = await dispatch(fetchCreateProduct(payload));
+    await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
+    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
+    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
+    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
+    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
+    if(newProduct) {
+      dispatch(fetchProductDetail(newProduct))
+      history.push(`/products/${newProduct.id}`)
+    }
   }
 
   // const handleTagClick = async (e) => {
@@ -77,18 +95,18 @@ function ProductFormPage() {
           <input
             type="number"
             value={price}
-            onChange={(e) => setPrice(e.target.price)}
+            onChange={(e) => setPrice(e.target.value)}
             required
           />
         </label>
         <label>
           Category
-          <select onChange={(e) => setCategory(e.target.value)}>
-            <option value="Dog">Dog</option>
-            <option value="Cat">Cat</option>
-            <option value="Aquatic">Aquatic</option>
-            <option value="Reptile">Reptile</option>
-            <option value="Others">Others</option>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value={1}>Dog</option>
+            <option value={2}>Cat</option>
+            <option value={3}>Aquatic</option>
+            <option value={4}>Reptile</option>
+            <option value={5}>Others</option>
           </select>
         </label>
         <label>Add Images</label>
