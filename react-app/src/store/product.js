@@ -84,7 +84,7 @@ export const fetchAddImageToProduct = (productId, url, preview) => async(dispatc
     body: JSON.stringify({
     "preview": preview,
     "image_url" : url,
-     "product_id" : productId})
+    "product_id" : productId})
   })
 
   if (response.ok) {
@@ -167,7 +167,7 @@ const productReducer = (state = initialState, action) => {
   let newState;
   switch(action.type) {
     case LOAD_PRODUCTS:
-      newState = {
+      newState = { ...state,
          ...action.products
       }
       return newState
@@ -180,7 +180,7 @@ const productReducer = (state = initialState, action) => {
       }
       return newState
       case LOAD_REVIEWS:
-        newState = {...state, singleProduct: {...state.singleProduct, ProductReviews: action.reviews.Reviews}}
+        newState = {...state, singleProduct: {...state.singleProduct, ProductReviews: action.reviews.Reviews }}
         return newState
       case CREATE_REVIEW:
         const newReview = action.payload.review
