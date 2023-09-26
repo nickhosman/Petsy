@@ -83,7 +83,7 @@
   justify-content: center;
 }
 
-#shop-selections-div h2 {
+#shop-selections-div h2,#trending-section h2 {
   margin-left: 20px;
 }
 
