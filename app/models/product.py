@@ -19,7 +19,7 @@ class Product(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
-    product_images = db.relationship('ProductImage', back_populates='product')
+    product_images = db.relationship('ProductImage', back_populates='product', cascade="all, delete, delete-orphan")
     category = db.relationship("Category", back_populates="products")
     all_tags = db.relationship(
         "Tag", secondary="product_tags", back_populates="products")
