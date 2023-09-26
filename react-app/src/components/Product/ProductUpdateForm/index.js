@@ -32,27 +32,24 @@ function ProductUpdateForm() {
       category_id: Number(category)
     }
 
-    await dispatch(fetchUpdateProduct(payload, productId))
-      .then((updatedProduct) => {
-        if(updatedProduct && updatedProduct.id) {
-          dispatch(fetchProductDetail(updatedProduct.id))
-          dispatch(getAllReviewsThunk(updatedProduct.id))
-          history.push(`/products/${updatedProduct.id}`)
-        }
-      })
-      .catch(async(res) => {
-        console.error(res)
-        const data = await res.json()
-        if (data && data.errors) {
-          setErrors(data.errors)
-        }
-      })
-    }
-
+    dispatch(fetchUpdateProduct(payload, productId))
+    .then((updatedProduct) => {
+      if(updatedProduct && updatedProduct.id) {
+        dispatch(fetchProductDetail(updatedProduct.id))
+        dispatch(getAllReviewsThunk(updatedProduct.id))
+        history.push(`/products/${updatedProduct.id}`)
+      }
+    })
+    .catch(async(error) => {
+      const data = await error.json()
+      console.error('data', data)
+      if (data && data.errors) {
+        setErrors(data.errors)
+      }
+    })
+  }
     // console.log('UPDATED PRODUCT', updatedProduct)
     // }
-
-
   return(
     <div className="n-product-form-wrapper">
     <h1>Update Your Listing</h1>
@@ -75,7 +72,7 @@ function ProductUpdateForm() {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-        {errors.description && <p>{errors.description}</p>}
+      {errors.description && <p className="error-message">*{errors.description}</p>}
       </label>
       <label>
         Price

@@ -58,15 +58,15 @@ function CreateReviewForm({}) {
         <div>
         <p>Please write product review here:</p>
           <textarea
-          style={{width: '400px', height: '150px', border: 'solid 1px black', resize: "none"}}
-          name='text'
-          rows='5'
-          cols='6'
-          label="Leave your review..."
-          value={details}
-          onChange={(e) => setDetails(e.target.value)}
-          required>
-          </textarea>
+            style={{width: '400px', height: '150px', border: 'solid 1px black', resize: "none"}}
+            name='text'
+            rows='5'
+            cols='6'
+            label="Leave your review..."
+            value={details}
+            onChange={(e) => setDetails(e.target.value)}
+            required
+          />
         {errors.details && <p>{errors.details}</p>}
         </div>
         <button onSubmit={handleSubmitReview}>Submit Review</button>
