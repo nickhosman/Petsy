@@ -20,7 +20,7 @@ function ProductDetails() {
   }, [dispatch]);
 
   if(!product || Object.keys(product).length === 0) return null;
-  console.log(product)
+
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>

@@ -19,9 +19,9 @@ function ProductFormPage() {
   const [otherImage4, setOtherImage4] = useState("");
 
 
-  // const [tags, setTags] = useState([]);
-  // const [errors, setErrors] = useState([]);
-  // let tagList = ["clothing", "toys", "halloween", "food"]
+  const [tags, setTags] = useState([]);
+  const [errors, setErrors] = useState([]);
+  let tagList = ["clothing", "toys", "halloween", "food"]
 
   // useEffect(async () => {
   //   const theseTags = await fetch("/api/tags")
@@ -53,18 +53,18 @@ function ProductFormPage() {
     }
   }
 
-  // const handleTagClick = async (e) => {
-  //   if (tags.includes(e.target.value)) {
-  //     let thisTag, otherTags;
-  //     thisTag = e.target.value;
-  //     [thisTag, ...otherTags] = tags;
-  //     setTags([...otherTags]);
-  //   }
-  //   else {
-  //     setTags([...tags, e.target.value])
-  //   }
-  //   console.log("tags:", tags)
-  // }
+  const handleTagClick = async (e) => {
+    if (tags.includes(e.target.value)) {
+      let thisTag, otherTags;
+      thisTag = e.target.value;
+      [thisTag, ...otherTags] = tags;
+      setTags([...otherTags]);
+    }
+    else {
+      setTags([...tags, e.target.value])
+    }
+    console.log("tags:", tags)
+  }
 
   return (
     <div className="n-product-form-wrapper">
@@ -117,13 +117,13 @@ function ProductFormPage() {
         <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)}  placeholder="(optional)"></input>
         <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)}  placeholder="(optional)"></input>
         </div>
-        {/* <label>
+        <label>
           Tags
           <input />
           <ul>
             {tagList.map((tag, idx) => <li key={idx} value={tag} onClick={handleTagClick}>{tag}</li>)}
           </ul>
-        </label> */}
+        </label>
         <button type="submit">Create Listing</button>
       </form>
     </div>

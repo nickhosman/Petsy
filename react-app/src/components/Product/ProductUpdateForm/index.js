@@ -30,6 +30,7 @@ const handleSubmit = async (e) => {
     price,
     category_id: Number(category)
   }
+  console.log('PAYLOAAAD', payload)
   const updatedProduct = await dispatch(fetchUpdateProduct(payload, productId))
   if(updatedProduct) {
     dispatch(fetchProductDetail(updatedProduct.id))
