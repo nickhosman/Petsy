@@ -17,7 +17,7 @@ function ProductDetails() {
 
   useEffect(() => {
     dispatch(fetchProductDetail(productId))
-  }, [dispatch]);
+  }, [dispatch, product]);
 
   if(!product || Object.keys(product).length === 0) return null;
 

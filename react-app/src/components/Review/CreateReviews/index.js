@@ -5,7 +5,6 @@ import { createReviewThunk, fetchAllProducts, getAllReviewsThunk } from "../../.
 import { StarRating } from "./StarRating";
 
 function CreateReviewForm({}) {
-  const product = useSelector(state => state.products?.singleProduct)
   const dispatch = useDispatch()
   const [details, setDetails] = useState("")
   const [stars, setStars] = useState(0)
@@ -14,13 +13,12 @@ function CreateReviewForm({}) {
   const onClick = (index) => {
     setStars(index)
   }
-  console.log('PRODUCT', product)
+
+  const product = useSelector(state => state.products?.singleProduct)
   const user = useSelector(state => state.session.user)
-  console.log('USER', user)
 
   const handleSubmitReview = (e) => {
     e.preventDefault()
-
     dispatch(createReviewThunk(
      product.id,
      user.id,
