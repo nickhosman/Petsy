@@ -25,7 +25,7 @@ function ProductDetails() {
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
         <Carousel showStatus={false} useKeyboardArrows={true}>
-        {product.ProductImages.map((product, index) => (
+        {product.ProductImages?.map((product, index) => (
           <div className='productdetails-image-container'>
             <img className='productdetails-image' src={product.imageUrl} alt='' key={index}></img>
           </div>
@@ -37,8 +37,8 @@ function ProductDetails() {
         <div className='productdetails-information'>
             <h4 id='productdetails-price'>${product.price}</h4>
             <h4 id='productdetails-name'>{product.name}</h4>
-            <h4 id='productdetails-seller'>{product.Seller.username}</h4>
-            {product.averageRating === 'No reviews' ? <h4>New Listing!</h4> : <h4>{product.averageRating.toFixed(1)} ★</h4>}
+            <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
+            {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
         </div>
         <OpenModalButton
