@@ -3,37 +3,69 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import './home.css'
 import { fetchAllCategories } from '../../store/category';
+import { fetchAllProducts } from '../../store/product';
+
+
 
 const Home = () => {
   const dispatch = useDispatch();
+  const history = useHistory()
+  const [isNavigated, setIsNavigated] = useState(false)
+  const [filterCategoryId, setFilterCategoryId] = useState(null)
 
   // GET ALL CATEGORIES
-  const all_categories = useSelector(state => state.categories.Categories &&Object.values(state.categories.Categories).length? state.categories.Categories : {})
-  // console.log(all_categories) //['Dog', 'Cat', 'Aquatic', 'Reptile', 'Others']
-  const category_names = Object.values(all_categories).map(categoryObj=>categoryObj.name)
-  
+  const allCategories = useSelector(state => state.categories.Categories && Object.values(state.categories.Categories).length ? state.categories.Categories : {})
 
-  const [categoryName,setCatogeryName] = useState()
-  const history = useHistory()
-  const handleGoToCategory = e=>{
+  const productObj = useSelector((state) => state.products.Products && Object.values(state.products.Products).length ? state.products.Products : {});
+
+  const allProducts = Object.values(productObj)
+  const categoryArr = Object.values(allCategories)
+  console.log(categoryArr)
+
+
+  console.log(productObj)
+
+  const handleGoToCategory = e => {
     e.preventDefault()
-    let targetDiv=e.target
-    while (targetDiv){
-      if (targetDiv.className === "category-card" && targetDiv.id){
-        setCatogeryName(targetDiv.id)
-        break
+    if (!isNavigated) {
+      let targetDiv = e.target
+      while (targetDiv) {
+        if (targetDiv.className === "category-card" && targetDiv.id) {
+
+          // setItemCategoryId()
+          history.push(`/products?category=${targetDiv.id}`)
+          setIsNavigated(true)
+          break
+        }
+        targetDiv = targetDiv.parentElement
       }
-      targetDiv = targetDiv.parentElement
+      const name = targetDiv.id
+      let filterId
+      categoryArr.forEach(categoryObj => {
+        if (categoryObj.name === name) {
+          filterId = categoryObj.id
+          return
+        }
+      })
+      console.log(filterId)
+      if (filterId){
+        setFilterCategoryId(filterId)
+      }
     }
-    setCatogeryName(targetDiv.id)
-    history.push(`categories/${targetDiv.id}`)
-    console.log(categoryName)
+    console.log(allProducts[0].categoryId)
+    console.log(filterCategoryId)
+
   }
-  useEffect(()=>{
+  useEffect(() => {
+    const filteredItems = allProducts.filter(product => product.categoryId === filterCategoryId)
+    console.log(filteredItems)
+  }, [filterCategoryId, allProducts])
+  useEffect(() => {
     dispatch(fetchAllCategories())
+    dispatch(fetchAllProducts())
   }, [dispatch])
 
-  if (!Object.values(all_categories).length) {
+  if (!Object.values(allCategories).length) {
     return null
   }
   return (
@@ -47,7 +79,7 @@ const Home = () => {
         </div>
       </div>
       <div id="category-div" >
-        <div className="category-card" id="Dog"  onClick={handleGoToCategory}>
+        <div className="category-card" id="Dog" onClick={handleGoToCategory}>
           <div className="category-img-card" >
             <img id="category-dog-img" src="https://t4.ftcdn.net/jpg/03/20/31/23/240_F_320312301_P50xX4vn41JdsueONpzzWJy6ezFSp8d4.jpg" alt="Picture_of_Dog" />
           </div>
