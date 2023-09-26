@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import ProductIndex from "./components/Product/ProductIndex";
 import ProductDetails from "./components/Product/ProductDetails";
 import ProductFormPage from "./components/Product/ProductForm";
+import ProductUpdateForm from "./components/Product/ProductUpdateForm";
 import ListingPage from "./components/Listing";
 import Home from "./components/Home";
 
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route exact path='/products/new'>
             <ProductFormPage/>
+          </Route>
+          <Route exact path='/products/:productId/edit'>
+            <ProductUpdateForm/>
           </Route>
           <Route exact path='/products/:productId'>
             <ProductDetails/>

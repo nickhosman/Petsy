@@ -10,7 +10,7 @@ function ProductManage({ listing }) {
 
   const handleViewProductForm = e => {
     e.preventDefault()
-    history.push('/products/new')
+    history.push(`/products/${listing.id}/edit`)
   }
 
   return (

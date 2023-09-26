@@ -96,13 +96,13 @@ export const fetchAddImageToProduct = (productId, url, preview) => async(dispatc
   }
 }
 
-export const updateProduct = product => async (dispatch) =>{
-  const response = await fetch(`/api/products/${product.id}`,{
-    method:"POST",
+export const fetchUpdateProduct = (product, productId) => async (dispatch) =>{
+  const response = await fetch(`/api/products/${productId}`,{
+    method:"PUT",
     headers: { 'Content-Type': 'application/json' },
     body:JSON.stringify(product)
   })
-
+  console.log(response)
   if (response.ok) {
     const updateProduct = await response.json()
     dispatch(getProduct(updateProduct))
