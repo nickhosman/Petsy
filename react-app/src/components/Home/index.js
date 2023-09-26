@@ -60,6 +60,7 @@ const Home = () => {
     const filteredItems = allProducts.filter(product => product.categoryId === filterCategoryId)
     console.log(filteredItems)
   }, [filterCategoryId, allProducts])
+  
   useEffect(() => {
     dispatch(fetchAllCategories())
     dispatch(fetchAllProducts())
