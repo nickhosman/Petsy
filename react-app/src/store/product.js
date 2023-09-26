@@ -4,6 +4,7 @@ export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
 export const REMOVE_PRODUCT = 'products/REMOVE_PRODUCT'
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
+export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 
 /**  Action Creators: */
 export const loadProducts = (products) => {
@@ -32,6 +33,12 @@ export const loadReviews = reviews => ({
   type: LOAD_REVIEWS,
   reviews
 })
+
+export const createReview = (review, user) => ({
+  type: CREATE_REVIEW,
+  payload: {review, user}
+})
+
 
 
 /** Thunk Action Creators: */
@@ -114,12 +121,29 @@ export const getAllReviewsThunk = (productId) => async dispatch => {
 
   if(response.ok) {
     const reviews = await response.json()
-    console.log('dasdasdasdasd', reviews)
     dispatch(loadReviews(reviews))
     return reviews
   }else {
     let errors = await response.json()
-    console.log(errors)
+    return errors
+  }
+}
+
+// CREATE A REVIEW
+export const createReviewThunk = (productId, user, stars, details) => async dispatch => {
+  const response = await fetch(`/api/products/${productId}/reviews`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({stars, details})
+  })
+
+  if (response.ok) {
+    const review = await response.json()
+    console.log('REVIEWS', review)
+    dispatch(createReview(user, review))
+    return review
+  }else {
+    let errors = await response.json()
     return errors
   }
 }
@@ -158,8 +182,11 @@ const productReducer = (state = initialState, action) => {
       return newState
       case LOAD_REVIEWS:
         newState = {...state, singleProduct: {...state.singleProduct, ProductReviews: action.reviews.Reviews}}
-        console.log('STATE',  action.reviews.Reviews)
         return newState
+      case CREATE_REVIEW:
+        const newReview = action.payload.review
+        console.log('NEW REVIEW', newReview)
+        return {...state, singleProduct: {...state.singleProduct, ProductReviews: {...state.singleProduct.ProductReviews, [newReview.id]: newReview}, User: action.payload.user}}
     default:
       return state
   };

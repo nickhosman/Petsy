@@ -23,14 +23,31 @@ const ShowReviews = ({productId}) => {
     <FontAwesomeIcon
       key={star}
       icon={faStar}
-      color={rating >= star ? "black" : "lightgray"}
-    />)
+      color={rating >= star ? "black" : "lightgray"} />
+      )
+
+  const reviewCount = () => {
+    if(product.totalReviews === 1) {
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Review · ★ {product.averageRating.toFixed(1)} </h3>
+    }else if (product.totalReviews === 0) {
+      return <h2>★ New</h2>
+    }else {
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Reviews · ★ {product.averageRating.toFixed(1)} </h3>
+    }
+  }
+
+  const sortReviewDates = (reviewA, reviewB) => {
+    const dateA = new Date(reviewA.createdAt)
+    const dateB = new Date(reviewB.createdAt)
+    return dateB - dateA
+  }
+
   if(!product || !allReviews || Object.keys(product).length === 0) return null;
   return (
     <div className="reviews-container">
       <div className="reviews-count-rating-header">
-        <h3 className="review-count-avg-rating">{product.totalReviews} Reviews · ★ {product.averageRating} </h3>
-        {Object.values(allReviews).map((review) => (
+        {reviewCount()}
+        {Object.values(allReviews).sort(sortReviewDates).map((review) => (
           <li className="reviews" key={review.id}>
             <h6>{starRating(review.stars)}</h6>
             <p>{review.User?.username} | {review.createdAt}</p>
