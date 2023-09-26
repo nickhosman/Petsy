@@ -44,7 +44,7 @@ function ProductDetails() {
         <OpenModalButton
           buttonText= "Leave a review"
           modalComponent={<CreateReviewForm/>}
-          className='reviewbutton'
+          styleClass= 'productdetails-reviewbutton'
         />
       </div>
     </div>
