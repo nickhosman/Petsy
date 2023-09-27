@@ -13,10 +13,15 @@ function Search() {
  
   const { searchInput, setSearchInput } = useSearchContext()
 
+  const location = useLocation();
+  const queryTerm = new URLSearchParams(location.search).get('q');
+
+  
   const objProducts = useSelector((state) => state.products?.searchProducts?.Search);
 
   console.log(objProducts)
   useEffect(() => {
+    setSearchInput(queryTerm)
     dispatch(fetchSearchedProducts(searchInput))
   }, [dispatch, searchInput])
 
