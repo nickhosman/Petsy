@@ -1,27 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProducts } from "../../../store/product";
-import ProductCard from "../ProductCard";
-import './ProductIndex.css'
+import { fetchSearchedProducts } from "../../store/product";
+import ProductCard from "../Product/ProductCard";
+import { useLocation  } from 'react-router-dom'
 
-function ProductIndex() {
+import { useSearchContext } from "../../context/Search";
+import '../Product/ProductIndex/ProductIndex.css'
+
+
+function Search() {
   const dispatch = useDispatch();
-  const objProducts = useSelector((state) => state.products.Products);
 
+  // const { searchInput, setSearchInput } = useSearchContext()
+
+  const location = useLocation();
+  const queryTerm = new URLSearchParams(location.search).get('q');
+
+
+  const objProducts = useSelector((state) => state.products?.searchProducts?.Search);
+
+  console.log(objProducts)
   useEffect(() => {
-    dispatch(fetchAllProducts())
-  }, [dispatch])
+    // setSearchInput(queryTerm)
+    dispatch(fetchSearchedProducts(queryTerm))
+  }, [dispatch, queryTerm])
 
   if (!objProducts || Object.keys(objProducts).length === 0) return null;
-  const allProducts = Object.values(objProducts);
-
+  const searchProducts = Object.values(objProducts);
+  console.log(searchProducts)
   return (
     <div id="all-products-div">
       <div id="all-products-title">
-        <h1>PRODUCTS</h1>
+        <h1>Search Result</h1>
       </div>
       <div className="k-productindex-container">
-        {allProducts.map((product) => (
+        {searchProducts.map((product) => (
           <ProductCard product={product} />
         ))}
       </div>
@@ -30,4 +43,4 @@ function ProductIndex() {
   )
 }
 
-export default ProductIndex
+export default Search

@@ -6,10 +6,11 @@ import { fetchAllCategories } from '../../store/category';
 import { fetchAllProducts } from '../../store/product';
 import ProductsSelection from './ProductsSelection/ProductsSelection';
 import Trending from './Trending/Trending';
+import { useSearchContext } from '../../context/Search';
 
 
 
-const Home = () => {
+const Home = ({ searchInput, setSearchInput }) => {
   const dispatch = useDispatch();
   const history = useHistory()
   const [isNavigated, setIsNavigated] = useState(false)
@@ -23,10 +24,11 @@ const Home = () => {
 
   const allProducts = Object.values(productObj)
   const categoryArr = Object.values(allCategories)
-  console.log(categoryArr)
-
-
-  console.log(productObj)
+  
+  const handleViewAllProducts =e=>{
+    e.preventDefault()
+    history.push(`/products`)
+  }
 
   const handleGoToCategory = e => {
     e.preventDefault()
@@ -34,9 +36,10 @@ const Home = () => {
       let targetDiv = e.target
       while (targetDiv) {
         if (targetDiv.className === "category-card" && targetDiv.id) {
-
+          
+          setSearchInput(targetDiv.id)
           // setItemCategoryId()
-          history.push(`/products?category=${targetDiv.id}`)
+          history.push(`/search?q=${targetDiv.id}`)
           setIsNavigated(true)
           break
         }
@@ -55,7 +58,7 @@ const Home = () => {
         setFilterCategoryId(filterId)
       }
     }
-    console.log(allProducts[0].categoryId)
+    console.log(allProducts[0]?.categoryId)
     console.log(filterCategoryId)
 
   }
@@ -142,6 +145,10 @@ const Home = () => {
             <img id="category-guineapig-img" src="https://t3.ftcdn.net/jpg/06/11/28/02/360_F_611280278_F4va8Lxym7oPkVAzenVbCnvw2DsFrVA5.jpg" alt="Picture_of_Guinea_Pig" />
           </div>
           <p>Others</p>
+        </div>
+        <div id="view-all-div" onClick={handleViewAllProducts}>
+          <p>View All</p>
+          <p><i class="fa-solid fa-arrow-right fa-sm"></i></p>
         </div>
       </div>
       <div id="shop-selections-div" >

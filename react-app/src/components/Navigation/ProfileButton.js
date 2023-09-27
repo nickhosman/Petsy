@@ -40,7 +40,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button id="prodile-btn" onClick={openMenu}>
+      <button id="profile-btn" onClick={openMenu}>
         <i class="fa-solid fa-user fa-xl"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
@@ -60,8 +60,8 @@ function ProfileButton({ user }) {
                 to={`/users/${user.id}/products`}>
             <div>View My Listings</div>
             </NavLink>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
+            <li id='log-out-btn-div'>
+              <button id="log-out-btn" onClick={handleLogout}>Log Out</button>
             </li>
           </div>
         ) : (

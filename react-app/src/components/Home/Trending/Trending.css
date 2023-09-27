@@ -5,7 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:100%;
+  width: 100%;
+  position: relative;
 }
 
 #trending-img-div {
@@ -22,3 +23,22 @@
   width: 200px;
 }
 
+#trending-name {
+  position: absolute;
+  width:150px;
+  text-align: center;
+  display: none;
+}
+
+#trending-card-div:hover #trending-name {
+  display: block;
+  position: absolute;
+}
+
+#trending-card-div:hover img {
+  opacity: 0.5;
+}
+
+#trending-card-div:hover{
+  cursor: pointer;
+}
