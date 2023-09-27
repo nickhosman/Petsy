@@ -5,13 +5,15 @@ import ProductCard from "../Product/ProductCard";
 import { useLocation  } from 'react-router-dom'
 
 import { useSearchContext } from "../../context/Search";
+import '../Product/ProductIndex/ProductIndex.css'
 
 
 function Search() {
   const dispatch = useDispatch();
-  const objProducts = useSelector((state) => state.products.Search);
+ 
   const { searchInput, setSearchInput } = useSearchContext()
 
+  const objProducts = useSelector((state) => state.products?.searchProducts?.Search);
 
   console.log(objProducts)
   useEffect(() => {
@@ -20,10 +22,11 @@ function Search() {
 
   if (!objProducts || Object.keys(objProducts).length === 0) return null;
   const searchProducts = Object.values(objProducts);
+  console.log(searchProducts)
 
   return (
-    <div id="search-products-div">
-      <div id="search-products-title">
+    <div id="all-products-div">
+      <div id="all-products-title">
         <h1>PRODUCTS</h1>
       </div>
       <div className="">
