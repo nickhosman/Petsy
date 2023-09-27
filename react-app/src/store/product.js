@@ -5,6 +5,7 @@ export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
+export const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 
 /**  Action Creators: */
 export const loadProducts = (products) => {
@@ -38,6 +39,11 @@ export const loadReviews = reviews => ({
 export const createReview = (review, user) => ({
   type: CREATE_REVIEW,
   payload: {review, user}
+})
+
+export const updateReview = review => ({
+  type: UPDATE_REVIEW,
+  review
 })
 
 
@@ -164,6 +170,24 @@ export const createReviewThunk = (productId, user, stars, details) => async disp
   }
 }
 
+  // UPDATE A REVIEW
+
+export const updateReviewThunk = (reviewId, stars, details ) => async dispatch => {
+  const response = await fetch(`api/reviews/${reviewId}`, {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({stars, details})
+  })
+  if (response.ok) {
+    const review = await response.json()
+    console.log('REVIEWS', review)
+    dispatch(updateReview(review))
+    return review
+  }else {
+    let errors = await response.json()
+    return errors
+  }
+}
 // product reducer
 // products: {
 //   Products: {
@@ -213,7 +237,9 @@ const productReducer = (state = initialState, action) => {
         const newReview = action.payload.review
         console.log('NEW REVIEW', newReview)
         return {...state, singleProduct: {...state.singleProduct, ProductReviews: {...state.singleProduct.ProductReviews, [newReview.id]: newReview}, User: action.payload.user}}
-    default:
+      case UPDATE_REVIEW:
+        return {...state, singleProduct: {...state.singleProduct, ProductReviews: {...state.singleProduct.ProductReviews, }}}
+        default:
       return state
   };
 }

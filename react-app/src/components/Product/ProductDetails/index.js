@@ -7,7 +7,7 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import './ProductDetails.css'
 import ShowReviews from '../../Review/ShowReviews/index.js';
-import CreateReviewForm from '../../Review/CreateReviews';
+import CreateReview from '../../Review/CreateReviews/index'
 import OpenModalButton from '../../OpenModalButton';
 
 function ProductDetails() {
@@ -15,6 +15,8 @@ function ProductDetails() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products?.singleProduct)
   const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
+  console.log('ALL REVIEWS', allReviews)
+
   const user = useSelector((state) => state.session.user)
   const favorites = useSelector((state) => state.user.Favorites)
   const [isFavorited, setIsFavorited] = useState(false)
@@ -35,7 +37,6 @@ function ProductDetails() {
   }, [favorites, product]);
 
 
-  if(!product || Object.keys(product).length === 0) return null;
   if(!favorites || Object.keys(favorites).length === 0) return null;
 
   const handleFavorite = async (e) => {
@@ -47,18 +48,19 @@ function ProductDetails() {
       await dispatch(fetchAddFavorite(product.id))
     setIsFavorited(!isFavorited);
   }
+  if(!allReviews || !product || Object.keys(product).length === 0) return null;
 
   const hasReviewed = () => {
     let userReview = false
-    for(let i = 0; i < Object.values(product?.ProductReviews).length; i++) {
-      let review = Object.values(product?.ProductReviews)[i]
+    for(let i = 0; i < Object.values(allReviews).length; i++) {
+      let review = Object.values(allReviews)[i]
       if (user?.id === review?.userId) {
         userReview = true
       }
     }
-  };
-}
-
+    return userReview
+  }
+  console.log('HAS REVIEWED', hasReviewed())
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
@@ -80,10 +82,10 @@ function ProductDetails() {
             {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
         </div>
-        {user && user.id !== product.sellerId ?
+        {user && user.id !== product.sellerId && !hasReviewed() ?
           <OpenModalButton
-            buttonText= "Leave a review"
-            modalComponent={<CreateReviewForm/>}
+            buttonText='Leave a review'
+            modalComponent={<CreateReview />}
             styleClass= 'productdetails-reviewbutton'
           />
           :
