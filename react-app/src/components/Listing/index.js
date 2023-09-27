@@ -16,13 +16,13 @@ function ListingPage() {
 
   if(!listingObj || Object.values(listingObj).length === 0) return null
   const listings = Object.values(listingObj)
-  console.log(listings)
+
   return(
     <div>
         <h1>Listed Items</h1>
       <div className='manageproduct-wrapper'>
         {listings.map(listing => (
-        <ProductManage listing={listing}/>
+        <ProductManage product={listing} isListing={true}/>
         ))}
       </div>
     </div>

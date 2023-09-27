@@ -10,13 +10,13 @@ import '../Product/ProductIndex/ProductIndex.css'
 
 function Search() {
   const dispatch = useDispatch();
- 
+
   // const { searchInput, setSearchInput } = useSearchContext()
 
   const location = useLocation();
   const queryTerm = new URLSearchParams(location.search).get('q');
 
-  
+
   const objProducts = useSelector((state) => state.products?.searchProducts?.Search);
 
   console.log(objProducts)
@@ -28,13 +28,12 @@ function Search() {
   if (!objProducts || Object.keys(objProducts).length === 0) return null;
   const searchProducts = Object.values(objProducts);
   console.log(searchProducts)
-
   return (
     <div id="all-products-div">
       <div id="all-products-title">
-        <h1>PRODUCTS</h1>
+        <h1>Search Result</h1>
       </div>
-      <div className="">
+      <div className="k-productindex-container">
         {searchProducts.map((product) => (
           <ProductCard product={product} />
         ))}

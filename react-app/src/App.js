@@ -10,6 +10,7 @@ import ProductDetails from "./components/Product/ProductDetails";
 import ProductFormPage from "./components/Product/ProductForm";
 import ProductUpdateForm from "./components/Product/ProductUpdateForm";
 import ListingPage from "./components/Listing";
+import FavoritePage from "./components/Favorites";
 import Home from "./components/Home";
 import Search from "./components/Search/Search";
 
@@ -20,7 +21,6 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-  console.log(searchInput)
   return (
     <>
       <Navigation isLoaded={isLoaded} />
@@ -29,17 +29,20 @@ function App() {
           <Route exact path='/users/:userId/products'>
             <ListingPage />
           </Route>
+          <Route exact path='/users/:userId/favorites'>
+            <FavoritePage />
+          </Route>
           <Route exact path='/products'>
-            <ProductIndex />
+            <ProductIndex/>
           </Route>
           <Route exact path='/products/new'>
-            <ProductFormPage />
+            <ProductFormPage/>
           </Route>
           <Route exact path='/products/:productId/edit'>
-            <ProductUpdateForm />
+            <ProductUpdateForm/>
           </Route>
           <Route exact path='/products/:productId'>
-            <ProductDetails />
+            <ProductDetails/>
           </Route>
           <Route path="/login" >
             <LoginFormPage />
@@ -51,7 +54,7 @@ function App() {
             <Search />
           </Route>
           <Route path="/">
-            <Home searchInput={searchInput} setSearchInput={setSearchInput} />
+            <Home searchInput={searchInput}  setSearchInput={setSearchInput} />
           </Route>
         </Switch>
       )}
