@@ -1,6 +1,6 @@
 /** Action Type Constants: */
 export const LOAD_PRODUCTS = 'products/LOAD_PRODUCTS'
-export const SEARCH_PRODUCTS = 'products/LOAD_PRODUCTS'
+export const SEARCH_PRODUCTS = 'products/SEARCH_PRODUCTS'
 export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
