@@ -48,10 +48,10 @@ console.log(searchInput)
             <SignupFormPage />
           </Route>
           <Route path={`/search`} >
-            <Search searchInput={searchInput} />
+            <Search searchInput={searchInput} setSearchInput={setSearchInput} />
           </Route>
           <Route path="/">
-            <Home />
+            <Home searchInput={searchInput}  setSearchInput={setSearchInput} />
           </Route>
         </Switch>
       )}

@@ -9,7 +9,7 @@ import Trending from './Trending/Trending';
 
 
 
-const Home = () => {
+const Home = ({ searchInput, setSearchInput }) => {
   const dispatch = useDispatch();
   const history = useHistory()
   const [isNavigated, setIsNavigated] = useState(false)
@@ -34,9 +34,9 @@ const Home = () => {
       let targetDiv = e.target
       while (targetDiv) {
         if (targetDiv.className === "category-card" && targetDiv.id) {
-
+          setSearchInput(targetDiv.id)
           // setItemCategoryId()
-          history.push(`/products?category=${targetDiv.id}`)
+          history.push(`/search?q=${targetDiv.id}`)
           setIsNavigated(true)
           break
         }
