@@ -32,9 +32,9 @@ function Search() {
   return (
     <div id="all-products-div">
       <div id="all-products-title">
-        <h1>PRODUCTS</h1>
+        <h1>Search Result</h1>
       </div>
-      <div className="">
+      <div className="k-productindex-container">
         {searchProducts.map((product) => (
           <ProductCard product={product} />
         ))}

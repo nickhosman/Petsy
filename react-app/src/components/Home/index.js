@@ -57,7 +57,7 @@ const Home = ({ searchInput, setSearchInput }) => {
         setFilterCategoryId(filterId)
       }
     }
-    console.log(allProducts[0].categoryId)
+    console.log(allProducts[0]?.categoryId)
     console.log(filterCategoryId)
 
   }
