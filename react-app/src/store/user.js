@@ -3,6 +3,7 @@ export const LOAD_LISTINGS= 'users/LOAD_LISTINGS'
 export const REMOVE_LISTING = 'users/REMOVE_LISTING'
 export const LOAD_FAVORITES = 'users/LOAD_FAVORITES'
 export const REMOVE_FAVORITE = 'users/REMOVE_FAVORITE'
+export const ADD_FAVORITE ='users/ADD_FAVORITE'
 
 export const loadListings = products => ({
   type: LOAD_LISTINGS,
@@ -24,6 +25,10 @@ export const removeFavorite = productId => ({
   productId
 })
 
+export const addFavorite = productId => ({
+  type: ADD_FAVORITE,
+  productId
+})
 export const fetchUserListings = (userId) => async(dispatch) => {
   const response = await fetch(`/api/users/${userId}/products`)
   if(response.ok) {
@@ -74,6 +79,21 @@ export const fetchDeleteFavorite = productId => async(dispatch) => {
   }
 }
 
+export const fetchAddFavorite = productId => async(dispatch) => {
+  const response = await fetch(`/api/products/${productId}/favorites`, { method: "POST",
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(productId) });
+  if(response.ok) {
+    console.log(response)
+    const data = await response.json()
+    return data
+  } else {
+    const errors = await response.json()
+    return errors
+  }
+}
+
+
 const initialState = {};
 const userReducer = (state = initialState, action) => {
   let newState;
@@ -100,14 +120,11 @@ const userReducer = (state = initialState, action) => {
       console.log('second', newState)
       return newState
     case REMOVE_FAVORITE:
-
       newState = {
         ...state,
         "Favorites" : { ...state.Favorites }
       }
-
       delete newState.Favorites[action.productId]
-
       return newState
     default:
       return state

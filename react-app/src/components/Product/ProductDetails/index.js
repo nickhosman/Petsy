@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchProductDetail, getAllReviewsThunk } from '../../../store/product';
+import { fetchUserFavorites, fetchDeleteFavorite, fetchAddFavorite } from '../../../store/user';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import './ProductDetails.css'
@@ -14,16 +15,38 @@ function ProductDetails() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products?.singleProduct)
   const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
-  console.log('ALL REVIEWS', allReviews)
- 
   const user = useSelector((state) => state.session.user)
-  console.log(user)
+  const favorites = useSelector((state) => state.user.Favorites)
+  const [isFavorited, setIsFavorited] = useState(false)
+
+
   useEffect(() => {
-    dispatch(fetchProductDetail(productId))
-    dispatch(getAllReviewsThunk(productId))
-  }, [dispatch, productId]);
+    dispatch(fetchProductDetail(productId));
+    dispatch(getAllReviewsThunk(productId));
+    dispatch(fetchUserFavorites(user.id));
+  }, [dispatch, user.id, productId]);
+
+  useEffect(() => {
+    if (favorites && Object.keys(favorites).includes(String(product.id))) {
+      setIsFavorited(true);
+    } else if (favorites && !Object.keys(favorites).includes(String(product.id))) {
+      setIsFavorited(false)
+    }
+  }, [favorites, product]);
+
 
   if(!product || Object.keys(product).length === 0) return null;
+  if(!favorites || Object.keys(favorites).length === 0) return null;
+
+  const handleFavorite = async (e) => {
+    console.log('fir')
+    e.preventDefault()
+    if(isFavorited){
+      await dispatch(fetchDeleteFavorite(product.id))
+    } else if (!isFavorited) {
+      await dispatch(fetchAddFavorite(product.id))
+    setIsFavorited(!isFavorited);
+  }
 
   const hasReviewed = () => {
     let userReview = false
@@ -33,8 +56,9 @@ function ProductDetails() {
         userReview = true
       }
     }
-  }
-  console.log('HAS REVIEWED', hasReviewed)
+  };
+}
+
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
@@ -42,9 +66,10 @@ function ProductDetails() {
         {product.ProductImages?.map((product, index) => (
           <div className='productdetails-image-container'>
             <img className='productdetails-image' src={product.imageUrl} alt='' key={index}></img>
-          </div>
-        ))}
+          </div>))}
         </Carousel>
+        {user?.id !== product.Seller?.id &&
+        <i className={isFavorited ? "fa-solid fa-heart": "fa-regular fa-heart"} onClick={handleFavorite}></i>}
         <ShowReviews productId={productId}/>
       </div>
       <div className='productdetails-sidebar-container'>
