@@ -12,8 +12,12 @@ import OpenModalButton from '../../OpenModalButton';
 function ProductDetails() {
   const { productId } = useParams();
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.products.singleProduct)
-
+  const product = useSelector((state) => state.products?.singleProduct)
+  const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
+  console.log('ALL REVIEWS', allReviews)
+ 
+  const user = useSelector((state) => state.session.user)
+  console.log(user)
   useEffect(() => {
     dispatch(fetchProductDetail(productId))
     dispatch(getAllReviewsThunk(productId))
@@ -21,6 +25,16 @@ function ProductDetails() {
 
   if(!product || Object.keys(product).length === 0) return null;
 
+  const hasReviewed = () => {
+    let userReview = false
+    for(let i = 0; i < Object.values(product?.ProductReviews).length; i++) {
+      let review = Object.values(product?.ProductReviews)[i]
+      if (user?.id === review?.userId) {
+        userReview = true
+      }
+    }
+  }
+  console.log('HAS REVIEWED', hasReviewed)
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
@@ -41,11 +55,15 @@ function ProductDetails() {
             {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
         </div>
-        <OpenModalButton
-          buttonText= "Leave a review"
-          modalComponent={<CreateReviewForm/>}
-          styleClass= 'productdetails-reviewbutton'
-        />
+        {user && user.id !== product.sellerId ?
+          <OpenModalButton
+            buttonText= "Leave a review"
+            modalComponent={<CreateReviewForm/>}
+            styleClass= 'productdetails-reviewbutton'
+          />
+          :
+          (null)
+        }
       </div>
     </div>
   )

@@ -32,24 +32,32 @@ function ProductUpdateForm() {
       category_id: Number(category)
     }
 
-    dispatch(fetchUpdateProduct(payload, productId))
-    .then((updatedProduct) => {
-      if(updatedProduct && updatedProduct.id) {
-        dispatch(fetchProductDetail(updatedProduct.id))
-        dispatch(getAllReviewsThunk(updatedProduct.id))
-        history.push(`/products/${updatedProduct.id}`)
-      }
-    })
-    .catch(async(error) => {
-      const data = await error.json()
-      console.error('data', data)
-      if (data && data.errors) {
-        setErrors(data.errors)
-      }
-    })
+    // dispatch(fetchUpdateProduct(payload, productId))
+    // .then((updatedProduct) => {
+    //   if(updatedProduct && updatedProduct.id) {
+    //     dispatch(fetchProductDetail(updatedProduct.id))
+    //     dispatch(getAllReviewsThunk(updatedProduct.id))
+    //     history.push(`/products/${updatedProduct.id}`)
+    //   }
+    // })
+    // .catch(async(error) => {
+    //   console.log('xxxxxxxxxxxxxxxxxx', error)
+    //   const data = await error.json()
+    //   if (data && data.errors) {
+    //     setErrors(data.errors)
+    //   }
+    // })
+
+    const response = await dispatch(fetchUpdateProduct(payload, productId))
+    if(response.errors) {
+      setErrors(response.errors)
+    } else {
+      dispatch(fetchProductDetail(response.id))
+      dispatch(getAllReviewsThunk(response.id))
+      history.push(`/products/${response.id}`)
+    }
   }
-    // console.log('UPDATED PRODUCT', updatedProduct)
-    // }
+
   return(
     <div className="n-product-form-wrapper">
     <h1>Update Your Listing</h1>
