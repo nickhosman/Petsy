@@ -4,17 +4,17 @@ import { fetchSearchedProducts } from "../../store/product";
 import ProductCard from "../Product/ProductCard";
 import { useLocation  } from 'react-router-dom'
 
+import { useSearchContext } from "../../context/Search";
 
-function Search({ searchInput,setSearchInput }) {
-  const location = useLocation();
-  const queryTerm = new URLSearchParams(location.search).get('q');
-  console.log(queryTerm)
+
+function Search() {
   const dispatch = useDispatch();
   const objProducts = useSelector((state) => state.products.Search);
+  const { searchInput, setSearchInput } = useSearchContext()
+
 
   console.log(objProducts)
   useEffect(() => {
-    setSearchInput(queryTerm)
     dispatch(fetchSearchedProducts(searchInput))
   }, [dispatch, searchInput])
 
@@ -26,7 +26,7 @@ function Search({ searchInput,setSearchInput }) {
       <div id="search-products-title">
         <h1>PRODUCTS</h1>
       </div>
-      <div className="k-productindex-container">
+      <div className="">
         {searchProducts.map((product) => (
           <ProductCard product={product} />
         ))}

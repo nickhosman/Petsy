@@ -1,12 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useSearchContext } from '../../context/Search';
 import ProfileButton from './ProfileButton';
 import SearchBar from './SearchBar';
 import './Navigation.css';
 
-function Navigation({ isLoaded, searchInput,setSearchInput }){
+function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
+	const {searchInput, setSearchInput} = useSearchContext()
 
 	return (
 		<ul id="navigation-bar">
