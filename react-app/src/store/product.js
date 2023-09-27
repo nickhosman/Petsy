@@ -1,13 +1,21 @@
 /** Action Type Constants: */
 export const LOAD_PRODUCTS = 'products/LOAD_PRODUCTS'
+export const SEARCH_PRODUCTS = 'products/SEARCH_PRODUCTS'
 export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
-export const REMOVE_PRODUCT = 'products/REMOVE_PRODUCT'
+export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
+export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 
 /**  Action Creators: */
 export const loadProducts = (products) => {
   return {
     type: LOAD_PRODUCTS,
+    products
+  }
+};
+export const searchProducts = (products) => {
+  return {
+    type: SEARCH_PRODUCTS,
     products
   }
 };
@@ -22,13 +30,19 @@ export const editProduct = product =>({
   product
 })
 
-export const removeProduct = productId =>({
-  type:REMOVE_PRODUCT,
-  productId
+export const loadReviews = reviews => ({
+  type: LOAD_REVIEWS,
+  reviews
 })
 
+export const createReview = (review, user) => ({
+  type: CREATE_REVIEW,
+  payload: {review, user}
+})
+
+
 /** Thunk Action Creators: */
-export const thunkLoadProducts = () => async(dispatch) => {
+export const fetchAllProducts = () => async(dispatch) => {
   const response = await fetch('/api/products')
   if(response.ok) {
     const data = await response.json()
@@ -40,9 +54,20 @@ export const thunkLoadProducts = () => async(dispatch) => {
   }
 };
 
+export const fetchSearchedProducts = (searchTerm) =>async (dispatch) =>{
+  const res = await fetch(`/api/search/?q=${searchTerm}`)
+  if(res.ok){
+    const data = await res.json()
+    dispatch(searchProducts(data))
+    return data
+  }else{
+    const errors = await res.json()
+    return errors
+  }
+}
 
 export const fetchProductDetail = productId =>async(dispatch)=>{
-  const response = await fetch('/api/products/:productid')
+  const response = await fetch(`/api/products/${productId}`)
   if(response.ok){
     const productDetails= await response.json()
     dispatch(getProduct(productDetails))
@@ -53,8 +78,7 @@ export const fetchProductDetail = productId =>async(dispatch)=>{
   }
 }
 
-
-export const createProduct = product => async (dispatch) =>{
+export const fetchCreateProduct = product => async (dispatch) =>{
   const response = await fetch("/api/products/new",{
     method:"POST",
     headers: { 'Content-Type': 'application/json' },
@@ -71,13 +95,32 @@ export const createProduct = product => async (dispatch) =>{
   }
 }
 
-export const updateProduct = product => async (dispatch) =>{
-  const response = await fetch(`/api/products/${product.id}`,{
-    method:"POST",
+export const fetchAddImageToProduct = (productId, url, preview) => async(dispatch) => {
+  if(url === "") return null
+  const response = await fetch(`/api/products/${productId}/images`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+    "preview": preview,
+    "image_url" : url,
+    "product_id" : productId})
+  })
+
+  if (response.ok) {
+    const data = await response.json()
+    return data
+  } else {
+    const errors = await response.json()
+    return errors
+  }
+}
+
+export const fetchUpdateProduct = (product, productId) => async (dispatch) =>{
+  const response = await fetch(`/api/products/${productId}`,{
+    method:"PUT",
     headers: { 'Content-Type': 'application/json' },
     body:JSON.stringify(product)
   })
-
   if (response.ok) {
     const updateProduct = await response.json()
     dispatch(getProduct(updateProduct))
@@ -88,19 +131,38 @@ export const updateProduct = product => async (dispatch) =>{
   }
 }
 
-export const deleteProduct = productId => async(dispatch)=>{
-  const response = await fetch(`/api/products/${productId}`,{
-    method:'DELETE'
-  })
+// GET ALL REVIEWS
+export const getAllReviewsThunk = (productId) => async dispatch => {
+  const response = await fetch(`/api/products/${productId}/reviews`)
 
-  if(response.ok){
-    dispatch(removeProduct())
-  } else {
-    const errors = await response.json()
+  if(response.ok) {
+    const reviews = await response.json()
+    dispatch(loadReviews(reviews))
+    return reviews
+  }else {
+    let errors = await response.json()
     return errors
   }
 }
 
+// CREATE A REVIEW
+export const createReviewThunk = (productId, user, stars, details) => async dispatch => {
+  const response = await fetch(`/api/products/${productId}/reviews`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({stars, details})
+  })
+
+  if (response.ok) {
+    const review = await response.json()
+    console.log('REVIEWS', review)
+    dispatch(createReview(user, review))
+    return review
+  }else {
+    let errors = await response.json()
+    return errors
+  }
+}
 
 // product reducer
 // products: {
@@ -122,10 +184,35 @@ const productReducer = (state = initialState, action) => {
   let newState;
   switch(action.type) {
     case LOAD_PRODUCTS:
-      newState = {
+      newState = { ...state,
          ...action.products
       }
+      console.log(newState)
       return newState
+    case SEARCH_PRODUCTS:
+      newState = {
+         ...state,
+         searchProducts:{
+          ...action.products
+         }
+      }
+      console.log(newState)
+      return newState
+    case GET_PRODUCT:
+      newState = {
+        ...state,
+        singleProduct : {
+          ...action.product
+        }
+      }
+      return newState
+      case LOAD_REVIEWS:
+        newState = {...state, singleProduct: {...state.singleProduct, ProductReviews: action.reviews.Reviews }}
+        return newState
+      case CREATE_REVIEW:
+        const newReview = action.payload.review
+        console.log('NEW REVIEW', newReview)
+        return {...state, singleProduct: {...state.singleProduct, ProductReviews: {...state.singleProduct.ProductReviews, [newReview.id]: newReview}, User: action.payload.user}}
     default:
       return state
   };

@@ -1,0 +1,44 @@
+#trending-card-div {
+
+  border-radius: 10px;
+  margin: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+#trending-img-div {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#trending-img {
+  width: 200px;
+}
+
+#trending-name {
+  position: absolute;
+  width:150px;
+  text-align: center;
+  display: none;
+}
+
+#trending-card-div:hover #trending-name {
+  display: block;
+  position: absolute;
+}
+
+#trending-card-div:hover img {
+  opacity: 0.5;
+}
+
+#trending-card-div:hover{
+  cursor: pointer;
+}

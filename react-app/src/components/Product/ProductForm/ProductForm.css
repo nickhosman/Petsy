@@ -1,0 +1,17 @@
+.n-product-form-wrapper {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: auto;
+  align-items: center;
+  justify-self: center
+}
+
+.n-product-form-wrapper label {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  row-gap: 10px;
+
+}

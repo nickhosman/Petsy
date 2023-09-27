@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkLoadProducts } from "../../../store/product";
+import { fetchAllProducts } from "../../../store/product";
 import ProductCard from "../ProductCard";
 import './ProductIndex.css'
 
@@ -9,7 +9,7 @@ function ProductIndex() {
   const objProducts = useSelector((state) => state.products.Products);
 
   useEffect(() => {
-    dispatch(thunkLoadProducts())
+    dispatch(fetchAllProducts())
   }, [dispatch])
 
   if (!objProducts || Object.keys(objProducts).length === 0) return null;
@@ -26,7 +26,7 @@ function ProductIndex() {
        ))}
     </div>
     </div>
-    
+
   )
 }
 

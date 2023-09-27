@@ -256,5 +256,3 @@ def add_favorite(productId):
     product.users.append(current_user)
     db.session.commit()
     return {"message": "Successfully added to favorites"}
-
-

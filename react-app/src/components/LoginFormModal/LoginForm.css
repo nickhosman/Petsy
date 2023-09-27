@@ -21,8 +21,21 @@
   margin-bottom: 10px;
 }
 
-#login-form-submit-btn {
+#login-form-submit-btn, #demo-submit-btn {
   height: 40px;
   margin-top: 10px;
+  background-color: rgb(193, 193, 193);
+  border-radius: 15px;
+  font-weight: bold;
+}
 
+#login-form-submit-btn:hover,
+#demo-submit-btn:hover{
+  background-color: rgb(193, 131, 131);
+    cursor: pointer;
+}
+
+#login-modal-div input{
+  height:25px;
+  border-radius: 5px;
 }

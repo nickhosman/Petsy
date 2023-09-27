@@ -4,6 +4,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -39,18 +40,30 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button id="prodile-btn" onClick={openMenu}>
+      <button id="profile-btn" onClick={openMenu}>
         <i class="fa-solid fa-user fa-xl"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="k-loggedin-container">
             <li>{user.username}</li>
             <li>{user.email}</li>
+            <NavLink style={{ textDecoration: "none", color: "black" }}
+                onClick={closeMenu}
+                to="/products/new">
+            <div>Create a Listing</div>
+            </NavLink>
             <li>
-              <button onClick={handleLogout}>Log Out</button>
             </li>
-          </>
+            <NavLink style={{ textDecoration: "none", color: "black" }}
+                onClick={closeMenu}
+                to={`/users/${user.id}/products`}>
+            <div>View My Listings</div>
+            </NavLink>
+            <li id='log-out-btn-div'>
+              <button id="log-out-btn" onClick={handleLogout}>Log Out</button>
+            </li>
+          </div>
         ) : (
           <>
             <OpenModalButton

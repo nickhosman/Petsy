@@ -15,9 +15,8 @@ def delete_favorite(productid):
         return {'errors': "Product not found"}, 404
     if current_user not in product.users:
        return {"error": 'Favorite product not found'}, 401
-  
+
     product.users.remove(current_user)
     db.session.commit()
 
     return {"message":"Successfully deleted the favorite product."}
-    

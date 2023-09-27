@@ -1,0 +1,24 @@
+.manageproduct-container {
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.manageproduct-wrapper {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.manageproduct-image {
+  width: 150px;
+  height: 150px;
+}
+
+.manageproduct-buttoncontainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
