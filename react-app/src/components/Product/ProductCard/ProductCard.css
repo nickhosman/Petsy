@@ -25,7 +25,8 @@
 }
 
 .k-productcard-image {
-  width: 260px;
+  /* width: 260px; */
+  height:300px;
 
 }
 

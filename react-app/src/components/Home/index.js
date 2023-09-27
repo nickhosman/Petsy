@@ -6,10 +6,11 @@ import { fetchAllCategories } from '../../store/category';
 import { fetchAllProducts } from '../../store/product';
 import ProductsSelection from './ProductsSelection/ProductsSelection';
 import Trending from './Trending/Trending';
+import { useSearchContext } from '../../context/Search';
 
 
 
-const Home = () => {
+const Home = ({ searchInput, setSearchInput }) => {
   const dispatch = useDispatch();
   const history = useHistory()
   const [isNavigated, setIsNavigated] = useState(false)
@@ -34,9 +35,10 @@ const Home = () => {
       let targetDiv = e.target
       while (targetDiv) {
         if (targetDiv.className === "category-card" && targetDiv.id) {
-
+          
+          setSearchInput(targetDiv.id)
           // setItemCategoryId()
-          history.push(`/products?category=${targetDiv.id}`)
+          history.push(`/search?q=${targetDiv.id}`)
           setIsNavigated(true)
           break
         }
@@ -55,7 +57,7 @@ const Home = () => {
         setFilterCategoryId(filterId)
       }
     }
-    console.log(allProducts[0].categoryId)
+    console.log(allProducts[0]?.categoryId)
     console.log(filterCategoryId)
 
   }
