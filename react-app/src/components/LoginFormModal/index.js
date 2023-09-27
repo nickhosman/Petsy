@@ -17,16 +17,30 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } else {
-        closeModal()
+      closeModal()
     }
   };
 
+  const handledemoUserLogin = (e) => {
+    e.preventDefault()
+    setErrors([]);
+    return dispatch(login('demouser@appacademy.io','password'))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  }
+ 
+
   return (
-    <>
+    <div id="login-modal-div">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form id="login-modal-form" onSubmit={handleSubmit}>
         <ul>
-          {errors.map((error, idx) => (
+          {errors&&errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
@@ -48,9 +62,10 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button id="demo-submit-btn" onClick={handledemoUserLogin}>Demo User</button>
+        <button id="login-form-submit-btn" type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 

@@ -236,7 +236,8 @@ def seed_products(all_users):
             seller_id=20,
             category_id=4,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[1], all_users[2]]
         ),
         Product(
             name="Meowbucks Outfit",
@@ -245,7 +246,8 @@ def seed_products(all_users):
             seller_id=10,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[17], all_users[8], all_users[1]]
         ),
         Product(
             name="Meowasaur Outfit",
@@ -254,7 +256,8 @@ def seed_products(all_users):
             seller_id=10,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[19], all_users[5], all_users[3]]
         ),
         Product(
             name="Pupper Mouse Costume",
@@ -264,7 +267,7 @@ def seed_products(all_users):
             category_id=1,
             created_at=current_date,
             updated_at=current_date,
-            users=[all_users[0]]
+            users=[all_users[0], all_users[10]]
         ),
         Product(
             name="Pupper Octopus Costume",
@@ -283,7 +286,8 @@ def seed_products(all_users):
             seller_id=6,
             category_id=1,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[9], all_users[1], all_users[8]]
         ),
         Product(
             name="Homemade Egg Treats",
@@ -302,7 +306,8 @@ def seed_products(all_users):
             seller_id=7,
             category_id=2,
             created_at=current_date,
-            updated_at=current_date
+            updated_at=current_date,
+            users=[all_users[11], all_users[3], all_users[13]]
         ),
         Product(
             name="Waterproof Dog Raincoat",

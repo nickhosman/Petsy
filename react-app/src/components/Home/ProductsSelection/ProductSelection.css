@@ -1,0 +1,24 @@
+#selection-img-div{
+  width:150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#selection-div{
+  width:13%;
+  border-radius: 10px;
+  margin:10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#selection-img{
+  width: 200px;
+}
+
+#selection-div:hover {
+  cursor: pointer;
+}

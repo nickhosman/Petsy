@@ -1,7 +1,97 @@
 .profile-dropdown {
+  padding:10px;
   position: absolute;
+  right:50px;
+  top:70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border:2px solid gray;
+  height: 150px;
+  width:fit-content;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.profile-dropdown button{
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  margin-bottom: 15px;
 }
 
 .hidden {
   display: none;
 }
+
+#navigation-bar{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#navigation-bar li{
+
+  list-style:none;
+}
+
+
+.nav-link{
+  text-decoration: none;
+  color:black;
+  cursor: pointer;
+  font-size: 30px;
+  display: flex;
+}
+
+.nav-link i,.nav-link p{
+  height:fit-content;
+  margin: 0;
+  margin-right: 5px;
+}
+
+#search-bar-li{
+  width: 50%;
+}
+#search-bar-div{
+  width:100%;
+}
+#search-bar-input{
+  width:100%;
+  height:40px;
+  border-radius: 10px;
+}
+
+#profile-btn{
+  border:none;
+  background-color: transparent;
+}
+#profile-btn:hover{
+  cursor: pointer;
+}
+#user-profile-li{
+  margin-right:40px;
+}
+
+#log-out-btn-div{
+  display: flex;
+  justify-content: center;
+  margin-top:15px;
+  background-color: rgb(193, 131, 131);
+  border-radius: 15px;
+}
+
+#log-out-btn{
+  margin:0;
+  padding:10px;
+}
+
+#log-out-btn:hover,#nav-heart-icon:hover{
+  cursor: pointer;
+}
+
+/* #nav-heart-icon:hover .fa-heart{
+  background-color: red;
+
+} */
