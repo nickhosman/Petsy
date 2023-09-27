@@ -44,3 +44,8 @@
 cursor: pointer;
 text-decoration: underline;
 }
+
+#error-msg{
+  color:red;
+  margin:0;
+}
