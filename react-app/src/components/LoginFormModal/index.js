@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -9,30 +9,17 @@ function LoginFormModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [disabled, setDisabled] = useState(false)
+
   const { closeModal } = useModal();
-
-
-  useEffect(() => {
-    if (!email || !password) {
-      setDisabled(true)
-    } else {
-      setDisabled(false)
-    }
-  }, [email, password])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
     const data = await dispatch(login(email, password));
-      if (data) {
-        setErrors(data);
-      } else {
-        closeModal();
-      }
-   
-    
-
+    if (data) {
+      setErrors(data);
+    } else {
+      closeModal();
+    }
 
   };
   console.log(errors)
@@ -42,7 +29,7 @@ function LoginFormModal() {
     setErrors([]);
     return dispatch(login('demouser@appacademy.io', 'password'))
       .then(closeModal)
-  
+
   }
 
 
@@ -65,6 +52,10 @@ function LoginFormModal() {
             required
           />
         </label>
+        {/* {errors && errors.email &&
+          <p className="login-input-error">
+            {errors.email}
+          </p>} */}
         <label>
           Password
           <input
@@ -74,16 +65,12 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors && errors.email &&
-          <p className="login-input-error">
-            {errors.email}
-          </p>}
         {errors && errors.password &&
           <p className="login-input-error">
             {errors.password}
           </p>}
         <button id="demo-submit-btn" onClick={handledemoUserLogin}>Demo User</button>
-        <button id="login-form-submit-btn" type="submit" disabled={disabled} >Log In</button>
+        <button id="login-form-submit-btn" type="submit"  >Log In</button>
       </form>
     </div>
   );
