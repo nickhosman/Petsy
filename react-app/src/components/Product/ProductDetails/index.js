@@ -27,9 +27,9 @@ function ProductDetails() {
   }, [dispatch, user.id, productId]);
 
   useEffect(() => {
-    if (favorites && Object.keys(favorites).includes(String(product.id))) {
+    if(favorites && product && Object.keys(favorites).includes(String(product.id))) {
       setIsFavorited(true);
-    } else if (favorites && !Object.keys(favorites).includes(String(product.id))) {
+    } else if (favorites && product && !Object.keys(favorites).includes(String(product.id))) {
       setIsFavorited(false)
     }
   }, [favorites, product]);
@@ -69,7 +69,7 @@ function ProductDetails() {
           </div>))}
         </Carousel>
         {user?.id !== product.Seller?.id &&
-        <i className={isFavorited ? "fa-solid fa-heart": "fa-regular fa-heart"} onClick={handleFavorite}></i>}
+        <i className={isFavorited ? "fa-solid fa-heart favoritedheart": "fa-regular fa-heart unfavoritedheart"} onClick={handleFavorite}></i>}
         <ShowReviews productId={productId}/>
       </div>
       <div className='productdetails-sidebar-container'>
