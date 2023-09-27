@@ -6,16 +6,12 @@ import ProductCard from "../Product/ProductCard";
 
 function Search({ searchInput }) {
   const dispatch = useDispatch();
-  const objProducts = useSelector((state) => {
-    console.log(state)
-    // state.products.searchProducts
-  }
-    );
+  const objProducts = useSelector((state) => state.products.Search);
 
   console.log(objProducts)
   useEffect(() => {
     dispatch(fetchSearchedProducts(searchInput))
-  }, [dispatch])
+  }, [dispatch,searchInput])
 
   if (!objProducts || Object.keys(objProducts).length === 0) return null;
   const searchProducts = Object.values(objProducts);
