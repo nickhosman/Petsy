@@ -116,13 +116,11 @@ export const fetchAddImageToProduct = (productId, url, preview) => async(dispatc
 }
 
 export const fetchUpdateProduct = (product, productId) => async (dispatch) =>{
-  console.log('HELLO!!!!')
   const response = await fetch(`/api/products/${productId}`,{
     method:"PUT",
     headers: { 'Content-Type': 'application/json' },
     body:JSON.stringify(product)
   })
-  console.log('RESPONSE UPDATE', response)
   if (response.ok) {
     const updateProduct = await response.json()
     dispatch(getProduct(updateProduct))

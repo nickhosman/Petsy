@@ -19,7 +19,9 @@ function Navigation({ isLoaded }){
 				<SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
 			</li>
 			<li>
+			<NavLink style={{ textDecoration: "none", color: "black" }} exact to={`/users/${sessionUser?.id}/favorites`}>
 				<i class="fa-solid fa-heart fa-lg"></i>
+				</NavLink>
 			</li>
 			{isLoaded && (
 				<li id="user-profile-li">
