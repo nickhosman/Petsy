@@ -17,21 +17,21 @@ function ProductFormPage() {
   const [otherImage2, setOtherImage2] = useState("");
   const [otherImage3, setOtherImage3] = useState("");
   const [otherImage4, setOtherImage4] = useState("");
+  const [tagList, setTagList] = useState([]);
 
 
   const [tags, setTags] = useState([]);
   const [errors, setErrors] = useState([]);
-  let tagList = ["clothing", "toys", "halloween", "food"]
 
-  // useEffect(async () => {
-  //   const theseTags = await fetch("/api/tags")
-  //   console.log(theseTags)
-  //   if (theseTags) {
-  //     tagList = Object.values(theseTags.Tags)
-  //   } else {
-  //     tagList = ["clothing", "toys", "halloween", "food"]
-  //   }
-  // }, [])
+  useEffect(async () => {
+    const response = await fetch("/api/tags")
+    if (response.ok) {
+      const theseTags = await response.json()
+      // console.log("TAGS BEFORE:", theseTags)
+      setTagList(Object.values(theseTags.Tags))
+      // console.log("TAGS:", tagList)
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -54,14 +54,20 @@ function ProductFormPage() {
   }
 
   const handleTagClick = async (e) => {
-    if (tags.includes(e.target.value)) {
-      let thisTag, otherTags;
-      thisTag = e.target.value;
-      [thisTag, ...otherTags] = tags;
-      setTags([...otherTags]);
+    console.log("FIRST", tags)
+    if (e.target.className === "tag-untoggled") {
+      e.target.className = "tag-toggled"
+    } else {
+      e.target.className = "tag-untoggled"
     }
-    else {
-      setTags([...tags, e.target.value])
+    if (tags.includes(e.target.textContent)) {
+      let valIdx = tags.indexOf(e.target.textContent)
+      let newTags = [...tags]
+      newTags.splice(valIdx, 1)
+      setTags(newTags)
+    } else {
+      console.log("AAAAAAAAAAAAAAAAAAAA")
+      setTags([...tags, e.target.textContent])
     }
     console.log("tags:", tags)
   }
@@ -117,11 +123,11 @@ function ProductFormPage() {
         <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)}  placeholder="(optional)"></input>
         <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)}  placeholder="(optional)"></input>
         </div>
-        <label>
+        <label className="tag-container">
           Tags
-          <input />
-          <ul>
-            {tagList.map((tag, idx) => <li key={idx} value={tag} onClick={handleTagClick}>{tag}</li>)}
+          <ul className="n-tag-wrapper">
+            {tagList.map((tag, idx) => <li key={idx} value={tag.name} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
+            <li className="tag-add">+</li>
           </ul>
         </label>
         <button type="submit">Create Listing</button>
