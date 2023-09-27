@@ -23,7 +23,7 @@ function App() {
 console.log(searchInput)
   return (
     <>
-      <Navigation isLoaded={isLoaded} searchInput={searchInput} setSearchInput={setSearchInput} />
+      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route exact path='/users/:userId/products'>
@@ -48,7 +48,7 @@ console.log(searchInput)
             <SignupFormPage />
           </Route>
           <Route path={`/search`} >
-            <Search searchInput={searchInput} />
+            <Search />
           </Route>
           <Route path="/">
             <Home />

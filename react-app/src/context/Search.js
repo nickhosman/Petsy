@@ -15,4 +15,4 @@ export function SearchProvider({ children }) {
   );
 }
 
-export const useSpotContext = () => useContext(SpotContext);
+export const useSearchContext = () => useContext(SearchContext);
