@@ -26,6 +26,7 @@ Mako = "==1.1.4"
 faker = "*"
 flask-login = "*"
 flask-cors = "*"
+email-validator = "*"
 
 [dev-packages]
 
