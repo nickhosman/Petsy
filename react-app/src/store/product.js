@@ -1,5 +1,6 @@
 /** Action Type Constants: */
 export const LOAD_PRODUCTS = 'products/LOAD_PRODUCTS'
+export const SEARCH_PRODUCTS = 'products/LOAD_PRODUCTS'
 export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
@@ -9,6 +10,12 @@ export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 export const loadProducts = (products) => {
   return {
     type: LOAD_PRODUCTS,
+    products
+  }
+};
+export const searchProducts = (products) => {
+  return {
+    type: SEARCH_PRODUCTS,
     products
   }
 };
@@ -46,6 +53,18 @@ export const fetchAllProducts = () => async(dispatch) => {
     return errors
   }
 };
+
+export const fetchSearchedProducts = (searchTerm) =>async (dispatch) =>{
+  const res = await fetch(`/api/search/?q=${searchTerm}`)
+  if(res.ok){
+    const data = await res.json()
+    dispatch(searchProducts(data))
+    return data
+  }else{
+    const errors = await res.json()
+    return errors
+  }
+}
 
 export const fetchProductDetail = productId =>async(dispatch)=>{
   const response = await fetch(`/api/products/${productId}`)
@@ -170,6 +189,16 @@ const productReducer = (state = initialState, action) => {
       newState = { ...state,
          ...action.products
       }
+      console.log(newState)
+      return newState
+    case SEARCH_PRODUCTS:
+      newState = {
+         ...state,
+         searchProducts:{
+          ...action.products
+         }
+      }
+      console.log(newState)
       return newState
     case GET_PRODUCT:
       newState = {

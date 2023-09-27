@@ -5,7 +5,7 @@ import ProfileButton from './ProfileButton';
 import SearchBar from './SearchBar';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded, searchInput,setSearchInput }){
 	const sessionUser = useSelector(state => state.session.user);
 
 	return (
@@ -14,7 +14,7 @@ function Navigation({ isLoaded }){
 				<NavLink className="nav-link" exact to="/"><i class="fa-solid fa-paw"></i><p>PETSY</p></NavLink>
 			</li>
 			<li id="search-bar-li">
-				<SearchBar />
+				<SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
 			</li>
 			<li>
 				<i class="fa-solid fa-heart fa-lg"></i>
