@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchedProducts } from "../../store/product";
 import ProductCard from "../Product/ProductCard";
 
+import { useSearchContext } from "../../context/Search";
 
-function Search({ searchInput }) {
+
+function Search() {
   const dispatch = useDispatch();
   const objProducts = useSelector((state) => state.products.Search);
+  const [searchInput, setSearchInput] = useSearchContext()
+
 
   console.log(objProducts)
   useEffect(() => {
