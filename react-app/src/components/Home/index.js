@@ -6,6 +6,7 @@ import { fetchAllCategories } from '../../store/category';
 import { fetchAllProducts } from '../../store/product';
 import ProductsSelection from './ProductsSelection/ProductsSelection';
 import Trending from './Trending/Trending';
+import { useSearchContext } from '../../context/Search';
 
 
 
@@ -34,6 +35,7 @@ const Home = ({ searchInput, setSearchInput }) => {
       let targetDiv = e.target
       while (targetDiv) {
         if (targetDiv.className === "category-card" && targetDiv.id) {
+          
           setSearchInput(targetDiv.id)
           // setItemCategoryId()
           history.push(`/search?q=${targetDiv.id}`)

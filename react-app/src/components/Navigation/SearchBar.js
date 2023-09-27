@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import { fetchAllProducts, fetchSearchedProducts } from '../../store/product';
+import { useSearchContext } from '../../context/Search';
 
-const SearchBar = ({ searchInput, setSearchInput }) => {
+const SearchBar = ({ searchInput,setSearchInput }) => {
   const dispatch = useDispatch();
   const history = useHistory()
   // GET ALL PRODUCTS
@@ -14,7 +15,7 @@ const SearchBar = ({ searchInput, setSearchInput }) => {
   const categoryArr = Object.values(allCategories)
 
   // const [searchInput, setSearchInput] = useState('')
-
+ 
 
   const handleInputChange = e => {
     e.preventDefault()
@@ -35,6 +36,7 @@ const SearchBar = ({ searchInput, setSearchInput }) => {
     })
     console.log(data)
     history.push(`/search?q=${searchInput}`)
+    setSearchInput('')
   }
 
   // filtered product payload

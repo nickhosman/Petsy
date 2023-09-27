@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-console.log(searchInput)
+  console.log(searchInput)
   return (
     <>
       <Navigation isLoaded={isLoaded} />
@@ -30,16 +30,16 @@ console.log(searchInput)
             <ListingPage />
           </Route>
           <Route exact path='/products'>
-            <ProductIndex/>
+            <ProductIndex />
           </Route>
           <Route exact path='/products/new'>
-            <ProductFormPage/>
+            <ProductFormPage />
           </Route>
           <Route exact path='/products/:productId/edit'>
-            <ProductUpdateForm/>
+            <ProductUpdateForm />
           </Route>
           <Route exact path='/products/:productId'>
-            <ProductDetails/>
+            <ProductDetails />
           </Route>
           <Route path="/login" >
             <LoginFormPage />
@@ -51,7 +51,7 @@ console.log(searchInput)
             <Search />
           </Route>
           <Route path="/">
-            <Home searchInput={searchInput}  setSearchInput={setSearchInput} />
+            <Home searchInput={searchInput} setSearchInput={setSearchInput} />
           </Route>
         </Switch>
       )}

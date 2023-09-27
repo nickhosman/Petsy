@@ -11,7 +11,7 @@ import '../Product/ProductIndex/ProductIndex.css'
 function Search() {
   const dispatch = useDispatch();
  
-  const { searchInput, setSearchInput } = useSearchContext()
+  // const { searchInput, setSearchInput } = useSearchContext()
 
   const location = useLocation();
   const queryTerm = new URLSearchParams(location.search).get('q');
@@ -21,9 +21,9 @@ function Search() {
 
   console.log(objProducts)
   useEffect(() => {
-    setSearchInput(queryTerm)
-    dispatch(fetchSearchedProducts(searchInput))
-  }, [dispatch, searchInput])
+    // setSearchInput(queryTerm)
+    dispatch(fetchSearchedProducts(queryTerm))
+  }, [dispatch, queryTerm])
 
   if (!objProducts || Object.keys(objProducts).length === 0) return null;
   const searchProducts = Object.values(objProducts);
