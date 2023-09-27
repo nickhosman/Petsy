@@ -1,27 +1,46 @@
-#signup-modal-div{
+#signup-modal-div {
   display: flex;
   flex-direction: column;
-  width:300px;
+  width: 300px;
   align-items: center;
   padding-bottom: 20px;
   border-radius: 15px;
 }
-#signup-modal-form{
+
+#signup-modal-form {
   display: flex;
   flex-direction: column;
-  width:90%;
+  width: 90%;
 
 }
 
-#signup-modal-form label{
+#signup-modal-form label {
   display: flex;
   flex-direction: column;
-  width:100%;
+  width: 100%;
   margin-bottom: 10px;
 }
 
-#signup-form-submit-btn{
-  height:40px;
-  margin-top:10px;
+#signup-form-submit-btn {
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  background-color: rgb(193, 193, 193);
+  width:100%;
+}
 
+#signup-form-submit-btn:hover{
+  background-color: rgb(193, 131, 131);
+  cursor: pointer;
+}
+
+#signup-modal-div input {
+  height: 25px;
+  border-radius: 5px;
+}
+
+#signup-login-btn:hover{
+cursor: pointer;
+text-decoration: underline;
 }

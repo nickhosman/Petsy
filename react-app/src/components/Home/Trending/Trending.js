@@ -13,6 +13,7 @@ const Trending = ({product}) => {
     <div id="trending-card-div" onClick={handleViewProductDetail} >
       <div id="trending-img-div">
         <img id="trending-img" src={product?.previewImage} alt="" />
+        <h4 id='trending-name'>{product?.name}</h4>
       </div>
     
     </div>

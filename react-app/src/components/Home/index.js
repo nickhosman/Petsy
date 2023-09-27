@@ -24,10 +24,11 @@ const Home = ({ searchInput, setSearchInput }) => {
 
   const allProducts = Object.values(productObj)
   const categoryArr = Object.values(allCategories)
-  console.log(categoryArr)
-
-
-  console.log(productObj)
+  
+  const handleViewAllProducts =e=>{
+    e.preventDefault()
+    history.push(`/products`)
+  }
 
   const handleGoToCategory = e => {
     e.preventDefault()
@@ -144,6 +145,10 @@ const Home = ({ searchInput, setSearchInput }) => {
             <img id="category-guineapig-img" src="https://t3.ftcdn.net/jpg/06/11/28/02/360_F_611280278_F4va8Lxym7oPkVAzenVbCnvw2DsFrVA5.jpg" alt="Picture_of_Guinea_Pig" />
           </div>
           <p>Others</p>
+        </div>
+        <div id="view-all-div" onClick={handleViewAllProducts}>
+          <p>View All</p>
+          <p><i class="fa-solid fa-arrow-right fa-sm"></i></p>
         </div>
       </div>
       <div id="shop-selections-div" >

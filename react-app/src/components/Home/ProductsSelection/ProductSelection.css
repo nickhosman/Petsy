@@ -19,3 +19,6 @@
   width: 200px;
 }
 
+#selection-div:hover {
+  cursor: pointer;
+}

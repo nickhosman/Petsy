@@ -30,7 +30,7 @@
 }
 
 .category-card {
-  margin: 20px 20px;
+  margin: 20px 22px ;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,6 +54,10 @@
   box-shadow: 2px 2px 5px gray;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+.category-img-card:hover{
+  cursor: pointer;
 }
 
 .category-img-card img {
@@ -83,7 +87,8 @@
   justify-content: center;
 }
 
-#shop-selections-div h2,#trending-section h2 {
+#shop-selections-div h2,
+#trending-section h2 {
   margin-left: 20px;
 }
 
@@ -91,4 +96,24 @@
   display: grid;
   grid-template-columns: repeat(5, auto);
   gap: 10px;
+}
+
+#view-all-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+}
+
+#view-all-div:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 700;
+
+}
+
+#view-all-div p {
+  margin: 0;
+  
 }

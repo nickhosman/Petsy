@@ -18,7 +18,7 @@ function Navigation({ isLoaded }){
 			<li id="search-bar-li">
 				<SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
 			</li>
-			<li>
+			<li id='nav-heart-icon'>
 				<i class="fa-solid fa-heart fa-lg"></i>
 			</li>
 			{isLoaded && (
