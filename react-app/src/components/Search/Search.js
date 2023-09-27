@@ -9,7 +9,7 @@ import { useSearchContext } from "../../context/Search";
 function Search() {
   const dispatch = useDispatch();
   const objProducts = useSelector((state) => state.products.Search);
-  const [searchInput, setSearchInput] = useSearchContext()
+  const {searchInput, setSearchInput} = useSearchContext()
 
 
   console.log(objProducts)

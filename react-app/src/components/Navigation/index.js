@@ -8,7 +8,7 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
-	const [searchInput, setSearchInput] = useSearchContext()
+	const {searchInput, setSearchInput} = useSearchContext()
 
 	return (
 		<ul id="navigation-bar">
