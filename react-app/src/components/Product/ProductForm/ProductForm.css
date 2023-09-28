@@ -66,3 +66,12 @@
   background-color: rgb(238, 233, 233);
   cursor: pointer;
 }
+
+
+.hidden{
+  display: none;
+}
+
+.show{
+  display: block;
+}

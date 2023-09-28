@@ -20,8 +20,10 @@ function ProductFormPage() {
   const [tagList, setTagList] = useState([]);
   const [productTagList, setProductTagList] = useState([]);
   const [productTag, setProductTag] = useState("");
-
-
+  const [customTagInput, setCustomTagInput]=useState("")
+  const [customTagInputClass, setCustomTagInputClass]=useState("hidden")
+  const [displayCustomTag, setDisplayCustomTag]=useState("")
+  const [lis, setLis] = useState([]);
 
   const [tags, setTags] = useState([]);
   const [errors, setErrors] = useState([]);
@@ -54,7 +56,7 @@ function ProductFormPage() {
     console.log(productTagList)
     let tagStr = ""
     productTagList.forEach(async tag => {
-      tagStr += tag + ","
+      tagStr += tag + ",,,"
     })
     const tagObj = {
       name: tagStr
@@ -91,7 +93,32 @@ function ProductFormPage() {
     })
 
   }
-  console.log(productTagList)
+  // + button onClick
+  const handleClickAddTagBtn = e=>{
+    e.preventDefault()
+    setCustomTagInputClass("show")
+
+  }
+  // input onChange
+  const handleAddCustomTag = e => {
+    e.preventDefault()
+    const input = e.target.value
+    setCustomTagInput(input)
+    setDisplayCustomTag(e.target.value)
+
+  }
+
+  // pressing enter to submit custom tag
+  const handleCustomTagOnKeyPress =e=>{
+    if (e.key === 'Enter') {
+      e.preventDefault()
+    
+      const newLi = <li className="tag-toggled" key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
+      setLis([...lis, newLi])
+      setCustomTagInput("")
+
+    }
+  }
 
   // const handleTagClick = async (e) => {
   //   console.log("FIRST", tags)
@@ -167,7 +194,17 @@ function ProductFormPage() {
           Tags
           <ul className="n-tag-wrapper">
             {tagList.map((tag, idx) => <li key={idx} value={tag.name} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
-            <li className="tag-add">+</li>
+            {lis}
+            {/* <form onSubmit={handleCustomTagOnSubmit}> */}
+              <input
+                type="text"
+                id="custom-tag-div"
+                className={customTagInputClass}
+                value={customTagInput}
+                onChange={handleAddCustomTag}
+                onKeyPress={handleCustomTagOnKeyPress} />
+            {/* </form> */}
+            <li className="tag-add" onClick={handleClickAddTagBtn}>+</li>
           </ul>
         </label>
         <button type="submit">Create Listing</button>
