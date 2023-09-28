@@ -47,15 +47,19 @@ function ProductFormPage() {
       price,
       category_id: Number(category)
     }
-    console.log(payload)
-    const newProduct = await dispatch(fetchCreateProduct(payload));
-    await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
-    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
-    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
-    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
-    await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
 
-    if (newProduct) {
+    const newProduct = await dispatch(fetchCreateProduct(payload));
+    if(newProduct.errors) {
+      setErrors(newProduct.errors)
+    };
+
+
+    if (newProduct && !newProduct.errors) {
+      await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
+      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
+      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
+      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
+      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
       // console.log(newProduct.id)
       await fetch(`/api/products/${newProduct.id}/tags`, {
         method: "POST",
@@ -105,6 +109,7 @@ function ProductFormPage() {
     const tagListItems= []
     for(const tagObj of tagList){
       tagListItems.push(Object.values(tagObj)[1])
+      setTagList(tagList)
     }
     console.log(customTagInput)
     if (tagListItems.includes(customTagInput)){
@@ -187,6 +192,7 @@ function ProductFormPage() {
             required
           />
         </label>
+        {errors && errors.name && <p id='error-msg'>*{errors.name}</p>}
         <label>
           Product description
           <textarea
@@ -197,6 +203,7 @@ function ProductFormPage() {
             required
           >
           </textarea>
+          {errors && errors.description && <p id='error-msg'>*{errors.description}</p>}
         </label>
         <label>
           Price
@@ -207,6 +214,7 @@ function ProductFormPage() {
             required
           />
         </label>
+        {errors && errors.price && <p id='error-msg'>{errors.price}</p>}
         <label>
           Category
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
@@ -218,7 +226,7 @@ function ProductFormPage() {
           </select>
         </label>
         <label>Add Images</label>
-        <input value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
+        <input value={previewImage} required type='url' onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
         <div>
           <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
           <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
