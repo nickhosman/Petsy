@@ -57,8 +57,8 @@ const ShowReviews = ({productId}) => {
         {reviewCount()}
         {Object.values(allReviews).sort(sortReviewDates).map((review) => (
           <li className="reviews" key={review.id}>
-            <h6>{starRating(review.stars)}</h6>
-            <p>{review.User?.username} | {review.createdAt}</p>
+            <h6 className="review-stars">{starRating(review.stars)}</h6>
+            <p className="review-user-date">{review.User?.username} | {review.createdAt}</p>
             <p>{review.details}</p>
             {user && user.id === review.userId ?
             <div>
