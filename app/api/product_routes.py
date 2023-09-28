@@ -17,6 +17,8 @@ def get_products():
         data = product.to_dict()
         images = product.product_images
         reviews = product.reviews
+        seller = product.seller
+        data['seller'] = seller.to_dict()
         total_review = len(reviews)
         if total_review == 0:
             data["averageRating"] = 'No reviews'

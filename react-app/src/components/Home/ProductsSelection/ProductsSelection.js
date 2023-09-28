@@ -10,13 +10,21 @@ const ProductsSelection = ({ product }) => {
     history.push(`/products/${product.id}`)
   }
 
-  console.log(product)
+  let average = product?.averageRating.toFixed(2);
+  let fullStars = Math.floor(average);
   return (
     <div id="selection-div" onClick={handleViewProductDetail} >
             <div id="selection-img-div">
               <img id="selection-img" src={product?.previewImage} alt="" />
             </div>
-            <p>{product?.name}</p>
+            <div className='selection-info'>
+              <p className='selection-name'>{product?.name}</p>
+              <p className='selection-seller'>{product?.seller.username}</p>
+              <div className="star-rating-container">
+                {Array.from({length: fullStars}).map((star, index) => (
+                <i key={index} className="fa-solid fa-star fa-reviewstar"></i>))}
+              </div>
+            </div>
           </div>
 
   )

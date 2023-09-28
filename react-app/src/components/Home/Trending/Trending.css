@@ -1,5 +1,6 @@
-#trending-card-div {
 
+
+#trending-card-div {
   border-radius: 10px;
   margin: 10px 20px;
   display: flex;
@@ -36,7 +37,7 @@
 }
 
 #trending-card-div:hover img {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 #trending-card-div:hover{

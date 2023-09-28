@@ -7,6 +7,7 @@ import { fetchAllProducts } from '../../store/product';
 import ProductsSelection from './ProductsSelection/ProductsSelection';
 import Trending from './Trending/Trending';
 import { useSearchContext } from '../../context/Search';
+import Tooltip from '../Tooltip/Tooltip';
 
 
 
@@ -64,7 +65,7 @@ const Home = ({ searchInput, setSearchInput }) => {
   // Our Selection Section
   const productsInSelection = [];
   for (let i = 0; i < 10; i++) {
-    if (productsInSelection.length < 5) {
+    if (productsInSelection.length < 6) {
     const randomIdx = Math.floor(Math.random() * allProducts.length);
 
     const selectRandomProduct = allProducts[randomIdx];
@@ -156,7 +157,8 @@ const Home = ({ searchInput, setSearchInput }) => {
         </div>
       </div>
       <div id="shop-selections-div" >
-        <h2>Shop Our Selections: </h2>
+        <h2>Shop Our Selections <i class="fa-solid fa-arrow-right fa-2xs selection-arrow"></i> </h2>
+        <p className='selection-curation'>Curated collections hand-picked by Petsy creators</p>
         <div id="our-selection-div">
           {productsInSelection.map(product => (
             <ProductsSelection product={product} />
@@ -165,10 +167,15 @@ const Home = ({ searchInput, setSearchInput }) => {
 
       </div>
       <div id="trending-section">
-        <h2>Trending</h2>
+        <div className='trending-text'>
+        <h2>Trending:</h2>
+        <p>Swipe these up fast before they're gone!</p>
+        </div>
         <div id="trending-div">
           {productsInTrending.map(product => (
+            <Tooltip content={product?.name} direction="top">
             <Trending product={product} />
+            </Tooltip>
           ))}
         </div>
       </div>
