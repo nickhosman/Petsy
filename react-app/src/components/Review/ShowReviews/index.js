@@ -5,12 +5,15 @@ import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import "./ShowReviews.css"
+import UpdateReview from "../UpdateReviews/index"
+import OpenModalButton from "../../OpenModalButton";
+import DeleteReviewModal from "../DeleteReviews/DeleteReviewModal";
 
 const ShowReviews = ({productId}) => {
 
   const allReviews = useSelector(state => state.products.singleProduct?.ProductReviews)
   const product = useSelector(state => state.products?.singleProduct)
-
+  const user = useSelector((state) => state.session.user)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -41,6 +44,12 @@ const ShowReviews = ({productId}) => {
     return dateB - dateA
   }
 
+  // const upateReview = () => {
+  //   if (user.id === Object.keys(allReviews.userId)) {
+  //     for()
+  //   }
+  // }
+
   if(!product || !allReviews || Object.keys(product).length === 0) return null;
   return (
     <div className="reviews-container">
@@ -51,6 +60,20 @@ const ShowReviews = ({productId}) => {
             <h6>{starRating(review.stars)}</h6>
             <p>{review.User?.username} | {review.createdAt}</p>
             <p>{review.details}</p>
+            {user.id === review.userId ?
+            <div>
+              <OpenModalButton
+                buttonText='Edit'
+                modalComponent={<UpdateReview reviewId={review.id}/>}
+                styleClass='productdetails-update-reviewbutton'
+              />
+              <OpenModalButton
+                buttonText='Delete'
+                modalComponent={<DeleteReviewModal reviewId={review.id} productId={productId} />}
+                styleClass='productdetails-delete-reviewbutton'
+              />
+            </div>
+            : null}
           </li>
         ))}
       </div>

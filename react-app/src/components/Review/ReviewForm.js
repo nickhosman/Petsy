@@ -2,15 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 import { useState } from "react";
-import { createReviewThunk, fetchAllProducts, getAllReviewsThunk, updateReview } from "../../store/product";
+import { createReviewThunk, fetchAllProducts, getAllReviewsThunk, updateReviewThunk } from "../../store/product";
 import { StarRating } from "./StarRating";
 
 function ReviewForm({review, formType}) {
   const dispatch = useDispatch()
-  const [details, setDetails] = useState("")
-  const [stars, setStars] = useState(0)
+  const [details, setDetails] = useState(review.details)
+  const [stars, setStars] = useState(review.stars)
   const [errors, setErrors] = useState({})
   const { closeModal } = useModal()
+
   const onClick = (index) => {
     setStars(index)
   }
@@ -18,70 +19,31 @@ function ReviewForm({review, formType}) {
   const product = useSelector(state => state.products?.singleProduct)
   const user = useSelector(state => state.session.user)
   console.log('PRODUCT', product.id)
-  console.log('REVIEW ID', product.ProductReviews.id)
   console.log("KJNMKMKMKM", formType)
 
   const handleSubmitReview = async(e) => {
     e.preventDefault()
     setErrors({})
 
-    let newReview = {
-      productId: product.id,
-      userId: user.id,
-      stars,
-      details
-    }
-    
     if (formType === 'Update Review') {
       try {
-        newReview.id = review.id
-        const updatedReview = await dispatch(updateReview(newReview))
-        if(updatedReview){
-          dispatch(getAllReviewsThunk(newReview))
-        }
+        await dispatch(updateReviewThunk(review.id, user, stars, details))
       } catch (error) {
-        const data = await error.json()
-        if(data && data.errors) {
-          setErrors(data.errors)
-        }
+        setErrors(error.errors)
+        return
       }
+      closeModal()
+
     } else if (formType === 'Create A Review') {
       try {
-        const createdReview = await dispatch(createReviewThunk(newReview))
-
-        if(createdReview) {
-          dispatch(getAllReviewsThunk(newReview))
-        }
+        await dispatch(createReviewThunk(product.id, user, stars, details))
       } catch (error){
-        const data = await error.json()
-        if(data && data.errors) {
-          setErrors(data.errors)
-        }
+        setErrors(error.errors)
+        return
       }
+      closeModal()
     }
   }
-  // const handleSubmitReview = (e) => {
-  //   e.preventDefault()
-  //   setErrors({})
-  //   dispatch(createReviewThunk(
-  //    product.id,
-  //    user.id,
-  //    stars,
-  //    details
-  //   ))
-  //   .then((review) => {
-  //     dispatch(fetchAllProducts())
-  //     dispatch(getAllReviewsThunk(product.id))
-  //     closeModal()
-  //   })
-  //   .catch(async(res) => {
-  //     console.error(res)
-  //     const data = await res.json()
-  //     if (data && data.errors) {
-  //       setErrors(data.errors)
-  //     }
-  //   })
-  // }
 
   return (
     <div>

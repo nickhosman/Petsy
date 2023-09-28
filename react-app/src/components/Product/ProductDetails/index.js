@@ -15,7 +15,6 @@ function ProductDetails() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products?.singleProduct)
   const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
-  console.log('ALL REVIEWS', allReviews)
 
   const user = useSelector((state) => state.session.user)
   const favorites = useSelector((state) => state.user.Favorites)
@@ -40,13 +39,13 @@ function ProductDetails() {
   if(!favorites || Object.keys(favorites).length === 0) return null;
 
   const handleFavorite = async (e) => {
-    console.log('fir')
     e.preventDefault()
     if(isFavorited){
       await dispatch(fetchDeleteFavorite(product.id))
     } else if (!isFavorited) {
       await dispatch(fetchAddFavorite(product.id))
-    setIsFavorited(!isFavorited);
+      setIsFavorited(!isFavorited);
+    }
   }
   if(!allReviews || !product || Object.keys(product).length === 0) return null;
 
@@ -60,7 +59,7 @@ function ProductDetails() {
     }
     return userReview
   }
-  console.log('HAS REVIEWED', hasReviewed())
+
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
@@ -95,5 +94,4 @@ function ProductDetails() {
     </div>
   )
 }
-
 export default ProductDetails
