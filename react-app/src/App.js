@@ -13,6 +13,7 @@ import ListingPage from "./components/Listing";
 import FavoritePage from "./components/Favorites";
 import Home from "./components/Home";
 import Search from "./components/Search/Search";
+import Footer from "./components/Home/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ function App() {
           </Route>
         </Switch>
       )}
+        <Footer isLoaded={isLoaded} />
     </>
   );
 }
