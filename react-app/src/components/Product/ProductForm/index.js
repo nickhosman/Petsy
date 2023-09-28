@@ -72,27 +72,34 @@ function ProductFormPage() {
 
   const handleTagClick = async (e) => {
     console.log("FIRST", tags)
+    let selTag = e.target.textContent
     if (e.target.className === "tag-untoggled") {
       e.target.className = "tag-toggled"
-    } else {
-      e.target.className = "tag-untoggled"
-    }
-    let selTag = e.target.textContent
-    setProductTagList(prevTagList => {
-      if (prevTagList?.length < 5) {
-        if (!prevTagList.includes(selTag)) {
-          console.log(selTag)
-          console.log([...prevTagList, selTag])
-          return[...prevTagList,selTag]
+      setProductTagList(prevTagList => {
+        if (prevTagList?.length < 5) {
+          if (!prevTagList.includes(selTag)) {
+            console.log('selTag', selTag)
+            console.log('newtags', [...prevTagList, selTag])
+            return[...prevTagList,selTag]
+          }
+          return prevTagList
+        } else {
+          e.target.className = "tag-untoggled"
+          return prevTagList
         }
-        return prevTagList
-      } else {
+        })
+    } else {
         e.target.className = "tag-untoggled"
-        return prevTagList
+        setProductTagList(prevTagList => {
+          const updatedTagList = prevTagList.filter(tag => tag !== selTag)
+          console.log('UPDATE', updatedTagList)
+          return updatedTagList
+        })
       }
-    })
+    }
 
-  }
+
+
   // + button onClick
   const handleClickAddTagBtn = e=>{
     e.preventDefault()
@@ -112,7 +119,7 @@ function ProductFormPage() {
   const handleCustomTagOnKeyPress =e=>{
     if (e.key === 'Enter') {
       e.preventDefault()
-    
+
       const newLi = <li className="tag-untoggled" key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
       setLis([...lis, newLi])
       setCustomTagInput("")
