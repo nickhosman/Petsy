@@ -106,7 +106,7 @@ const Home = ({ searchInput, setSearchInput }) => {
   return (
     <div>
       {sessionUser && <p className='homepage-userwelcome'> <span>Welcome back,</span> <strong className='underline-name'>{sessionUser.firstName}</strong>!</p>}
-      <div id="tag-div">
+      {/* <div id="tag-div">
         <div id="tag-text">
           <p>|</p>
           <h3>The Halloween Shop</h3>
@@ -118,7 +118,7 @@ const Home = ({ searchInput, setSearchInput }) => {
           <h3>Treats</h3>
           <p>|</p>
         </div>
-      </div>
+      </div> */}
       <div id="category-div" >
         <div className="category-card" id="Dog" onClick={handleGoToCategory}>
           <div className="category-img-card" >
