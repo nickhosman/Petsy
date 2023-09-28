@@ -55,6 +55,8 @@
   background-color: lightgray;
   width: 1rem;
   height: 1rem;
+  line-height: 1rem;
+  text-align: center;
   border-radius: 30px;
   padding: .25rem;
   display: flex;
@@ -67,6 +69,24 @@
   cursor: pointer;
 }
 
+.add-tag-btn {
+  width: fit-content;
+  background-color: rgb(158, 189, 158);
+  border-radius: 5px;
+  padding: .25rem;
+  color: white;
+}
+.add-tag-btn:hover {
+  cursor: pointer;
+  background-color: rgb(76, 128, 76);
+}
+
+#custom-tag-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+}
 
 .hidden{
   display: none;
