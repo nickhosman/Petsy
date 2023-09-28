@@ -60,7 +60,7 @@ const ShowReviews = ({productId}) => {
             <h6>{starRating(review.stars)}</h6>
             <p>{review.User?.username} | {review.createdAt}</p>
             <p>{review.details}</p>
-            {user.id === review.userId ?
+            {user && user.id === review.userId ?
             <div>
               <OpenModalButton
                 buttonText='Edit'

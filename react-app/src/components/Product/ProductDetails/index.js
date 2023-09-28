@@ -24,8 +24,11 @@ function ProductDetails() {
   useEffect(() => {
     dispatch(fetchProductDetail(productId));
     dispatch(getAllReviewsThunk(productId));
-    dispatch(fetchUserFavorites(user.id));
-  }, [dispatch, user.id, productId]);
+
+    if(user) {
+      dispatch(fetchUserFavorites(user.id));
+    }
+  }, [dispatch, user, productId]);
 
   useEffect(() => {
     if(favorites && product && Object.keys(favorites).includes(String(product.id))) {
@@ -35,8 +38,7 @@ function ProductDetails() {
     }
   }, [favorites, product]);
 
-
-  if(!favorites || Object.keys(favorites).length === 0) return null;
+  if(!allReviews || !product || Object.keys(product).length === 0) return null;
 
   const handleFavorite = async (e) => {
     e.preventDefault()
@@ -47,7 +49,6 @@ function ProductDetails() {
       setIsFavorited(!isFavorited);
     }
   }
-  if(!allReviews || !product || Object.keys(product).length === 0) return null;
 
   const hasReviewed = () => {
     let userReview = false
@@ -69,7 +70,7 @@ function ProductDetails() {
             <img className='productdetails-image' src={product.imageUrl} alt='' key={index}></img>
           </div>))}
         </Carousel>
-        {user?.id !== product.Seller?.id &&
+        {user && user?.id !== product.Seller?.id &&
         <i className={isFavorited ? "fa-solid fa-heart favoritedheart": "fa-regular fa-heart unfavoritedheart"} onClick={handleFavorite}></i>}
         <ShowReviews productId={productId}/>
       </div>
