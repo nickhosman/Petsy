@@ -1,0 +1,15 @@
+#footer-top {
+  border-top: 1px dashed gray;
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.join-us-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+ /* color:#2f5284; */
+  margin:0;
+}
