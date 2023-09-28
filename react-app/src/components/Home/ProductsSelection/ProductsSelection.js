@@ -9,9 +9,14 @@ const ProductsSelection = ({ product }) => {
     console.log(e.target)
     history.push(`/products/${product.id}`)
   }
+  let fullStars;
 
-  let average = product?.averageRating.toFixed(2);
-  let fullStars = Math.floor(average);
+  if(!product) return null
+  console.log(typeof product?.averageRating)
+  if(product && product?.averageRating) {
+    let average = product?.averageRating;
+    fullStars = Math.floor(average);
+  }
   return (
     <div id="selection-div" onClick={handleViewProductDetail} >
             <div id="selection-img-div">
