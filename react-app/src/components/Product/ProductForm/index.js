@@ -113,7 +113,7 @@ function ProductFormPage() {
     if (e.key === 'Enter') {
       e.preventDefault()
     
-      const newLi = <li className="tag-toggled" key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
+      const newLi = <li className="tag-untoggled" key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
       setLis([...lis, newLi])
       setCustomTagInput("")
 

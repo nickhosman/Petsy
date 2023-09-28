@@ -201,7 +201,7 @@ export const CreateProductTag = (productId,productTag )=> async (dispatch) => {
 
   if (response.ok) {
     const newProductTag = await response.json()
-    console.log(newProductTag)
+    console.log(newProductTag) //not hitting this line
     dispatch(createProductTag(newProductTag))
     return newProductTag
   } else {
