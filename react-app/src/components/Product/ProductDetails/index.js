@@ -24,7 +24,6 @@ function ProductDetails() {
   useEffect(() => {
     dispatch(fetchProductDetail(productId));
     dispatch(getAllReviewsThunk(productId));
-
     if(user) {
       dispatch(fetchUserFavorites(user.id));
     }
