@@ -5,8 +5,13 @@ export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
+<<<<<<< HEAD
 export const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 export const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
+=======
+export const LOAD_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
+export const CREATE_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
+>>>>>>> frontend-tags
 
 /**  Action Creators: */
 export const loadProducts = (products) => {
@@ -22,13 +27,13 @@ export const searchProducts = (products) => {
   }
 };
 
-export const getProduct = product =>({
-  type:GET_PRODUCT,
+export const getProduct = product => ({
+  type: GET_PRODUCT,
   product
 })
 
-export const editProduct = product =>({
-  type:EDIT_PRODUCT,
+export const editProduct = product => ({
+  type: EDIT_PRODUCT,
   product
 })
 
@@ -39,7 +44,16 @@ export const loadReviews = reviews => ({
 
 export const createReview = (review, user) => ({
   type: CREATE_REVIEW,
-  payload: {review, user}
+  payload: { review, user }
+})
+
+export const loadProductTag = productTag => ({
+  type: LOAD_PRODUCTTAG,
+  productTag
+})
+export const createProductTag = productTag => ({
+  type: CREATE_PRODUCTTAG,
+  productTag
 })
 
 export const updateReview = (review, user) => ({
@@ -53,9 +67,9 @@ export const deleteReview = reviewId => ({
 })
 
 /** Thunk Action Creators: */
-export const fetchAllProducts = () => async(dispatch) => {
+export const fetchAllProducts = () => async (dispatch) => {
   const response = await fetch('/api/products')
-  if(response.ok) {
+  if (response.ok) {
     const data = await response.json()
     dispatch(loadProducts(data))
     return data
@@ -65,35 +79,35 @@ export const fetchAllProducts = () => async(dispatch) => {
   }
 };
 
-export const fetchSearchedProducts = (searchTerm) =>async (dispatch) =>{
+export const fetchSearchedProducts = (searchTerm) => async (dispatch) => {
   const res = await fetch(`/api/search/?q=${searchTerm}`)
-  if(res.ok){
+  if (res.ok) {
     const data = await res.json()
     dispatch(searchProducts(data))
     return data
-  }else{
+  } else {
     const errors = await res.json()
     return errors
   }
 }
 
-export const fetchProductDetail = productId =>async(dispatch)=>{
+export const fetchProductDetail = productId => async (dispatch) => {
   const response = await fetch(`/api/products/${productId}`)
-  if(response.ok){
-    const productDetails= await response.json()
+  if (response.ok) {
+    const productDetails = await response.json()
     dispatch(getProduct(productDetails))
     return productDetails
-  }else{
+  } else {
     let errors = await response.json()
     return errors
   }
 }
 
-export const fetchCreateProduct = product => async (dispatch) =>{
-  const response = await fetch("/api/products/new",{
-    method:"POST",
+export const fetchCreateProduct = product => async (dispatch) => {
+  const response = await fetch("/api/products/new", {
+    method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body:JSON.stringify(product)
+    body: JSON.stringify(product)
   })
 
   if (response.ok) {
@@ -106,15 +120,16 @@ export const fetchCreateProduct = product => async (dispatch) =>{
   }
 }
 
-export const fetchAddImageToProduct = (productId, url, preview) => async(dispatch) => {
-  if(url === "") return null
+export const fetchAddImageToProduct = (productId, url, preview) => async (dispatch) => {
+  if (url === "") return null
   const response = await fetch(`/api/products/${productId}/images`, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-    "preview": preview,
-    "image_url" : url,
-    "product_id" : productId})
+      "preview": preview,
+      "image_url": url,
+      "product_id": productId
+    })
   })
 
   if (response.ok) {
@@ -126,11 +141,11 @@ export const fetchAddImageToProduct = (productId, url, preview) => async(dispatc
   }
 }
 
-export const fetchUpdateProduct = (product, productId) => async (dispatch) =>{
-  const response = await fetch(`/api/products/${productId}`,{
-    method:"PUT",
+export const fetchUpdateProduct = (product, productId) => async (dispatch) => {
+  const response = await fetch(`/api/products/${productId}`, {
+    method: "PUT",
     headers: { 'Content-Type': 'application/json' },
-    body:JSON.stringify(product)
+    body: JSON.stringify(product)
   })
   if (response.ok) {
     const updateProduct = await response.json()
@@ -146,11 +161,11 @@ export const fetchUpdateProduct = (product, productId) => async (dispatch) =>{
 export const getAllReviewsThunk = (productId) => async dispatch => {
   const response = await fetch(`/api/products/${productId}/reviews`)
 
-  if(response.ok) {
+  if (response.ok) {
     const reviews = await response.json()
     dispatch(loadReviews(reviews))
     return reviews
-  }else {
+  } else {
     let errors = await response.json()
     return errors
   }
@@ -160,8 +175,8 @@ export const getAllReviewsThunk = (productId) => async dispatch => {
 export const createReviewThunk = (productId, user, stars, details) => async dispatch => {
   const response = await fetch(`/api/products/${productId}/reviews`, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({stars, details})
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ stars, details })
   })
 
   if (response.ok) {
@@ -203,6 +218,40 @@ export const deleteReviewThunk = (reviewId) => async dispatch => {
   }
 }
 
+// GET ALL PRODUCT TAGS
+export const getProductTag = () => async (dispatch) => {
+  const response = await fetch('/api/products/:productid/tags')
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(loadProductTag(data))
+    return data
+  } else {
+    const errors = await response.json()
+    return errors
+  }
+};
+
+// CREATE A TAG FOR A PRODUCT
+export const CreateProductTag = (productId,productTag )=> async (dispatch) => {
+  const response = await fetch(`/api/products/${productId}/tags`, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(productTag)
+  })
+  console.log("tag",productTag)
+  console.log("yessssssss")
+
+  if (response.ok) {
+    const newProductTag = await response.json()
+    console.log(newProductTag) //not hitting this line
+    dispatch(createProductTag(newProductTag))
+    return newProductTag
+  } else {
+    let errors = await response.json()
+    return errors
+  }
+}
+
 // product reducer
 // products: {
 //   Products: {
@@ -221,30 +270,32 @@ export const deleteReviewThunk = (reviewId) => async dispatch => {
 const initialState = {}
 const productReducer = (state = initialState, action) => {
   let newState;
-  switch(action.type) {
+  switch (action.type) {
     case LOAD_PRODUCTS:
-      newState = { ...state,
-         ...action.products
+      newState = {
+        ...state,
+        ...action.products
       }
       console.log(newState)
       return newState
     case SEARCH_PRODUCTS:
       newState = {
-         ...state,
-         searchProducts:{
+        ...state,
+        searchProducts: {
           ...action.products
-         }
+        }
       }
       console.log(newState)
       return newState
     case GET_PRODUCT:
       newState = {
         ...state,
-        singleProduct : {
+        singleProduct: {
           ...action.product
         }
       }
       return newState
+<<<<<<< HEAD
       case LOAD_REVIEWS:
         newState = {...state, singleProduct: {...state.singleProduct, ProductReviews: action.reviews.Reviews }}
         return newState
@@ -259,6 +310,33 @@ const productReducer = (state = initialState, action) => {
         return newState
       default:
         return state
+=======
+    case LOAD_REVIEWS:
+      newState = { ...state, singleProduct: { ...state.singleProduct, ProductReviews: action.reviews.Reviews } }
+      return newState
+    case CREATE_REVIEW:
+      const newReview = action.payload.review
+      console.log('NEW REVIEW', newReview)
+      return { ...state, singleProduct: { ...state.singleProduct, ProductReviews: { ...state.singleProduct.ProductReviews, [newReview.id]: newReview }, User: action.payload.user } }
+    case LOAD_PRODUCTTAG:
+      newState={
+        ...state,
+        singleProduct:{
+          ...state.singleProduct,
+          productTags:action.productTag
+        }
+      }
+    case CREATE_PRODUCTTAG:
+      newState={
+        ...state,
+        singleProduct:{
+          ...state.singleProduct,
+          productTags:action.productTag
+        }
+      }
+    default:
+      return state
+>>>>>>> frontend-tags
   };
 }
 
