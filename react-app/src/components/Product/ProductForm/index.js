@@ -102,7 +102,14 @@ function ProductFormPage() {
 
   const handleAddClick = async (e) => {
     e.preventDefault()
-
+    const tagListItems= []
+    for(const tagObj of tagList){
+      tagListItems.push(Object.values(tagObj)[1])
+    }
+    console.log(customTagInput)
+    if (tagListItems.includes(customTagInput)){
+      alert("The tag already exists. Please select it from the list.")
+    }
       const newTag = await fetch("/api/tags/", {
         method: "POST",
         headers: {
