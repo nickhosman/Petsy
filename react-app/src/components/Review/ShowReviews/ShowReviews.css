@@ -2,3 +2,16 @@
   list-style: none;
   border-bottom: solid 1px rgb(146, 144, 144);
 }
+.review-user-date{
+  color: #5c5d5e;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.review-stars{
+  margin: 10px 0px 10px 0px
+}
+.reviews-count-rating-header{
+  margin-top: 30px;
+  /* border-top: rgb(169, 169, 169) 1px solid; */
+}
