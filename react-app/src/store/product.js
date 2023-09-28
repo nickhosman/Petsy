@@ -5,13 +5,10 @@ export const GET_PRODUCT = 'products/GET_PRODUCT'
 export const EDIT_PRODUCT = 'products/EDIT_PRODUCT'
 export const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
-<<<<<<< HEAD
 export const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 export const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
-=======
 export const LOAD_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
 export const CREATE_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
->>>>>>> frontend-tags
 
 /**  Action Creators: */
 export const loadProducts = (products) => {
@@ -238,12 +235,9 @@ export const CreateProductTag = (productId,productTag )=> async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(productTag)
   })
-  console.log("tag",productTag)
-  console.log("yessssssss")
 
   if (response.ok) {
     const newProductTag = await response.json()
-    console.log(newProductTag) //not hitting this line
     dispatch(createProductTag(newProductTag))
     return newProductTag
   } else {
@@ -252,21 +246,6 @@ export const CreateProductTag = (productId,productTag )=> async (dispatch) => {
   }
 }
 
-// product reducer
-// products: {
-//   Products: {
-//     [productId]: {
-//          ...productData
-//     },
-//   },
-//   singleProduct: {
-//      ...productData,
-//       ProductImages: [...imagesData],
-//         Seller: {
-//        ...sellerData,
-//      },
-//   },
-// },
 const initialState = {}
 const productReducer = (state = initialState, action) => {
   let newState;
@@ -295,7 +274,6 @@ const productReducer = (state = initialState, action) => {
         }
       }
       return newState
-<<<<<<< HEAD
       case LOAD_REVIEWS:
         newState = {...state, singleProduct: {...state.singleProduct, ProductReviews: action.reviews.Reviews }}
         return newState
@@ -308,35 +286,24 @@ const productReducer = (state = initialState, action) => {
         console.log("NEW STATE", newState)
         delete newState.singleProduct.ProductReviews[action.reviewId]
         return newState
+      case LOAD_PRODUCTTAG:
+      newState={
+        ...state,
+        singleProduct:{
+          ...state.singleProduct,
+          productTags:action.productTag
+        }
+      }
+      case CREATE_PRODUCTTAG:
+      newState={
+        ...state,
+        singleProduct:{
+          ...state.singleProduct,
+          productTags:action.productTag
+        }
+      }
       default:
         return state
-=======
-    case LOAD_REVIEWS:
-      newState = { ...state, singleProduct: { ...state.singleProduct, ProductReviews: action.reviews.Reviews } }
-      return newState
-    case CREATE_REVIEW:
-      const newReview = action.payload.review
-      console.log('NEW REVIEW', newReview)
-      return { ...state, singleProduct: { ...state.singleProduct, ProductReviews: { ...state.singleProduct.ProductReviews, [newReview.id]: newReview }, User: action.payload.user } }
-    case LOAD_PRODUCTTAG:
-      newState={
-        ...state,
-        singleProduct:{
-          ...state.singleProduct,
-          productTags:action.productTag
-        }
-      }
-    case CREATE_PRODUCTTAG:
-      newState={
-        ...state,
-        singleProduct:{
-          ...state.singleProduct,
-          productTags:action.productTag
-        }
-      }
-    default:
-      return state
->>>>>>> frontend-tags
   };
 }
 
