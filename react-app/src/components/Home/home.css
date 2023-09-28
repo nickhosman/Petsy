@@ -1,25 +1,39 @@
+* {
+  font-family: 'Work Sans', sans-serif;
+}
+
+body {
+  background-color: 	#fdfdfd
+}
+
+
 #tag-div {
   width: 100%;
   display: flex;
   justify-content: center;
-
 }
 
 #tag-text {
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 68%;
   margin-right: 0;
 }
 
 #tag-text h3 {
-  color: black;
+  font-size: 15px;
+  color: rgb(210, 39, 39);
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 #tag-text h3:hover {
-  text-decoration: underline;
   cursor: pointer;
-  color: gray;
+  text-decoration: underline;
+}
+
+#tag-text p {
+  color: rgb(212, 212, 212)
 }
 
 #category-div {
@@ -51,35 +65,50 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 2px 2px 5px gray;
+  box-shadow: 2px 3px 8px rgb(185, 185, 185);
   margin-bottom: 20px;
   margin-top: 20px;
+  border: 1px solid rgba(191, 191, 191, 0.867);
+  transition: transform 0.05s ease-in-out;
 }
 
 .category-img-card:hover{
   cursor: pointer;
+  transform: scale(1.1);
+  box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
 }
 
 .category-img-card img {
   height: 160px;
+}
 
+#category-dog-img {
+  margin-top: 49px;
+  height: 180px;
+  width: 170px;
 }
 
 #category-reptile-img {
-  height: 120px;
+  height: 140px;
+  margin-top: 10px;
 }
 
 #category-cat-img {
   height: 170px;
-  padding-right: 50px;
+  width: 160px;
+  margin-top: 35px;
 }
 
 #category-aquatic-img {
-  height: 80px;
+  height: 150px;
+  margin-top: 18px;
 }
 
 #category-guineapig-img {
-  height: 140px;
+  margin-top: 5px;
+  margin-left: 8px;
+  height: 150px;
+  width: 170px;
 }
 
 #our-selection-div {
@@ -87,16 +116,46 @@
   justify-content: center;
 }
 
-#shop-selections-div h2,
-#trending-section h2 {
+#shop-selections-div h2 {
   margin-left: 20px;
 }
 
 #trending-div {
   display: grid;
-  grid-template-columns: repeat(5, auto);
-  gap: 10px;
+  width: 100%;
+  width: fit-content;
+  border: 1px solid rgb(190, 190, 190);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  grid-auto-rows: minmax(100px, auto);
+  padding-right: 35px;
+  padding-top: 20px;
+  padding-bottom: 15px;
 }
+.trending-text {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.trending-text h2 {
+  margin-bottom: 5px;
+  color: rgb(210, 39, 39);
+}
+
+.trending-text p {
+  margin: 0;
+  color: rgb(130, 130, 130);
+  font-size: 15px
+}
+
 
 #view-all-div {
   display: flex;
@@ -115,5 +174,44 @@
 
 #view-all-div p {
   margin: 0;
-  
+}
+
+.homepage-userwelcome {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.homepage-userwelcome span {
+  color: rgb(120, 120, 120)
+}
+
+#category-div p {
+  margin: 0px;
+}
+
+#shop-selections-div h2 {
+  margin-top: 50px;
+  color: rgb(199, 22, 22);
+  font-size: 17px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+#our-selection-div {
+  width: 100%;
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  grid-auto-rows: minmax(300px, auto);
+  gap: 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.selection-curation {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: rgb(130, 130, 130)
 }

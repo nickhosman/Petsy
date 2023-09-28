@@ -41,33 +41,40 @@ function ProfileButton({ user }) {
   return (
     <>
       <button id="profile-btn" onClick={openMenu}>
-        <i class="fa-solid fa-user fa-xl"></i>
+        <i class="fa-solid fa-bars"></i>
+        <i id='nav-user-icon' class="fa-regular fa-user fa-xl"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="k-loggedin-container">
-            <li>{user.username}</li>
-            <li>{user.email}</li>
+            <div id='loggedin-userinfocontainer'>
+              <img className='loggedin-defaultprofilepic' src='https://i.ibb.co/1LCJZZZ/Default-pfp-svg.png'></img>
+            <div className="loggedin-profilepiccontainer">
+              <p><strong>{user.username}</strong></p>
+              <p className="useremail">{user.email}</p>
+            </div>
+            </div>
+            <div className="loggedin-line"></div>
             <NavLink style={{ textDecoration: "none", color: "black" }}
                 onClick={closeMenu}
                 to="/products/new">
-            <div>Create a Listing</div>
+            <li>+ Sell on Petsy</li>
             </NavLink>
-            <li>
-            </li>
+            <div className="loggedin-line"></div>
             <NavLink style={{ textDecoration: "none", color: "black" }}
                 onClick={closeMenu}
                 to={`/users/${user.id}/products`}>
-            <div>View My Listings</div>
+            <li>ฅ View Listings</li>
             </NavLink>
-            <li id='log-out-btn-div'>
-              <button id="log-out-btn" onClick={handleLogout}>Log Out</button>
-            </li>
+            <div className="loggedin-line"></div>
+              <button id="log-out-btn" onClick={handleLogout}>Log Out
+              </button>
           </div>
         ) : (
           <>
             <OpenModalButton
               buttonText="Log In"
+              styleClass='nav-login-button'
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
             />
