@@ -21,6 +21,7 @@ function ProductFormPage() {
   const [productTagList, setProductTagList] = useState([]);
   const [productTag, setProductTag] = useState("");
   const [customTagInput, setCustomTagInput]=useState("")
+  const [addTagBtn, setAddTagBtn] = useState("show")
   const [customTagInputClass, setCustomTagInputClass]=useState("hidden")
   const [displayCustomTag, setDisplayCustomTag]=useState("")
   const [lis, setLis] = useState([]);
@@ -59,17 +60,15 @@ function ProductFormPage() {
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
-    console.log(productTagList)
-    let tagStr = ""
-    productTagList.forEach(async tag => {
-      tagStr += tag + ",,,"
-    })
-    const tagObj = {
-      name: tagStr
-    }
+
     if (newProduct) {
       // console.log(newProduct.id)
-      await dispatch(CreateProductTag(newProduct.id,tagObj))
+      await fetch(`/api/products/${newProduct.id}/tags`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: productTagList }),
+      })
+      console.log(productTagList)
       dispatch(fetchProductDetail(newProduct.id))
       history.push(`/products/${newProduct.id}`)
     }
@@ -77,40 +76,25 @@ function ProductFormPage() {
 
 
   const handleTagClick = async (e) => {
-    console.log("FIRST", tags)
-    let selTag = e.target.textContent
     if (e.target.className === "tag-untoggled") {
-      e.target.className = "tag-toggled"
-      setProductTagList(prevTagList => {
-        if (prevTagList?.length < 5) {
-          if (!prevTagList.includes(selTag)) {
-            console.log('selTag', selTag)
-            console.log('newtags', [...prevTagList, selTag])
-            return[...prevTagList,selTag]
-          }
-          return prevTagList
-        } else {
-          e.target.className = "tag-untoggled"
-          return prevTagList
-        }
-        })
-    } else {
-        e.target.className = "tag-untoggled"
-        setProductTagList(prevTagList => {
-          const updatedTagList = prevTagList.filter(tag => tag !== selTag)
-          console.log('UPDATE', updatedTagList)
-          return updatedTagList
-        })
+      if (!(productTagList.length >= 5)) {
+        e.target.className = "tag-toggled"
+        console.log(e.target.id)
+        setProductTagList([...productTagList, e.target.id])
       }
+    } else {
+      e.target.className = "tag-untoggled"
+      let tempList = [...productTagList]
+      let tagIdx = tempList.indexOf(e.target.id)
+      tempList.splice(tagIdx, 1)
+      setProductTagList(tempList)
     }
-
-
 
   // + button onClick
   const handleClickAddTagBtn = e=>{
     e.preventDefault()
     setCustomTagInputClass("show")
-
+    setAddTagBtn("hidden")
   }
   // input onChange
   const handleAddCustomTag = e => {
@@ -121,15 +105,58 @@ function ProductFormPage() {
 
   }
 
+  const handleAddClick = async (e) => {
+    e.preventDefault()
+    const tagListItems= []
+    for(const tagObj of tagList){
+      tagListItems.push(Object.values(tagObj)[1])
+    }
+    console.log(customTagInput)
+    if (tagListItems.includes(customTagInput)){
+      alert("The tag already exists. Please select it from the list.")
+    }
+      const newTag = await fetch("/api/tags/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: displayCustomTag
+        })
+      })
+      const res = await newTag.json()
+      if (displayCustomTag.length <= 25) {
+        const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
+        setLis([...lis, newLi])
+        setCustomTagInput("")
+      } else {
+          alert("Tags must be less than or equal to 25 characters")
+      }
+  }
+
   // pressing enter to submit custom tag
-  const handleCustomTagOnKeyPress =e=>{
+  const handleCustomTagOnKeyPress = async (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
 
-      const newLi = <li className="tag-untoggled" key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
-      setLis([...lis, newLi])
-      setCustomTagInput("")
-
+      const newTag = await fetch("/api/tags/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: displayCustomTag
+        })
+      })
+      const res = await newTag.json()
+      if (displayCustomTag.length <= 25) {
+        const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
+        setLis([...lis, newLi])
+        setCustomTagInput("")
+      } else {
+        alert("Tags must be less than or equal to 25 characters")
+      }
+      // console.log(res)
     }
   }
 
@@ -210,24 +237,28 @@ function ProductFormPage() {
         <label className="tag-container">
           Tags
           <ul className="n-tag-wrapper">
-            {tagList.map((tag, idx) => <li key={idx} value={tag.name} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
+            {tagList.map((tag, idx) => <li key={idx} id={tag.id} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
             {lis}
             {/* <form onSubmit={handleCustomTagOnSubmit}> */}
+            {/* </form> */}
+            <li className={`tag-add ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</li>
+            </ul>
+            <div id="custom-tag-wrapper">
               <input
                 type="text"
                 id="custom-tag-div"
                 className={customTagInputClass}
                 value={customTagInput}
                 onChange={handleAddCustomTag}
-                onKeyPress={handleCustomTagOnKeyPress} />
-            {/* </form> */}
-            <li className="tag-add" onClick={handleClickAddTagBtn}>+</li>
-          </ul>
+                onKeyPress={handleCustomTagOnKeyPress}
+              />
+              <li className={`add-tag-btn ${customTagInputClass}`} onClick={handleAddClick}>Add Tag</li>
+            </div>
         </label>
         <button type="submit">Create Listing</button>
       </form>
     </div>
   )
 }
-
+}
 export default ProductFormPage;
