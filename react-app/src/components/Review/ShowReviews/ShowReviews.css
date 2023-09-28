@@ -15,3 +15,24 @@
   margin-top: 30px;
   /* border-top: rgb(169, 169, 169) 1px solid; */
 }
+
+.productdetails-update-review-reviewbuttons{
+  background-color: transparent;
+  border: none;
+}
+
+.productdetails-update-reviewbutton{
+  background-color: transparent;
+  border: none;
+  border-right: 1px gray solid;
+  padding-left: 0px;
+  color: rgb(95, 94, 94);
+}
+
+.productdetails-delete-reviewbutton{
+  background-color: transparent;
+  border: none;
+  margin-bottom: 10px;
+  color: rgb(95, 94, 94);
+}
+

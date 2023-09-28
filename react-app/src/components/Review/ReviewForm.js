@@ -73,7 +73,7 @@ function ReviewForm({review, formType}) {
             onChange={(e) => setDetails(e.target.value)}
             required
           />
-        {errors.details && <p>{errors.details}</p>}
+        {errors.details && <p id='error-msg'>*{errors.details}</p>}
         </div>
         <button onSubmit={handleSubmitReview} type='submit'>{formType === 'Create A Review' ? 'Create Review' : 'Update Review'}</button>
       </form>

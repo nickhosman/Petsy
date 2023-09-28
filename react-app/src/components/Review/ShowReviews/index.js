@@ -14,6 +14,7 @@ const ShowReviews = ({productId}) => {
   const allReviews = useSelector(state => state.products.singleProduct?.ProductReviews)
   const product = useSelector(state => state.products?.singleProduct)
   const user = useSelector((state) => state.session.user)
+  console.log(user)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,16 +26,16 @@ const ShowReviews = ({productId}) => {
     <FontAwesomeIcon
       key={star}
       icon={faStar}
-      color={rating >= star ? "black" : "lightgray"} />
+      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
       )
 
   const reviewCount = () => {
     if(product.totalReviews === 1) {
-      return <h3 className="review-count-avg-rating">{product.totalReviews} Review · ★ {product.averageRating?.toFixed(1)} </h3>
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Review </h3>
     }else if (product.totalReviews === 0) {
       return <h2>★ New</h2>
     }else {
-      return <h3 className="review-count-avg-rating">{product.totalReviews} Reviews · ★ {product.averageRating?.toFixed(1)} </h3>
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Reviews</h3>
     }
   }
 
@@ -58,10 +59,10 @@ const ShowReviews = ({productId}) => {
         {Object.values(allReviews).sort(sortReviewDates).map((review) => (
           <li className="reviews" key={review.id}>
             <h6 className="review-stars">{starRating(review.stars)}</h6>
-            <p className="review-user-date">{review.User?.username} | {review.createdAt}</p>
+            <p className="review-user-date">{review.User?.firstName} | {review.createdAt}</p>
             <p>{review.details}</p>
             {user && user.id === review.userId ?
-            <div>
+            <div className="productdetails-update-review-reviewbuttons">
               <OpenModalButton
                 buttonText='Edit'
                 modalComponent={<UpdateReview reviewId={review.id}/>}
