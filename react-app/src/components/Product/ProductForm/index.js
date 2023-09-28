@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import './ProductForm.css'
-import { fetchCreateProduct, fetchAddImageToProduct, fetchProductDetail } from "../../../store/product";
+import { fetchCreateProduct, fetchAddImageToProduct, fetchProductDetail, CreateProductTag } from "../../../store/product";
 
 function ProductFormPage() {
   const dispatch = useDispatch();
@@ -18,6 +18,9 @@ function ProductFormPage() {
   const [otherImage3, setOtherImage3] = useState("");
   const [otherImage4, setOtherImage4] = useState("");
   const [tagList, setTagList] = useState([]);
+  const [productTagList, setProductTagList] = useState([]);
+  const [productTag, setProductTag] = useState("");
+
 
 
   const [tags, setTags] = useState([]);
@@ -41,17 +44,29 @@ function ProductFormPage() {
       price,
       category_id: Number(category)
     }
+    console.log(payload)
     const newProduct = await dispatch(fetchCreateProduct(payload));
     await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
-    if(newProduct) {
+    console.log(productTagList)
+    let tagStr = ""
+    productTagList.forEach(async tag => {
+      tagStr += tag + ","
+    })
+    const tagObj = {
+      name: tagStr
+    }
+    if (newProduct) {
+      // console.log(newProduct.id)
+      await dispatch(CreateProductTag(newProduct.id,tagObj))
       dispatch(fetchProductDetail(newProduct.id))
       history.push(`/products/${newProduct.id}`)
     }
   }
+
 
   const handleTagClick = async (e) => {
     console.log("FIRST", tags)
@@ -60,17 +75,42 @@ function ProductFormPage() {
     } else {
       e.target.className = "tag-untoggled"
     }
-    if (tags.includes(e.target.textContent)) {
-      let valIdx = tags.indexOf(e.target.textContent)
-      let newTags = [...tags]
-      newTags.splice(valIdx, 1)
-      setTags(newTags)
-    } else {
-      console.log("AAAAAAAAAAAAAAAAAAAA")
-      setTags([...tags, e.target.textContent])
-    }
-    console.log("tags:", tags)
+    let selTag = e.target.textContent
+    setProductTagList(prevTagList => {
+      if (prevTagList?.length < 5) {
+        if (!prevTagList.includes(selTag)) {
+          console.log(selTag)
+          console.log([...prevTagList, selTag])
+          return[...prevTagList,selTag]
+        }
+        return prevTagList
+      } else {
+        e.target.className = "tag-untoggled"
+        return prevTagList
+      }
+    })
+
   }
+  console.log(productTagList)
+
+  // const handleTagClick = async (e) => {
+  //   console.log("FIRST", tags)
+  //   if (e.target.className === "tag-untoggled") {
+  //     e.target.className = "tag-toggled"
+  //   } else {
+  //     e.target.className = "tag-untoggled"
+  //   }
+  //   if (tags.includes(e.target.textContent)) {
+  //     let valIdx = tags.indexOf(e.target.textContent)
+  //     let newTags = [...tags]
+  //     newTags.splice(valIdx, 1)
+  //     setTags(newTags)
+  //   } else {
+  //     console.log("AAAAAAAAAAAAAAAAAAAA")
+  //     setTags([...tags, e.target.textContent])
+  //   }
+  //   console.log("tags:", tags)
+  // }
 
   return (
     <div className="n-product-form-wrapper">
@@ -118,10 +158,10 @@ function ProductFormPage() {
         <label>Add Images</label>
         <input value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
         <div>
-        <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
-        <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
-        <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)}  placeholder="(optional)"></input>
-        <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)}  placeholder="(optional)"></input>
+          <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
+          <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
+          <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)} placeholder="(optional)"></input>
+          <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)} placeholder="(optional)"></input>
         </div>
         <label className="tag-container">
           Tags

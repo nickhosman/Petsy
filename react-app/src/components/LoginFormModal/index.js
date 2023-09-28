@@ -8,7 +8,8 @@ function LoginFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
+
   const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
@@ -17,32 +18,30 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } else {
-      closeModal()
+      closeModal();
     }
+
   };
+  console.log(errors)
 
   const handledemoUserLogin = (e) => {
     e.preventDefault()
     setErrors([]);
-    return dispatch(login('demouser@appacademy.io','password'))
+    return dispatch(login('demouser@appacademy.io', 'password'))
       .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+
   }
- 
+
 
   return (
     <div id="login-modal-div">
       <h1>Log In</h1>
       <form id="login-modal-form" onSubmit={handleSubmit}>
         <ul>
-          {errors&&errors.map((error, idx) => (
+          {/* {errors&&errors.map((error, idx) => (
             <li key={idx}>{error}</li>
-          ))}
+          ))} */}
+
         </ul>
         <label>
           Email
@@ -53,6 +52,10 @@ function LoginFormModal() {
             required
           />
         </label>
+        {/* {errors && errors.email &&
+          <p className="login-input-error">
+            {errors.email}
+          </p>} */}
         <label>
           Password
           <input
@@ -62,8 +65,12 @@ function LoginFormModal() {
             required
           />
         </label>
+        {errors && errors.password &&
+          <p className="login-input-error">
+            {errors.password}
+          </p>}
         <button id="demo-submit-btn" onClick={handledemoUserLogin}>Demo User</button>
-        <button id="login-form-submit-btn" type="submit">Log In</button>
+        <button id="login-form-submit-btn" type="submit"  >Log In</button>
       </form>
     </div>
   );

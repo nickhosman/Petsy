@@ -24,7 +24,7 @@ function ProductManage({ product, isListing }) {
   return (
     <div className='manageproduct-container'>
       <div>
-        <img className='manageproduct-image' src={product.previewImage} alt=''></img>
+        <img className='manageproduct-image' src={product.previewImage} alt='' onClick={() => history.push(`/products/${product.id}`)}></img>
       </div>
       <div>
         <p>{product.name}</p>

@@ -130,3 +130,25 @@
 .productdetails-reviewbutton:hover {
   cursor: pointer;
 }
+
+.favoritedheart {
+  color: red;
+  position: absolute;
+  top: 190px;
+  left: 606px;
+  border: 1px solid red;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 13px;
+}
+
+.unfavoritedheart {
+  color: black;
+  position: absolute;
+  top: 190px;
+  left: 606px;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 13px;
+}
