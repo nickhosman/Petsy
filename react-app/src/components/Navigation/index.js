@@ -5,6 +5,8 @@ import { useSearchContext } from '../../context/Search';
 import ProfileButton from './ProfileButton';
 import SearchBar from './SearchBar';
 import './Navigation.css';
+import logo from '../images/Petsy-logo.svg'
+import doggo from '../images/doggo.svg'
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
@@ -13,21 +15,24 @@ function Navigation({ isLoaded }){
 	return (
 		<ul id="navigation-bar">
 			<li id="logo">
-				<NavLink className="nav-link" exact to="/"><i class="fa-solid fa-paw"></i><p>PETSY</p></NavLink>
-			</li>
-			<li id="search-bar-li">
-				<SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
-			</li>
-			<li id='nav-heart-icon'>
-		
-			<NavLink style={{ textDecoration: "none", color: "black" }} exact to={`/users/${sessionUser?.id}/favorites`}>
-				<i class="fa-solid fa-heart fa-lg"></i>
+				<NavLink className="nav-link" exact to="/">
+					<img className='petsy-logo' src={logo}></img>
 				</NavLink>
 			</li>
+			<li id="search-bar-li">
+				<img className='nav-peekingdoggo' src={doggo}></img>
+				<SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
+			</li>
 			{isLoaded && (
+			<div className='navigation-bar-right'>
+				{sessionUser &&
+					<NavLink style={{ textDecoration: "none", color: "black" }} exact to={`/users/${sessionUser?.id}/favorites`}>
+					<i id='nav-heart-icon' class="fa-sharp fa-regular fa-heart"></i>
+					</NavLink>}
 				<li id="user-profile-li">
 					<ProfileButton user={sessionUser} />
 				</li>
+			</div>
 			)}
 		</ul>
 	);

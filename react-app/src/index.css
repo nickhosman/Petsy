@@ -1,1 +1,6 @@
 /* TODO Add site wide styles */
+
+#gray-bar {
+  border-bottom: 1px solid rgb(217, 217, 217);
+  padding-top: 10px;
+}

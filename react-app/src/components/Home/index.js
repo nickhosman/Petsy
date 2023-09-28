@@ -15,6 +15,7 @@ const Home = ({ searchInput, setSearchInput }) => {
   const history = useHistory()
   const [isNavigated, setIsNavigated] = useState(false)
   const [filterCategoryId, setFilterCategoryId] = useState(null)
+  const sessionUser = useSelector(state => state.session.user);
 
 
   // GET ALL CATEGORIES
@@ -24,7 +25,7 @@ const Home = ({ searchInput, setSearchInput }) => {
 
   const allProducts = Object.values(productObj)
   const categoryArr = Object.values(allCategories)
-  
+
   const handleViewAllProducts =e=>{
     e.preventDefault()
     history.push(`/products`)
@@ -36,7 +37,7 @@ const Home = ({ searchInput, setSearchInput }) => {
       let targetDiv = e.target
       while (targetDiv) {
         if (targetDiv.className === "category-card" && targetDiv.id) {
-          
+
           setSearchInput(targetDiv.id)
           // setItemCategoryId()
           history.push(`/search?q=${targetDiv.id}`)
@@ -58,9 +59,6 @@ const Home = ({ searchInput, setSearchInput }) => {
         setFilterCategoryId(filterId)
       }
     }
-    console.log(allProducts[0]?.categoryId)
-    console.log(filterCategoryId)
-
   }
 
   // Our Selection Section
@@ -90,7 +88,6 @@ const Home = ({ searchInput, setSearchInput }) => {
   }
 
 
-
   useEffect(() => {
     const filteredItems = allProducts.filter(product => product.categoryId === filterCategoryId)
     console.log(filteredItems)
@@ -104,45 +101,52 @@ const Home = ({ searchInput, setSearchInput }) => {
   if (!Object.values(allCategories).length) {
     return null
   }
+
   return (
     <div>
+      {sessionUser && <p className='homepage-userwelcome'> <span>Welcome back,</span> <strong className='underline-name'>{sessionUser.firstName}</strong>!</p>}
       <div id="tag-div">
         <div id="tag-text">
+          <p>|</p>
           <h3>The Halloween Shop</h3>
+          <p>|</p>
           <h3>Pet Clothing</h3>
+          <p>|</p>
           <h3>Toys</h3>
+          <p>|</p>
           <h3>Treats</h3>
+          <p>|</p>
         </div>
       </div>
       <div id="category-div" >
         <div className="category-card" id="Dog" onClick={handleGoToCategory}>
           <div className="category-img-card" >
-            <img id="category-dog-img" src="https://t4.ftcdn.net/jpg/03/20/31/23/240_F_320312301_P50xX4vn41JdsueONpzzWJy6ezFSp8d4.jpg" alt="Picture_of_Dog" />
+            <img id="category-dog-img" src="https://i.etsystatic.com/5632914/r/il/8ba30a/4272623729/il_794xN.4272623729_orkx.jpg" alt="Picture_of_Dog" />
           </div>
           <p>For Dogs</p>
         </div>
         <div className="category-card" id="Cat" onClick={handleGoToCategory}>
           <div className="category-img-card" >
-            <img id="category-cat-img" src="https://as1.ftcdn.net/v2/jpg/02/94/95/06/1000_F_294950610_0uQYP5eWysiojsEjRgHybXy41AJ7EqU4.jpg" alt="Picture_of_Cat" />
+            <img id="category-cat-img" src="https://pbs.twimg.com/media/F6CzEK5WQAAOc8t?format=jpg" alt="Picture_of_Cat" />
           </div>
           <p>For Cats</p>
         </div>
 
         <div className="category-card" id="Reptile" onClick={handleGoToCategory}>
           <div className="category-img-card" >
-            <img id="category-reptile-img" src="	https://t4.ftcdn.net/jpg/02/84/36/01/240_F_284360115_HVFpofdPf08t3DPFDnziiXYL8su7uTg1.jpg" alt="Picture_of_Reptile" />
+            <img id="category-reptile-img" src="https://i.etsystatic.com/17565181/r/il/96bc4d/3117994707/il_794xN.3117994707_v7vd.jpg" alt="Picture_of_Reptile" />
           </div>
           <p>For Reptiles</p>
         </div>
         <div className="category-card" id="Aquatic" onClick={handleGoToCategory}>
           <div className="category-img-card" >
-            <img id="category-aquatic-img" src="https://t3.ftcdn.net/jpg/06/17/10/92/240_F_617109219_Ct1DD5JDXvpF0mn2Gv1bcttQhCasWLrM.jpg" alt="Picture_of_Aquatic" />
+            <img id="category-aquatic-img" src="https://i.etsystatic.com/31903230/r/il/379794/3621076408/il_794xN.3621076408_jwkd.jpg" alt="Picture_of_Aquatic" />
           </div>
           <p>For Aquatic</p>
         </div>
         <div className="category-card" id="Others" onClick={handleGoToCategory}>
           <div className="category-img-card" >
-            <img id="category-guineapig-img" src="https://t3.ftcdn.net/jpg/06/11/28/02/360_F_611280278_F4va8Lxym7oPkVAzenVbCnvw2DsFrVA5.jpg" alt="Picture_of_Guinea_Pig" />
+            <img id="category-guineapig-img" src="https://i.etsystatic.com/27232651/r/il/5b7220/4621311834/il_794xN.4621311834_y1yw.jpg" alt="Picture_of_Guinea_Pig" />
           </div>
           <p>Others</p>
         </div>
@@ -152,7 +156,7 @@ const Home = ({ searchInput, setSearchInput }) => {
         </div>
       </div>
       <div id="shop-selections-div" >
-        <h2>Shop Our Selections</h2>
+        <h2>Shop Our Selections: </h2>
         <div id="our-selection-div">
           {productsInSelection.map(product => (
             <ProductsSelection product={product} />

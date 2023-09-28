@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
+import cats from '../images/cats.svg'
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function SignupFormModal() {
 
 	return (
 		<div id="signup-modal-div">
+			<img className="peepingcats" src={cats}></img>
 			<h1>Sign Up</h1>
 			<form id="signup-modal-form" onSubmit={handleSubmit}>
 				{/* <ul>
