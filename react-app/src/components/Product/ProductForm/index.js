@@ -166,6 +166,7 @@ function ProductFormPage() {
             required
           />
         </label>
+        {errors && errors.name && <p id='error-msg'>*{errors.name}</p>}
         <label>
           Product description
           <textarea
