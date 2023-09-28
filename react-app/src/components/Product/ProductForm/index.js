@@ -47,14 +47,8 @@ function ProductFormPage() {
       price,
       category_id: Number(category)
     }
+    console.log(payload)
     const newProduct = await dispatch(fetchCreateProduct(payload));
-    if(newProduct.errors) {
-      setErrors(newProduct.errors)
-    }
-    if(!previewImage) {
-      setErrors({ ...errors, "preview": "Must have preview image"})
-    }
-
     await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
     await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
@@ -90,6 +84,7 @@ function ProductFormPage() {
       setProductTagList(tempList)
     }
 
+  }
   // + button onClick
   const handleClickAddTagBtn = e=>{
     e.preventDefault()
@@ -179,7 +174,6 @@ function ProductFormPage() {
   //   console.log("tags:", tags)
   // }
 
-  console.log('ERRORS', errors)
   return (
     <div className="n-product-form-wrapper">
       <h1>Create A Listing</h1>
@@ -193,7 +187,6 @@ function ProductFormPage() {
             required
           />
         </label>
-        {errors && errors.name && <p id='error-msg'>*{errors.name}</p>}
         <label>
           Product description
           <textarea
@@ -204,7 +197,6 @@ function ProductFormPage() {
             required
           >
           </textarea>
-          {errors && errors.description && <p id='error-msg'>*{errors.description}</p>}
         </label>
         <label>
           Price
@@ -215,7 +207,6 @@ function ProductFormPage() {
             required
           />
         </label>
-        {errors && errors.price && <p id='error-msg'>{errors.price}</p>}
         <label>
           Category
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
@@ -227,12 +218,12 @@ function ProductFormPage() {
           </select>
         </label>
         <label>Add Images</label>
-        <input value={previewImage} required type='url' onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
+        <input value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
         <div>
-          <input value={otherImage1} type='url' onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
-          <input value={otherImage2} type='url' onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
-          <input value={otherImage3} type='url' onChange={(e) => setOtherImage3(e.target.value)} placeholder="(optional)"></input>
-          <input value={otherImage4} type='url' onChange={(e) => setOtherImage4(e.target.value)} placeholder="(optional)"></input>
+          <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
+          <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
+          <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)} placeholder="(optional)"></input>
+          <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)} placeholder="(optional)"></input>
         </div>
         <label className="tag-container">
           Tags
@@ -260,5 +251,5 @@ function ProductFormPage() {
     </div>
   )
 }
-}
+
 export default ProductFormPage;
