@@ -17,6 +17,8 @@ def get_products():
         data = product.to_dict()
         images = product.product_images
         reviews = product.reviews
+        seller = product.seller
+        data['seller'] = seller.to_dict()
         total_review = len(reviews)
         if total_review == 0:
             data["averageRating"] = 'No reviews'
@@ -93,35 +95,27 @@ def post_product(productId):
 @login_required
 def post_tags(productId):
     """
-    Create a tag for a product
+    Add tags to a product
     """
     product = Product.query.get(productId)
+    print("zzzzzzzz", product)
     if not product:
         return {"errors": "Product not found"}, 404
 
-    product_tags = product.all_tags
-    print("FIRST", product_tags)
-    form = TagForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
+    print("rrrrrrrrr", request.get_json())
+    new_tags = request.get_json()['name']
+    print("----------", new_tags)
 
-    if form.validate_on_submit():
-        existing_tag = Tag.query.filter_by(name=form.data["name"]).first()
+    tag_obj_list = [Tag.query.get(int(tag_id)) for tag_id in new_tags]
 
-        if existing_tag:
-            if existing_tag in product_tags:
-                return {"errors": "Tag already exists for this product"}, 400
-            product_tags.append(existing_tag)
-            db.session.commit()
-            return existing_tag.to_dict()
+    print("AAAAAAAAAAA", tag_obj_list)
+    product.all_tags = tag_obj_list
+    db.session.commit()
+    print("lllllllll", [tag.to_dict() for tag in tag_obj_list])
+    print("bbbbbbbbbb", zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
 
-        else:
-            new_tag = Tag(name = form.data["name"])
-            db.session.add(new_tag)
-            product_tags.append(new_tag)
-            db.session.commit()
-            print("SECOND", product_tags)
-            return new_tag.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+    tag_object =  dict(zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
+    return tag_object
 
 @product_routes.route("/<int:productId>/reviews")
 def get_reviews(productId):
@@ -156,6 +150,8 @@ def get_products_detail(productId):
     reviews = product.reviews
     images = product.product_images
     total_review = len(reviews)
+    # tags = [tag.to_dict() for tag in product.all_tags]
+    tag_dict = { tag.id: tag.to_dict() for tag in product.all_tags }
     if total_review == 0:
         average_rating = 'No reviews'
     else:
@@ -172,7 +168,8 @@ def get_products_detail(productId):
         "totalReviews": total_review,
         "averageRating": average_rating,
         "ProductImages": [image.to_dict() for image in images],
-        "Seller": product.seller.to_dict()
+        "Seller": product.seller.to_dict(),
+        "tags": tag_dict,
     }
 
     return data

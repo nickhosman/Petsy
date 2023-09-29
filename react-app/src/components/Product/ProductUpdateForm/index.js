@@ -58,6 +58,8 @@ function ProductUpdateForm() {
     }
   }
 
+  console.log('ERRORS', errors)
+
   return(
     <div className="n-product-form-wrapper">
     <h1>Update Your Listing</h1>
@@ -80,7 +82,7 @@ function ProductUpdateForm() {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-      {errors.description && <p className="error-message">*{errors.description}</p>}
+      {errors && errors.description && <p id='error-msg'> {errors.description} </p>}
       </label>
       <label>
         Price
@@ -91,6 +93,7 @@ function ProductUpdateForm() {
           required
         />
       </label>
+      {errors && errors.price && <p id='error-msg'>{errors.price}</p>}
       <label>
         Category
         <select value={category} onChange={(e) => setCategory(e.target.value)}>

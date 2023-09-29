@@ -15,7 +15,7 @@ const SearchBar = ({ searchInput,setSearchInput }) => {
   const categoryArr = Object.values(allCategories)
 
   // const [searchInput, setSearchInput] = useState('')
- 
+
 
   const handleInputChange = e => {
     e.preventDefault()
@@ -72,7 +72,7 @@ const SearchBar = ({ searchInput,setSearchInput }) => {
   return (
     <div id="search-bar-div">
       <form onSubmit={handleSubmit}>
-        <input id="search-bar-input"
+        <input className='nav-searchbar' id="search-bar-input"
           type="text"
           placeholder='Search for something...'
           value={searchInput}

@@ -20,7 +20,7 @@ function ProductCard({ product }) {
         <h4>{product.name}</h4>
         <div id="product-rating-div">
           <p>{product.averageRating}</p>
-          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star fa-reviewstar"></i>
         </div>
         <p id='price'>${product.price}</p>
       </div>

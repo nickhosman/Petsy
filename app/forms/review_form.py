@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Length,ValidationError
 
 class ReviewForm(FlaskForm):
   stars=IntegerField("Stars",default=0)
-  details=TextAreaField("Details",validators=[DataRequired(),Length(min=20)])
+  details=TextAreaField("Details",validators=[DataRequired()])
 
   def validate_stars(form, field):
       if not field.data:

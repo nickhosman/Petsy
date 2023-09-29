@@ -1,12 +1,11 @@
 .manageproduct-container {
-  border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  border: 1px solid rgb(197, 197, 197);
 }
 
 .manageproduct-wrapper {
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   row-gap: 20px;

@@ -5,13 +5,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import "./ShowReviews.css"
+import UpdateReview from "../UpdateReviews/index"
+import OpenModalButton from "../../OpenModalButton";
+import DeleteReviewModal from "../DeleteReviews/DeleteReviewModal";
 
-const ShowReviews = ({productId}) => {
-
-  const allReviews = useSelector(state => state.products.singleProduct?.ProductReviews)
-  const product = useSelector(state => state.products?.singleProduct)
-
+const ShowReviews = ({product, user, productId}) => {
   const dispatch = useDispatch()
+  const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
 
   useEffect(() => {
     dispatch(getAllReviewsThunk(productId))
@@ -22,16 +22,16 @@ const ShowReviews = ({productId}) => {
     <FontAwesomeIcon
       key={star}
       icon={faStar}
-      color={rating >= star ? "black" : "lightgray"} />
+      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
       )
 
   const reviewCount = () => {
     if(product.totalReviews === 1) {
-      return <h3 className="review-count-avg-rating">{product.totalReviews} Review · ★ {product.averageRating?.toFixed(1)} </h3>
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Review </h3>
     }else if (product.totalReviews === 0) {
       return <h2>★ New</h2>
     }else {
-      return <h3 className="review-count-avg-rating">{product.totalReviews} Reviews · ★ {product.averageRating?.toFixed(1)} </h3>
+      return <h3 className="review-count-avg-rating">{product.totalReviews} Reviews</h3>
     }
   }
 
@@ -41,6 +41,12 @@ const ShowReviews = ({productId}) => {
     return dateB - dateA
   }
 
+  // const upateReview = () => {
+  //   if (user.id === Object.keys(allReviews.userId)) {
+  //     for()
+  //   }
+  // }
+
   if(!product || !allReviews || Object.keys(product).length === 0) return null;
   return (
     <div className="reviews-container">
@@ -48,9 +54,23 @@ const ShowReviews = ({productId}) => {
         {reviewCount()}
         {Object.values(allReviews).sort(sortReviewDates).map((review) => (
           <li className="reviews" key={review.id}>
-            <h6>{starRating(review.stars)}</h6>
-            <p>{review.User?.username} | {review.createdAt}</p>
+            <h6 className="review-stars">{starRating(review.stars)}</h6>
+            <p className="review-user-date">{review.User?.firstName} | {review.createdAt}</p>
             <p>{review.details}</p>
+            {user && user.id === review.userId ?
+            <div className="productdetails-update-review-reviewbuttons">
+              <OpenModalButton
+                buttonText='Edit'
+                modalComponent={<UpdateReview reviewId={review.id}/>}
+                styleClass='productdetails-update-reviewbutton'
+              />
+              <OpenModalButton
+                buttonText='Delete'
+                modalComponent={<DeleteReviewModal reviewId={review.id} productId={productId} />}
+                styleClass='productdetails-delete-reviewbutton'
+              />
+            </div>
+            : null}
           </li>
         ))}
       </div>
