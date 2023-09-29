@@ -79,21 +79,26 @@ console.log(allProductTags)
 
   const handleAddTagClick = async (e) => {
     e.preventDefault()
-    const response = await fetch(`/api/products/${product.id}/tags/add`, {
-      method: "PUT",
-      headers: {
-        "Content-Type" : "application/json"
-      },
-      body: JSON.stringify({name: tagInput})
-    })
-
-    if (response.ok) {
-      const tag = await response.json()
-      dispatch(createProductTag(tag))
-      dispatch(fetchProductDetail(productId))
+    if (tagArr.includes(tagInput)) {
+      alert("Tag already exists for product")
       setTagInput("")
     } else {
-      console.error(response.errors)
+      const response = await fetch(`/api/products/${product.id}/tags/add`, {
+        method: "PUT",
+        headers: {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({name: tagInput})
+      })
+
+      if (response.ok) {
+        const tag = await response.json()
+        dispatch(createProductTag(tag))
+        dispatch(fetchProductDetail(productId))
+        setTagInput("")
+      } else {
+        console.error(response.errors)
+      }
     }
   }
 
