@@ -66,6 +66,7 @@ werkzeug = "==2.2.2"
 wtforms = "==3.0.1"
 faker = "*"
 psycopg2 = "*"
+email-validator = "*"
 
 [dev-packages]
 

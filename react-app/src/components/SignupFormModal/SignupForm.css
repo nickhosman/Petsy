@@ -3,8 +3,10 @@
   flex-direction: column;
   width: 300px;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 42px;
   border-radius: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 #signup-modal-form {
@@ -26,12 +28,12 @@
   margin-top: 10px;
   border-radius: 15px;
   font-weight: bold;
-  background-color: rgb(193, 193, 193);
+  background-color: rgb(245, 245, 245);
   width:100%;
 }
 
 #signup-form-submit-btn:hover{
-  background-color: rgb(193, 131, 131);
+  background-color: rgb(199, 53, 53);
   cursor: pointer;
 }
 
@@ -43,4 +45,16 @@
 #signup-login-btn:hover{
 cursor: pointer;
 text-decoration: underline;
+}
+
+#error-msg{
+  color:red;
+  margin:0;
+}
+
+.peepingcats {
+  position: absolute;
+  top: -60px;
+  right: 25px;
+  width: 290px;
 }

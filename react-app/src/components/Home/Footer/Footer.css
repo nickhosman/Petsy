@@ -1,0 +1,36 @@
+#footer-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+
+.join-us-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+ /* color:#2f5284; */
+  margin:0;
+}
+
+#root{
+  display: flex;
+  flex-direction: column;
+  /* height: 100vh; */
+}
+
+#footer-div {
+  background-color: #fff; /* You can change the background color as needed */
+  padding: 10px; /* Adjust the padding as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ background-color: rgba(243, 242, 240,0.5);
+ margin-top:50px;
+}
+
+#developer-github{
+  display:flex;
+}

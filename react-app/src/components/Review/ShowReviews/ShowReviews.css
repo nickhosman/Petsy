@@ -1,4 +1,58 @@
+.reviews-container {
+  padding-left: 100px;
+  padding-right: 400px;
+}
+
 .reviews {
   list-style: none;
   border-bottom: solid 1px rgb(146, 144, 144);
+}
+
+.reviews > li {
+  padding-top: 10px;
+}
+
+.review-user-date{
+  color: #5c5d5e;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.review-stars{
+  margin: 20px 0px 10px 0px;
+}
+.reviews-count-rating-header{
+  margin-top: 30px;
+}
+
+.review-count-avg-rating {
+  border-bottom: 1px solid rgb(161, 161, 161);
+  width: fit-content;
+}
+
+.productdetails-update-review-reviewbuttons{
+  background-color: transparent;
+  border: none;
+}
+
+.productdetails-update-reviewbutton{
+  background-color: transparent;
+  border: none;
+  border-right: 1px gray solid;
+  padding-left: 0px;
+  color: rgb(95, 94, 94);
+}
+.productdetails-update-reviewbutton:hover {
+  color: rgb(122, 194, 122);
+}
+
+.productdetails-delete-reviewbutton{
+  background-color: transparent;
+  border: none;
+  margin-bottom: 10px;
+  color: rgb(95, 94, 94);
+}
+
+.productdetails-delete-reviewbutton:hover {
+  color: rgb(212, 25, 25);
 }

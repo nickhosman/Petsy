@@ -1,0 +1,64 @@
+.review-form{
+  margin: 20px;
+
+}
+
+.form-title {
+  text-align: center;
+  color:rgb(210, 39, 39);
+}
+
+.product-name-img{
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name {
+  color: rgb(84, 83, 83);
+
+}
+
+.product-img{
+  width: 200px;
+  height: 200px;
+}
+
+.on {
+  border: none;
+  color:rgb(210, 39, 39);
+}
+
+.off{
+  border: none;
+  color: #7d7b7b;
+}
+
+.star-rating > button {
+  background-color: white;
+  font-size: 15px;
+}
+
+.rating-star-container{
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+}
+
+.product-review-textbox-header{
+  font-weight: bold;
+}
+
+.update-create-submit-button{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 15px;
+}
+
+.update-create-submit-button > button {
+  background-color: rgb(254, 251, 251);
+  border: 1px solid black;
+  border-radius: 5px;
+  size: 2px;
+  font-size: 15px;
+}
