@@ -53,3 +53,34 @@
 .fa-reviewstar {
   color: rgb(212, 25, 25)
 }
+
+.selection-name-likes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  /* border: 1px solid red; */
+  margin-right: 10px;
+  width: 245px;
+}
+
+.fa-xs {
+  color: rgb(212, 25, 25)
+}
+
+.selection-likes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 40px;
+  width: 30px;
+  position: absolute;
+  top: 14px;
+  right: -42px;
+}
+
+.selection-likes p {
+  color: rgb(212, 25, 25);
+  font-size: 11px;
+  margin-left: 1.4px;
+}

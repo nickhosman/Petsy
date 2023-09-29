@@ -3,7 +3,6 @@
   flex-direction: column;
   /* width: 100%; */
   align-items: center;
-  box-shadow: 2px 2px 6px gray;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -68,7 +67,6 @@
 #product-info-div>*{
   margin: 10px 0;
 }
-
 
 #product-info-div h4:hover{
   text-decoration: underline;
