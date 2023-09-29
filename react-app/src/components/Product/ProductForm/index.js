@@ -68,42 +68,42 @@ function ProductFormPage() {
       const otherImg3=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
       const otherImg4=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
       // console.log(newProduct.id)
-      if (previewImg.errors){
+      if (previewImg?.errors){
      
         // console.log(previewImg.errors)
-        setImgErrs(previewImg.errors)
+        setImgErrs(previewImg?.errors)
         return
       }else{
         setImgErrs([])
       }
-      if (otherImg1.errors){
+      if (otherImg1?.errors){
      
         // console.log(previewImg.errors)
-        setImgErrs1(otherImg1.errors)
+        setImgErrs1(otherImg1?.errors)
         return
       } else {
         setImgErrs1([])
       }
-      if (otherImg2.errors){
+      if (otherImg2?.errors){
      
         // console.log(previewImg.errors)
-        setImgErrs2(otherImg2.errors)
+        setImgErrs2(otherImg2?.errors)
         return
       } else {
         setImgErrs2([])
       }
-      if (otherImg3.errors){
+      if (otherImg3?.errors){
      
         // console.log(previewImg.errors)
-        setImgErrs3(otherImg3.errors)
+        setImgErrs3(otherImg3?.errors)
         return
       } else {
         setImgErrs3([])
       }
-      if (otherImg4.errors){
+      if (otherImg4?.errors){
      
         // console.log(previewImg.errors)
-        setImgErrs4(otherImg4.errors)
+        setImgErrs4(otherImg4?.errors)
         return
       } else {
         setImgErrs4([])
