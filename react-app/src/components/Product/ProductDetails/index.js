@@ -91,11 +91,9 @@ console.log(allProductTags)
             {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
             <div id='product-tag-div'>
-              {tagArr?.map(tag=>(
-                <p id='individual-tag'>{tag}</p>
-              )
-             
-              )}
+              {allProductTags?.map(tag=>(
+                <p id='individual-tag' className={`${tag.id}`}>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag">x</div> : null}</p>
+              ))}
             </div>
           </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?

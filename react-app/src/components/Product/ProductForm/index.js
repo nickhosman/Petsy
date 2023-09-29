@@ -149,7 +149,7 @@ function ProductFormPage() {
         })
       })
       const res = await newTag.json()
-      if (displayCustomTag.length <= 25) {
+      if (!res.errors && displayCustomTag.length <= 25) {
         const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
         setLis([...lis, newLi])
         setCustomTagInput("")
