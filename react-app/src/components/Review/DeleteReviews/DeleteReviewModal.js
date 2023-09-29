@@ -24,7 +24,6 @@ function DeleteReviewModal({reviewId, productId}) {
     <div>
       <h1>Confirm Delete</h1>
       <h4>Are you sure you want to remove your review?</h4>
-
       <button onClick={handleDeleteReview}>Yes</button>
       <button onClick={handleCancel}>No</button>
     </div>
