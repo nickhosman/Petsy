@@ -69,7 +69,7 @@ function ProductFormPage() {
       const otherImg4=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
       // console.log(newProduct.id)
       if (previewImg?.errors){
-     
+
         // console.log(previewImg.errors)
         setImgErrs(previewImg?.errors)
         return
@@ -77,7 +77,7 @@ function ProductFormPage() {
         setImgErrs([])
       }
       if (otherImg1?.errors){
-     
+
         // console.log(previewImg.errors)
         setImgErrs1(otherImg1?.errors)
         return
@@ -85,7 +85,7 @@ function ProductFormPage() {
         setImgErrs1([])
       }
       if (otherImg2?.errors){
-     
+
         // console.log(previewImg.errors)
         setImgErrs2(otherImg2?.errors)
         return
@@ -93,7 +93,7 @@ function ProductFormPage() {
         setImgErrs2([])
       }
       if (otherImg3?.errors){
-     
+
         // console.log(previewImg.errors)
         setImgErrs3(otherImg3?.errors)
         return
@@ -101,7 +101,7 @@ function ProductFormPage() {
         setImgErrs3([])
       }
       if (otherImg4?.errors){
-     
+
         // console.log(previewImg.errors)
         setImgErrs4(otherImg4?.errors)
         return
@@ -155,11 +155,13 @@ function ProductFormPage() {
 
   const handleAddClick = async (e) => {
     e.preventDefault()
-
     const tagListItems = []
     for (const tagObj of tagList) {
       tagListItems.push(Object.values(tagObj)[1])
     }
+
+    console.log(displayCustomTag)
+
     if (tagListItems.includes(displayCustomTag)) {
       alert("The tag already exists. Please select it from the list.")
     } else {
@@ -174,7 +176,7 @@ function ProductFormPage() {
       })
       const res = await newTag.json()
 
-      if (displayCustomTag.length > 0 && displayCustomTag.length <= 25) {
+      if (displayCustomTag.trim().length > 0 && displayCustomTag.length <= 25) {
         const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
 
         setLis([newLi])
