@@ -1,8 +1,9 @@
 #footer-top {
-  border-top: 1px dashed gray;
-  padding-top: 30px;
+  width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
 }
 
 .join-us-btn {
@@ -12,4 +13,19 @@
   font-weight: bold;
  /* color:#2f5284; */
   margin:0;
+}
+
+#root{
+  border: 3px solid blue;
+  display: flex;
+  flex-direction: column;
+  /* height: 100vh; */
+}
+
+#footer-div {
+  background-color: #fff; /* You can change the background color as needed */
+  padding: 10px; /* Adjust the padding as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

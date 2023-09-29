@@ -9,13 +9,9 @@ import UpdateReview from "../UpdateReviews/index"
 import OpenModalButton from "../../OpenModalButton";
 import DeleteReviewModal from "../DeleteReviews/DeleteReviewModal";
 
-const ShowReviews = ({productId}) => {
-
-  const allReviews = useSelector(state => state.products.singleProduct?.ProductReviews)
-  const product = useSelector(state => state.products?.singleProduct)
-  const user = useSelector((state) => state.session.user)
-  console.log(user)
+const ShowReviews = ({product, user, productId}) => {
   const dispatch = useDispatch()
+  const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
 
   useEffect(() => {
     dispatch(getAllReviewsThunk(productId))

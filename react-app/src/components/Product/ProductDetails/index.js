@@ -15,7 +15,6 @@ function ProductDetails() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products?.singleProduct)
   const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
-
   const user = useSelector((state) => state.session.user)
   const favorites = useSelector((state) => state.user.Favorites)
   const [isFavorited, setIsFavorited] = useState(false)
@@ -71,7 +70,7 @@ function ProductDetails() {
         </Carousel>
         {user && user?.id !== product.Seller?.id &&
         <i className={isFavorited ? "fa-solid fa-heart favoritedheart": "fa-regular fa-heart unfavoritedheart"} onClick={handleFavorite}></i>}
-        <ShowReviews productId={productId}/>
+        <ShowReviews product={product} user={user} productId={productId}/>
       </div>
       <div className='productdetails-sidebar-container'>
         <div className='productdetails-information'>
