@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from 'react-redux'
 import { useModal } from "../../../context/Modal";
-import { deleteReviewThunk, getAllReviewsThunk } from "../../../store/product";
+import { deleteReviewThunk, getAllReviewsThunk, fetchProductDetail } from "../../../store/product";
 
 function DeleteReviewModal({reviewId, productId}) {
   const dispatch = useDispatch();
@@ -11,6 +11,7 @@ function DeleteReviewModal({reviewId, productId}) {
     e.preventDefault();
     await dispatch(deleteReviewThunk(reviewId))
     dispatch(getAllReviewsThunk(productId))
+    dispatch(fetchProductDetail(productId))
     closeModal()
   }
 

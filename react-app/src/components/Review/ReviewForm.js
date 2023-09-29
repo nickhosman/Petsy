@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 import { useState } from "react";
-import { createReviewThunk, fetchAllProducts, getAllReviewsThunk, updateReviewThunk } from "../../store/product";
+import { createReviewThunk, fetchAllProducts, getAllReviewsThunk, updateReviewThunk, fetchProductDetail } from "../../store/product";
 import { StarRating } from "./StarRating";
 
 function ReviewForm({review, formType}) {
@@ -18,8 +18,7 @@ function ReviewForm({review, formType}) {
 
   const product = useSelector(state => state.products?.singleProduct)
   const user = useSelector(state => state.session.user)
-  console.log('PRODUCT', product.id)
-  console.log("KJNMKMKMKM", formType)
+
 
   const handleSubmitReview = async(e) => {
     e.preventDefault()
@@ -27,7 +26,10 @@ function ReviewForm({review, formType}) {
 
     if (formType === 'Update Review') {
       try {
-        await dispatch(updateReviewThunk(review.id, user, stars, details))
+        const updatedReview = await dispatch(updateReviewThunk(review.id, user, stars, details))
+        if(updatedReview) {
+          dispatch(fetchProductDetail(product.id))
+        }
       } catch (error) {
         setErrors(error.errors)
         return
@@ -36,7 +38,10 @@ function ReviewForm({review, formType}) {
 
     } else if (formType === 'Create A Review') {
       try {
-        await dispatch(createReviewThunk(product.id, user, stars, details))
+        const newReview = await dispatch(createReviewThunk(product.id, user, stars, details))
+        if(newReview) {
+          dispatch(fetchProductDetail(product.id))
+        }
       } catch (error){
         setErrors(error.errors)
         return
