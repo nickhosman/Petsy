@@ -150,6 +150,7 @@
   border-radius: 50%;
   padding: 7px;
   font-size: 13px;
+  z-index: 100;
 }
 
 .unfavoritedheart {
@@ -161,6 +162,7 @@
   border-radius: 50%;
   padding: 7px;
   font-size: 13px;
+  z-index: 100;
 }
 
 .favoritedheart:hover {
