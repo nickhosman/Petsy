@@ -41,6 +41,8 @@ React Components:
 - SignupFormPage()
 - addTagModal()
 - Tooltip()
+- ProductsSelection()
+- Trending()
 
 Frontend Routes:
 - listing page: '/users/:userId/products'
