@@ -30,3 +30,7 @@
  background-color: rgba(243, 242, 240,0.5);
  margin-top:50px;
 }
+
+#developer-github{
+  display:flex;
+}
