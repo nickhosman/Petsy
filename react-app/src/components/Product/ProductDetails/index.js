@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
+import { createProductTag, fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
 import { fetchUserFavorites, fetchDeleteFavorite, fetchAddFavorite } from '../../../store/user';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
@@ -20,6 +20,9 @@ function ProductDetails() {
   const productTagObj = useSelector(state=>state.products?.singleProduct?.tags)
   console.log(productTagObj)
   const [isFavorited, setIsFavorited] = useState(false)
+  const [customTagInputClass, setCustomTagInputClass] = useState("hidden");
+  const [addTagBtn, setAddTagBtn] = useState("show")
+  const [tagInput, setTagInput] = useState("");
 
   const allProductTags = []
   const tagArr=[]
@@ -68,6 +71,32 @@ console.log(allProductTags)
     await dispatch(thunkRemoveTag(product.id, tagId))
   }
 
+  const handleClickAddTagBtn = (e) => {
+    e.preventDefault()
+    setCustomTagInputClass("show")
+    setAddTagBtn("hidden")
+  }
+
+  const handleAddTagClick = async (e) => {
+    e.preventDefault()
+    const response = await fetch(`/api/products/${product.id}/tags/add`, {
+      method: "PUT",
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({name: tagInput})
+    })
+
+    if (response.ok) {
+      const tag = await response.json()
+      dispatch(createProductTag(tag))
+      dispatch(fetchProductDetail(productId))
+      setTagInput("")
+    } else {
+      console.error(response.errors)
+    }
+  }
+
   const hasReviewed = () => {
     let userReview = false
     for(let i = 0; i < Object.values(allReviews).length; i++) {
@@ -100,8 +129,19 @@ console.log(allProductTags)
             <h4 id='productdetails-desc'>{product.description}</h4>
             <div id='product-tag-div'>
               {allProductTags?.map(tag=>(
-                <p id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</p>
+                <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>
               ))}
+              {user && user?.id === product.Seller?.id && allProductTags.length < 5 ? <div className={`_add-tag-btn ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</div> : null}
+            </div>
+            <div id="custom-tag-wrapper">
+              <input
+                type="text"
+                id="custom-tag-div"
+                value={tagInput}
+                onChange={(e) => {setTagInput(e.target.value)}}
+                className={allProductTags.length < 5 ? customTagInputClass : "hidden"}
+              />
+              <p className={`add-tag-btn ${allProductTags.length < 5 ? customTagInputClass : "hidden"}`} onClick={handleAddTagClick}>Add Tag</p>
             </div>
           </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?

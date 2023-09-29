@@ -8,7 +8,7 @@ export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 export const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 export const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
 export const LOAD_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
-export const CREATE_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
+export const CREATE_PRODUCTTAG = 'tags/CREATE_PRODUCTTAG'
 export const REMOVE_TAG = 'tags/REMOVE_TAG'
 
 
@@ -330,11 +330,12 @@ const productReducer = (state = initialState, action) => {
         }
       }
       case CREATE_PRODUCTTAG:
+      const newTag = action.productTag
       newState={
         ...state,
         singleProduct:{
           ...state.singleProduct,
-          productTags:action.productTag
+          tags: {...state.singleProduct.tags, newTag}
         }
       }
       case REMOVE_TAG:
