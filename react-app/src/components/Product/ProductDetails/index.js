@@ -59,7 +59,6 @@ function ProductDetails() {
     }
     return userReview
   }
-
   return(
     <div className='product-details-container'>
       <div className='productdetails-carousel-container'>
