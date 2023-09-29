@@ -70,7 +70,6 @@ console.log(allProductTags)
     }
     return userReview
   }
-
   return(
     <div className='product-details-container'>
       <div id='upper-div'>

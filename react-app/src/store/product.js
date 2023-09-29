@@ -64,6 +64,8 @@ export const deleteReview = reviewId => ({
   reviewId
 })
 
+
+
 /** Thunk Action Creators: */
 export const fetchAllProducts = () => async (dispatch) => {
   const response = await fetch('/api/products')
@@ -246,6 +248,7 @@ export const CreateProductTag = (productId,productTag )=> async (dispatch) => {
     return errors
   }
 }
+
 
 const initialState = {}
 const productReducer = (state = initialState, action) => {
