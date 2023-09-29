@@ -8,8 +8,24 @@ import {
 function AboutPetsyModal() {
   const handleToYiGithub = e => {
     e.preventDefault()
-    window.location.replace('https://github.com/heehyun1128')
+    window.open('https://github.com/heehyun1128')
   }
+
+  const handleToNickGithub = e => {
+    e.preventDefault()
+    window.open('https://github.com/nickhosman')
+  }
+
+  const handleToKevinGithub = e => {
+    e.preventDefault()
+    window.open('https://github.com/kevindbaik')
+  }
+
+  const handleToHuynhGithub = e => {
+    e.preventDefault()
+    window.open('https://github.com/huynhlam56')
+  }
+
 
   return (
     <div id="about-petsy-div">
@@ -20,6 +36,24 @@ function AboutPetsyModal() {
         <FontAwesomeIcon icon={faGithub} color="black" size="2x" />
         <p>
           Yi Chen
+        </p>
+      </div>
+      <div id='developer-github' onClick={handleToNickGithub}>
+        <FontAwesomeIcon icon={faGithub} color="black" size="2x" />
+        <p>
+          Nick Hosman
+        </p>
+      </div>
+      <div id='developer-github' onClick={handleToKevinGithub}>
+        <FontAwesomeIcon icon={faGithub} color="black" size="2x" />
+        <p>
+          Kevin Baik
+        </p>
+      </div>
+      <div id='developer-github' onClick={handleToHuynhGithub}>
+        <FontAwesomeIcon icon={faGithub} color="black" size="2x" />
+        <p>
+          Huynh Lam
         </p>
       </div>
     </div>
