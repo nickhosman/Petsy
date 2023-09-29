@@ -175,11 +175,29 @@
   justify-content: center;
   padding: .25rem;
   border-radius: 30px;
-  z-index: 10;
   font-size: 12px;
+}
+
+._add-tag-btn {
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .25rem;
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+._add-tag-btn:hover {
+  background-color: rgb(196, 183, 183);
+  cursor: pointer;
 }
 
 #remove-tag:hover {
   cursor: pointer;
   color: red;
+}
+
+.hidden {
+  display: none;
 }
