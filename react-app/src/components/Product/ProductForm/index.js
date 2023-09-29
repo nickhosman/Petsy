@@ -26,8 +26,14 @@ function ProductFormPage() {
   const [displayCustomTag, setDisplayCustomTag]=useState("")
   const [lis, setLis] = useState([]);
 
+
   const [tags, setTags] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [imgErrs, setImgErrs] = useState([])
+  const [imgErrs1, setImgErrs1] = useState([])
+  const [imgErrs2, setImgErrs2] = useState([])
+  const [imgErrs3, setImgErrs3] = useState([])
+  const [imgErrs4, setImgErrs4] = useState([])
 
   useEffect(async () => {
     const response = await fetch("/api/tags")
@@ -50,17 +56,58 @@ function ProductFormPage() {
 
     const newProduct = await dispatch(fetchCreateProduct(payload));
     if(newProduct.errors) {
+      console.log(newProduct.errors)
       setErrors(newProduct.errors)
     };
 
 
     if (newProduct && !newProduct.errors) {
-      await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
+      const previewImg=await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
+      const otherImg1=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
+      const otherImg2=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
+      const otherImg3=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
+      const otherImg4=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
       // console.log(newProduct.id)
+      if (previewImg.errors){
+     
+        // console.log(previewImg.errors)
+        setImgErrs(previewImg.errors)
+        return
+      }else{
+        setImgErrs([])
+      }
+      if (otherImg1.errors){
+     
+        // console.log(previewImg.errors)
+        setImgErrs1(otherImg1.errors)
+        return
+      } else {
+        setImgErrs1([])
+      }
+      if (otherImg2.errors){
+     
+        // console.log(previewImg.errors)
+        setImgErrs2(otherImg2.errors)
+        return
+      } else {
+        setImgErrs2([])
+      }
+      if (otherImg3.errors){
+     
+        // console.log(previewImg.errors)
+        setImgErrs3(otherImg3.errors)
+        return
+      } else {
+        setImgErrs3([])
+      }
+      if (otherImg4.errors){
+     
+        // console.log(previewImg.errors)
+        setImgErrs4(otherImg4.errors)
+        return
+      } else {
+        setImgErrs4([])
+      }
       await fetch(`/api/products/${newProduct.id}/tags`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -222,11 +269,16 @@ function ProductFormPage() {
         <label>Add Images</label>
         <div className="form-imagescontainer">
         <input value={previewImage} required type='url' onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
+          {imgErrs && imgErrs.image_url && <p id='error-msg'>*{imgErrs.image_url}</p>}
         <div className="other-images">
           <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs1 && imgErrs1.image_url && <p id='error-msg'>*{imgErrs1.image_url}</p>}
           <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs2 && imgErrs2.image_url && <p id='error-msg'>*{imgErrs2.image_url}</p>}
           <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs3 && imgErrs3.image_url && <p id='error-msg'>*{imgErrs3.image_url}</p>}
           <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs4 && imgErrs4.image_url && <p id='error-msg'>*{imgErrs4.image_url}</p>}
         </div>
         </div>
         <label className="tag-container">
