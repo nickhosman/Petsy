@@ -67,10 +67,10 @@
 }
 
 .product-details-container {
-  /* border: 1px solid green; */
   display: flex;
   flex-direction: column;
-  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .productdetails-information {
@@ -134,11 +134,15 @@
   cursor: pointer;
 }
 
+#upper-div{
+  position: relative
+}
+
 .favoritedheart {
   color: rgb(210, 39, 39);;
   position: absolute;
-  top: 202px;
-  left: 604px;
+  top: 82px;
+  left: 600px;
   border: 1px solid rgb(46, 46, 46);
   border-radius: 50%;
   padding: 7px;
@@ -148,8 +152,8 @@
 .unfavoritedheart {
   color: rgb(30, 30, 30);;
   position: absolute;
-  top: 202px;
-  left: 604px;
+  top: 82px;
+  left: 600px;
   border: 1px solid rgb(46, 46, 46);
   border-radius: 50%;
   padding: 7px;
