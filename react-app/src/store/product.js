@@ -8,7 +8,8 @@ export const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
 export const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 export const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
 export const LOAD_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
-export const CREATE_PRODUCTTAG = 'reviews/LOAD_PRODUCTTAG'
+export const CREATE_PRODUCTTAG = 'tags/CREATE_PRODUCTTAG'
+export const REMOVE_TAG = 'tags/REMOVE_TAG'
 
 
 /**  Action Creators: */
@@ -62,6 +63,11 @@ export const updateReview = (review, user) => ({
 export const deleteReview = reviewId => ({
   type: DELETE_REVIEW,
   reviewId
+})
+
+export const removeTag = tagId => ({
+  type: REMOVE_TAG,
+  payload: tagId
 })
 
 
@@ -249,6 +255,29 @@ export const CreateProductTag = (productId,productTag )=> async (dispatch) => {
   }
 }
 
+// Remove a tag from a product
+export const thunkRemoveTag = (productId, tagId) => async (dispatch) => {
+  const response = await fetch(`/api/products/${productId}/tags/remove`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({tagId: tagId}),
+  })
+  // console.log("RESPONSE", response.json())
+
+  if (response.ok) {
+    const message = {"message": "Successfully removed tag"}
+    dispatch(removeTag(tagId))
+    return message
+  } else {
+    // console.log("ERRORS")
+    let errors = await response.json()
+    console.log(errors)
+    return errors
+  }
+}
+
 
 const initialState = {}
 const productReducer = (state = initialState, action) => {
@@ -301,13 +330,26 @@ const productReducer = (state = initialState, action) => {
         }
       }
       case CREATE_PRODUCTTAG:
+      const newTag = action.productTag
       newState={
         ...state,
         singleProduct:{
           ...state.singleProduct,
-          productTags:action.productTag
+          tags: {...state.singleProduct.tags, newTag}
         }
       }
+      case REMOVE_TAG:
+        const newTags = {...state.singleProduct["tags"]}
+        console.log("NEW TAGS", newTags)
+        delete newTags[action.payload]
+        newState={
+          ...state,
+          singleProduct: {
+            ...state.singleProduct,
+            tags: {...newTags}
+          }
+        }
+        return newState
       default:
         return state
   };

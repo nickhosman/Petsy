@@ -50,6 +50,7 @@ text-decoration: underline;
 #error-msg{
   color:red;
   margin:0;
+  font-size: 12px;
 }
 
 .peepingcats {

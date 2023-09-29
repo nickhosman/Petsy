@@ -91,6 +91,7 @@ def post_product(productId):
         return new_image.to_dict()
     return {"errors": validation_errors_to_error_messages(form.errors)}, 400
 
+
 @product_routes.route("/<int:productId>/tags", methods=['POST'])
 @login_required
 def post_tags(productId):
@@ -98,24 +99,82 @@ def post_tags(productId):
     Add tags to a product
     """
     product = Product.query.get(productId)
-    print("zzzzzzzz", product)
+    # print("zzzzzzzz", product)
     if not product:
         return {"errors": "Product not found"}, 404
 
-    print("rrrrrrrrr", request.get_json())
+    # print("rrrrrrrrr", request.get_json())
     new_tags = request.get_json()['name']
-    print("----------", new_tags)
+    # print("----------", new_tags)
 
     tag_obj_list = [Tag.query.get(int(tag_id)) for tag_id in new_tags]
 
-    print("AAAAAAAAAAA", tag_obj_list)
+    # print("AAAAAAAAAAA", tag_obj_list)
     product.all_tags = tag_obj_list
     db.session.commit()
-    print("lllllllll", [tag.to_dict() for tag in tag_obj_list])
-    print("bbbbbbbbbb", zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
+    # print("lllllllll", [tag.to_dict() for tag in tag_obj_list])
+    # print("bbbbbbbbbb", zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
 
     tag_object =  dict(zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
     return tag_object
+
+
+@product_routes.route("/<int:productId>/tags/add", methods=["PUT"])
+def add_one_tag(productId):
+    """
+    Add one tag to a product
+    """
+    product = Product.query.get(productId)
+
+    if not product:
+        return {"errors": "Product not found"}, 404
+
+    tag_name = request.get_json()["name"]
+    tag_list = Tag.query.all()
+    tag_names = [tag.name for tag in tag_list]
+    print(tag_names)
+
+    if tag_name in tag_names:
+        existing_tag = Tag.query.filter_by(name = tag_name).first()
+        product.all_tags.append(existing_tag)
+        db.session.commit()
+        return existing_tag.to_dict()
+    else:
+        form = TagForm()
+        form['csrf_token'].data = request.cookies['csrf_token']
+        if form.validate_on_submit():
+            tag = Tag(
+                name = form.data["name"]
+            )
+            product.all_tags.append(tag)
+            db.session.add(tag)
+            db.session.commit()
+            return tag.to_dict()
+        return {"errors": validation_errors_to_error_messages(form.errors)}, 400
+
+
+
+@product_routes.route("/<int:productId>/tags/remove", methods=["PUT"])
+def remove_tag(productId):
+    """
+    Removes a tag from a product
+    """
+    product = Product.query.get(productId)
+    if not product:
+        return {'errors': {"Product": "Product not found"}}, 404
+
+    tag_id = request.get_json()["tagId"]
+    tag = Tag.query.get(tag_id)
+
+    if tag:
+        product.all_tags.remove(tag)
+        db.session.commit()
+    else:
+        return {"errors": {"Tag": "Tag not found"}}, 404
+
+    return { "message": "Successfully removed tag from product."}
+
+
 
 @product_routes.route("/<int:productId>/reviews")
 def get_reviews(productId):

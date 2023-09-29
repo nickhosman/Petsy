@@ -12,19 +12,24 @@ function ListingPage() {
 
   useEffect(() => {
     dispatch(fetchUserListings(userId))
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
-  if(!listingObj || Object.values(listingObj).length === 0) return null
-  const listings = Object.values(listingObj)
+  let hasListings = true
+  if(!listingObj || Object.values(listingObj).length === 0) {
+    hasListings = false
+  }
 
   return(
-    <div>
-        <h1>Listed Items</h1>
+    <div className='manage-container'>
+      <h1 className='manage-header'>Listed Items</h1>
+      {!hasListings ? <h2 style={{ color: 'rgb(212, 25, 25)' }}> No Listings</h2>
+      :
       <div className='manageproduct-wrapper'>
-        {listings.map(listing => (
+        {Object.values(listingObj).map(listing => (
         <ProductManage product={listing} isListing={true}/>
         ))}
       </div>
+      }
     </div>
   )
 }

@@ -67,15 +67,17 @@
 }
 
 .product-details-container {
-  /* border: 1px solid green; */
   display: flex;
   flex-direction: column;
-  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .productdetails-information {
-  width: fit-content;
-  height: 340px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: 380px;
+  height: 400px;
   margin-top: 100px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.09);
   padding-left: 14px;
@@ -83,7 +85,7 @@
   display: flex;
   flex-direction: column;
   margin-left: 90px;
-  
+
 }
 
 .productdetails-information > h4 {
@@ -119,6 +121,7 @@
 .productdetails-sidebar-container {
   width: 400px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .productdetails-reviewbutton {
@@ -134,26 +137,40 @@
   cursor: pointer;
 }
 
+#upper-div{
+  position: relative
+}
+
 .favoritedheart {
-  color: red;
+  color: rgb(210, 39, 39);;
   position: absolute;
-  top: 190px;
-  left: 606px;
-  border: 1px solid red;
+  top: 82px;
+  left: 600px;
+  border: 1px solid rgb(46, 46, 46);
   border-radius: 50%;
-  padding: 5px;
+  padding: 7px;
   font-size: 13px;
+  z-index: 100;
 }
 
 .unfavoritedheart {
-  color: black;
+  color: rgb(30, 30, 30);;
   position: absolute;
-  top: 190px;
-  left: 606px;
-  border: 1px solid black;
+  top: 82px;
+  left: 600px;
+  border: 1px solid rgb(46, 46, 46);
   border-radius: 50%;
-  padding: 5px;
+  padding: 7px;
   font-size: 13px;
+  z-index: 100;
+}
+
+.favoritedheart:hover {
+  cursor: pointer;
+}
+
+.unfavoritedheart:hover {
+  cursor: pointer;
 }
 
 #upper-div{
@@ -161,7 +178,53 @@
   width:100%;
 }
 
+#product-tag-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 #individual-tag{
   background-color: rgb(230, 230, 230);
-  margin-right:10px;
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: center;
+  padding: .25rem;
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+.productdetails-tagcontainer {
+  position: absolute;
+  bottom: 30px;
+}
+
+._add-tag-btn {
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .25rem;
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+._add-tag-btn:hover {
+  background-color: rgb(196, 183, 183);
+  cursor: pointer;
+}
+
+#remove-tag:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+.productdetails-tags {
+  position: absolute;
+  bottom: 94px;
 }

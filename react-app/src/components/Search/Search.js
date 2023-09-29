@@ -16,30 +16,31 @@ function Search() {
   const location = useLocation();
   const queryTerm = new URLSearchParams(location.search).get('q');
 
-
   const objProducts = useSelector((state) => state.products?.searchProducts?.Search);
 
-  console.log(objProducts)
   useEffect(() => {
     // setSearchInput(queryTerm)
     dispatch(fetchSearchedProducts(queryTerm))
   }, [dispatch, queryTerm])
 
-  if (!objProducts || Object.keys(objProducts).length === 0) return null;
-  const searchProducts = Object.values(objProducts);
-  console.log(searchProducts)
+  let found = true;
+  if (!objProducts || Object.keys(objProducts).length === 0) found = false
+
   return (
     <div id="all-products-div">
       <div id="all-products-title">
         <h1>Search Result</h1>
       </div>
+      {!found ?
+      <div>
+        <h2 style={{ color: 'rgb(212, 25, 25)' }}>No products found</h2>
+      </div> :
       <div className="k-productindex-container">
-        {searchProducts.map((product) => (
+        {Object?.values(objProducts).map((product) => (
           <ProductCard product={product} />
         ))}
-      </div>
+      </div>}
     </div>
-
   )
 }
 

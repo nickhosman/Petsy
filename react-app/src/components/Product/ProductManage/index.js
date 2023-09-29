@@ -27,12 +27,12 @@ function ProductManage({ product, isListing }) {
         <img className='manageproduct-image' src={product.previewImage} alt='' onClick={() => history.push(`/products/${product.id}`)}></img>
       </div>
       <div>
-        <p>{product.name}</p>
-        <p>{product.price}</p>
+        <p><strong>Name:</strong> {product.name}</p>
+        <p><strong>Price:</strong> ${product.price}</p>
       </div>
       <div className='manageproduct-buttoncontainer'>
-      {isListing && <button onClick={handleViewProductForm}>Update</button>}
-      {isListing ? <OpenModalButton buttonText='Remove' modalComponent={<DeleteProductModal listing={product}/>}/> : <button onClick={handleRemoveFavorite}>Unfavorite</button>}
+      {isListing && <button className='button-update' onClick={handleViewProductForm}>Update</button>}
+      {isListing ? <OpenModalButton styleClass="button-remove" buttonText='Remove' modalComponent={<DeleteProductModal listing={product}/>}/> : <button className='button-remove' onClick={handleRemoveFavorite}>Remove</button>}
       </div>
   </div>
   )

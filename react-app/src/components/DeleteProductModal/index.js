@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from 'react-redux'
 import { useModal } from "../../context/Modal";
 import { fetchDeleteListing } from "../../store/user";
+import './Delete.css'
 
 
 function DeleteProductModal({ listing }) {
@@ -21,12 +22,11 @@ function DeleteProductModal({ listing }) {
   }
 
   return (
-    <div>
+    <div className="deletemodal-container">
       <h1>Confirm Delete</h1>
       <h4>Are you sure you want to remove this listing?</h4>
-
-      <button onClick={handleDeleteProduct}>Yes</button>
-      <button onClick={handleCancel}>No</button>
+      <button className="confirm-yes" onClick={handleDeleteProduct}>Yes</button>
+      <button className="confirm-no" onClick={handleCancel}>No</button>
     </div>
   )
 }

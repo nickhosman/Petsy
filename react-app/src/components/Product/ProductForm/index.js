@@ -26,8 +26,14 @@ function ProductFormPage() {
   const [displayCustomTag, setDisplayCustomTag]=useState("")
   const [lis, setLis] = useState([]);
 
+
   const [tags, setTags] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [imgErrs, setImgErrs] = useState([])
+  const [imgErrs1, setImgErrs1] = useState([])
+  const [imgErrs2, setImgErrs2] = useState([])
+  const [imgErrs3, setImgErrs3] = useState([])
+  const [imgErrs4, setImgErrs4] = useState([])
 
   useEffect(async () => {
     const response = await fetch("/api/tags")
@@ -35,7 +41,7 @@ function ProductFormPage() {
       const theseTags = await response.json()
       // console.log("TAGS BEFORE:", theseTags)
       setTagList(Object.values(theseTags.Tags))
-      // console.log("TAGS:", tagList)
+      console.log("TAGS:", tagList)
     }
   }, [])
 
@@ -50,17 +56,58 @@ function ProductFormPage() {
 
     const newProduct = await dispatch(fetchCreateProduct(payload));
     if(newProduct.errors) {
+      console.log(newProduct.errors)
       setErrors(newProduct.errors)
     };
 
 
     if (newProduct && !newProduct.errors) {
-      await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
-      await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
+      const previewImg=await dispatch(fetchAddImageToProduct(newProduct.id, previewImage, true));
+      const otherImg1=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage1, false));
+      const otherImg2=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
+      const otherImg3=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
+      const otherImg4=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
       // console.log(newProduct.id)
+      if (previewImg?.errors){
+
+        // console.log(previewImg.errors)
+        setImgErrs(previewImg?.errors)
+        return
+      }else{
+        setImgErrs([])
+      }
+      if (otherImg1?.errors){
+
+        // console.log(previewImg.errors)
+        setImgErrs1(otherImg1?.errors)
+        return
+      } else {
+        setImgErrs1([])
+      }
+      if (otherImg2?.errors){
+
+        // console.log(previewImg.errors)
+        setImgErrs2(otherImg2?.errors)
+        return
+      } else {
+        setImgErrs2([])
+      }
+      if (otherImg3?.errors){
+
+        // console.log(previewImg.errors)
+        setImgErrs3(otherImg3?.errors)
+        return
+      } else {
+        setImgErrs3([])
+      }
+      if (otherImg4?.errors){
+
+        // console.log(previewImg.errors)
+        setImgErrs4(otherImg4?.errors)
+        return
+      } else {
+        setImgErrs4([])
+      }
       await fetch(`/api/products/${newProduct.id}/tags`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -100,21 +147,24 @@ function ProductFormPage() {
     e.preventDefault()
     const input = e.target.value
     setCustomTagInput(input)
-    setDisplayCustomTag(e.target.value)
+    const captalizedTag = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase()
+    setDisplayCustomTag(captalizedTag)
 
   }
 
+
   const handleAddClick = async (e) => {
     e.preventDefault()
-    const tagListItems= []
-    for(const tagObj of tagList){
+    const tagListItems = []
+    for (const tagObj of tagList) {
       tagListItems.push(Object.values(tagObj)[1])
-      setTagList(tagList)
     }
-    console.log(customTagInput)
-    if (tagListItems.includes(customTagInput)){
+
+    console.log(displayCustomTag)
+
+    if (tagListItems.includes(displayCustomTag)) {
       alert("The tag already exists. Please select it from the list.")
-    }
+    } else {
       const newTag = await fetch("/api/tags/", {
         method: "POST",
         headers: {
@@ -125,38 +175,31 @@ function ProductFormPage() {
         })
       })
       const res = await newTag.json()
-      if (displayCustomTag.length <= 25) {
+
+      if (displayCustomTag.trim().length > 0 && displayCustomTag.length <= 25) {
         const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
-        setLis([...lis, newLi])
+
+        setLis([newLi])
+        console.log(lis)
+        setTagList(prevTagList => [...prevTagList, res])
         setCustomTagInput("")
+
+
       } else {
-          alert("Tags must be less than or equal to 25 characters")
+        alert("Tags cannot be empty and must be less than or equal to 25 characters")
       }
+    }
+
+
+
   }
+
+
 
   // pressing enter to submit custom tag
   const handleCustomTagOnKeyPress = async (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault()
-
-      const newTag = await fetch("/api/tags/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: displayCustomTag
-        })
-      })
-      const res = await newTag.json()
-      if (displayCustomTag.length <= 25) {
-        const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
-        setLis([...lis, newLi])
-        setCustomTagInput("")
-      } else {
-        alert("Tags must be less than or equal to 25 characters")
-      }
-      // console.log(res)
+      handleAddClick(e)
     }
   }
 
@@ -203,7 +246,7 @@ function ProductFormPage() {
             required
           >
           </textarea>
-          {errors && errors.description && <p id='error-msg'>*{errors.description}</p>}
+          {errors && errors.description && <p id='error-msg'>{errors.description}</p>}
         </label>
         <label>
           Price
@@ -226,18 +269,25 @@ function ProductFormPage() {
           </select>
         </label>
         <label>Add Images</label>
+        <div className="form-imagescontainer">
         <input value={previewImage} required type='url' onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
-        <div>
+          {imgErrs && imgErrs.image_url && <p id='error-msg'>*{imgErrs.image_url}</p>}
+        <div className="other-images">
           <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs1 && imgErrs1.image_url && <p id='error-msg'>*{imgErrs1.image_url}</p>}
           <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs2 && imgErrs2.image_url && <p id='error-msg'>*{imgErrs2.image_url}</p>}
           <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs3 && imgErrs3.image_url && <p id='error-msg'>*{imgErrs3.image_url}</p>}
           <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)} placeholder="(optional)"></input>
+            {imgErrs4 && imgErrs4.image_url && <p id='error-msg'>*{imgErrs4.image_url}</p>}
+        </div>
         </div>
         <label className="tag-container">
           Tags
           <ul className="n-tag-wrapper">
             {tagList.map((tag, idx) => <li key={idx} id={tag.id} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
-            {lis}
+            {/* {lis} */}
             {/* <form onSubmit={handleCustomTagOnSubmit}> */}
             {/* </form> */}
             <li className={`tag-add ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</li>
@@ -254,7 +304,7 @@ function ProductFormPage() {
               <li className={`add-tag-btn ${customTagInputClass}`} onClick={handleAddClick}>Add Tag</li>
             </div>
         </label>
-        <button type="submit">Create Listing</button>
+        <button className="button-form" type="submit">Create Listing</button>
       </form>
     </div>
   )

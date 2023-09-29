@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchProductDetail, getAllReviewsThunk } from '../../../store/product';
+import { createProductTag, fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
 import { fetchUserFavorites, fetchDeleteFavorite, fetchAddFavorite } from '../../../store/user';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
@@ -20,6 +20,9 @@ function ProductDetails() {
   const productTagObj = useSelector(state=>state.products?.singleProduct?.tags)
   console.log(productTagObj)
   const [isFavorited, setIsFavorited] = useState(false)
+  const [customTagInputClass, setCustomTagInputClass] = useState("hidden");
+  const [addTagBtn, setAddTagBtn] = useState("show")
+  const [tagInput, setTagInput] = useState("");
 
   const allProductTags = []
   const tagArr=[]
@@ -28,10 +31,8 @@ function ProductDetails() {
   }
   for(const tag of allProductTags){
     tagArr.push(tag.name)
-  console.log(tag.name)
   }
-  console.log(tagArr)
-console.log(allProductTags)
+
   useEffect(() => {
     dispatch(fetchProductDetail(productId));
     dispatch(getAllReviewsThunk(productId));
@@ -57,6 +58,45 @@ console.log(allProductTags)
     } else if (!isFavorited) {
       await dispatch(fetchAddFavorite(product.id))
       setIsFavorited(!isFavorited);
+    }
+  }
+
+  const handleRemoveTag = async (e) => {
+    e.preventDefault()
+    const tagId = e.target.className
+    await dispatch(thunkRemoveTag(product.id, tagId))
+    setAddTagBtn("show")
+  }
+
+  const handleClickAddTagBtn = (e) => {
+    e.preventDefault()
+    setCustomTagInputClass("show")
+    setAddTagBtn("hidden")
+  }
+
+  const handleAddTagClick = async (e) => {
+    e.preventDefault()
+    if (tagArr.includes(tagInput)) {
+      alert("Tag already exists for product")
+      setTagInput("")
+    } else {
+      const response = await fetch(`/api/products/${product.id}/tags/add`, {
+        method: "PUT",
+        headers: {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({name: tagInput})
+      })
+
+      if (response.ok) {
+        const tag = await response.json()
+        dispatch(createProductTag(tag))
+        dispatch(fetchProductDetail(productId))
+        setTagInput("")
+        setAddTagBtn("show")
+      } else {
+        console.error(response.errors)
+      }
     }
   }
 
@@ -90,13 +130,22 @@ console.log(allProductTags)
             <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
             {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
-            <div id='product-tag-div'>
-              {tagArr?.map(tag=>(
-                <p id='individual-tag'>{tag}</p>
-              )
-             
-              )}
+            <div id='product-tag-div' className='productdetails-tags'>
+              {allProductTags?.map(tag=>(
+                <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>
+              ))}
+              {user && user?.id === product.Seller?.id && allProductTags.length < 5 && addTagBtn === "show" ? <div className={`_add-tag-btn ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</div> : null}
             </div>
+            {addTagBtn ==="hidden" && <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
+              <input
+                type="text"
+                id="custom-tag-div"
+                value={tagInput}
+                onChange={(e) => {setTagInput(e.target.value)}}
+                className={allProductTags.length < 5 ? customTagInputClass : "hidden"}
+              />
+              <p className={`add-tag-btn ${allProductTags.length < 5 ? customTagInputClass : "hidden"}`} onClick={handleAddTagClick}>Add Tag</p>
+            </div>}
           </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?
             <OpenModalButton
