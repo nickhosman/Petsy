@@ -98,24 +98,42 @@ def post_tags(productId):
     Add tags to a product
     """
     product = Product.query.get(productId)
-    print("zzzzzzzz", product)
+    # print("zzzzzzzz", product)
     if not product:
         return {"errors": "Product not found"}, 404
 
-    print("rrrrrrrrr", request.get_json())
+    # print("rrrrrrrrr", request.get_json())
     new_tags = request.get_json()['name']
-    print("----------", new_tags)
+    # print("----------", new_tags)
 
     tag_obj_list = [Tag.query.get(int(tag_id)) for tag_id in new_tags]
 
-    print("AAAAAAAAAAA", tag_obj_list)
+    # print("AAAAAAAAAAA", tag_obj_list)
     product.all_tags = tag_obj_list
     db.session.commit()
-    print("lllllllll", [tag.to_dict() for tag in tag_obj_list])
-    print("bbbbbbbbbb", zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
+    # print("lllllllll", [tag.to_dict() for tag in tag_obj_list])
+    # print("bbbbbbbbbb", zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
 
     tag_object =  dict(zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
     return tag_object
+
+@product_routes.route("/<int:productId/tags", methods=["DELETE"])
+def remove_tag(productId):
+    """
+    Removes a tag from a product
+    """
+    product = Product.query.get(productId)
+    if not product:
+        return {'errors': {"Product": "Product not found"}}, 404
+
+    tag_id = request.tagId
+
+    product.all_tags.remove(Tag.query.get(tag_id))
+    db.session.commit()
+
+    return { "message": "Successfully removed tag from product."}
+
+
 
 @product_routes.route("/<int:productId>/reviews")
 def get_reviews(productId):

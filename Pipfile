@@ -27,7 +27,6 @@ faker = "*"
 flask-login = "*"
 flask-cors = "*"
 email-validator = "*"
-
 [dev-packages]
 
 [requires]
