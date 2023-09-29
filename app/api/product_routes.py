@@ -117,7 +117,7 @@ def post_tags(productId):
     tag_object =  dict(zip(new_tags, [tag.to_dict() for tag in tag_obj_list]))
     return tag_object
 
-@product_routes.route("/<int:productId/tags", methods=["DELETE"])
+@product_routes.route("/<int:productId>/tags/remove", methods=["PUT"])
 def remove_tag(productId):
     """
     Removes a tag from a product
@@ -126,10 +126,14 @@ def remove_tag(productId):
     if not product:
         return {'errors': {"Product": "Product not found"}}, 404
 
-    tag_id = request.tagId
+    tag_id = request.get_json()["tagId"]
+    tag = Tag.query.get(tag_id)
 
-    product.all_tags.remove(Tag.query.get(tag_id))
-    db.session.commit()
+    if tag:
+        product.all_tags.remove(tag)
+        db.session.commit()
+    else:
+        return {"errors": {"Tag": "Tag not found"}}, 404
 
     return { "message": "Successfully removed tag from product."}
 

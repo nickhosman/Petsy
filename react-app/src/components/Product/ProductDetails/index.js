@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchProductDetail, getAllReviewsThunk } from '../../../store/product';
+import { fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
 import { fetchUserFavorites, fetchDeleteFavorite, fetchAddFavorite } from '../../../store/user';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
@@ -60,6 +60,14 @@ console.log(allProductTags)
     }
   }
 
+  const handleRemoveTag = async (e) => {
+    e.preventDefault()
+    const tagId = e.target.className
+    console.log("AAAAA", tagId)
+
+    await dispatch(thunkRemoveTag(product.id, tagId))
+  }
+
   const hasReviewed = () => {
     let userReview = false
     for(let i = 0; i < Object.values(allReviews).length; i++) {
@@ -92,7 +100,7 @@ console.log(allProductTags)
             <h4 id='productdetails-desc'>{product.description}</h4>
             <div id='product-tag-div'>
               {allProductTags?.map(tag=>(
-                <p id='individual-tag' className={`${tag.id}`}>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag">x</div> : null}</p>
+                <p id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</p>
               ))}
             </div>
           </div>
