@@ -17,9 +17,21 @@ function ProductDetails() {
   const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
   const user = useSelector((state) => state.session.user)
   const favorites = useSelector((state) => state.user.Favorites)
+  const productTagObj = useSelector(state=>state.products?.singleProduct?.tags)
+  console.log(productTagObj)
   const [isFavorited, setIsFavorited] = useState(false)
 
-
+  const allProductTags = []
+  const tagArr=[]
+  for (const key in productTagObj){
+    allProductTags.push(productTagObj[key])
+  }
+  for(const tag of allProductTags){
+    tagArr.push(tag.name)
+  console.log(tag.name)
+  }
+  console.log(tagArr)
+console.log(allProductTags)
   useEffect(() => {
     dispatch(fetchProductDetail(productId));
     dispatch(getAllReviewsThunk(productId));
@@ -79,6 +91,13 @@ function ProductDetails() {
             <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
             {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
+            <div id='product-tag-div'>
+              {tagArr?.map(tag=>(
+                <p id='individual-tag'>{tag}</p>
+              )
+             
+              )}
+            </div>
           </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?
             <OpenModalButton
