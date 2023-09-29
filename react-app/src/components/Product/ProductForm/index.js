@@ -226,12 +226,14 @@ function ProductFormPage() {
           </select>
         </label>
         <label>Add Images</label>
+        <div className="form-imagescontainer">
         <input value={previewImage} required type='url' onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
-        <div>
+        <div className="other-images">
           <input value={otherImage1} onChange={(e) => setOtherImage1(e.target.value)} placeholder="(optional)"></input>
           <input value={otherImage2} onChange={(e) => setOtherImage2(e.target.value)} placeholder="(optional)"></input>
           <input value={otherImage3} onChange={(e) => setOtherImage3(e.target.value)} placeholder="(optional)"></input>
           <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)} placeholder="(optional)"></input>
+        </div>
         </div>
         <label className="tag-container">
           Tags

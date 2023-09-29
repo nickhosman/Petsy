@@ -1,11 +1,16 @@
 .n-product-form-wrapper {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   width: 400px;
   margin: auto;
   align-items: center;
-  justify-self: center
+  justify-self: center;
+  margin-top: 20px;
+  border: 1px solid blue;
+}
+
+.n-product-form-wrapper h1 {
+  margin-bottom: 0px;
 }
 
 .n-product-form-wrapper label {
@@ -13,7 +18,15 @@
   flex-direction: column;
   width: 300px;
   row-gap: 10px;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
 
+.n-product-form-wrapper textarea {
+  height: 100px;
+  border: 1px solid black
 }
 
 .n-tag-wrapper {
@@ -98,5 +111,18 @@
 
 #product-tag-div{
   display: flex;
-  
+
+}
+
+.form-imagescontainer {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.other-images {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
