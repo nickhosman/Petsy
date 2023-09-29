@@ -135,9 +135,10 @@ def add_one_tag(productId):
     print(tag_names)
 
     if tag_name in tag_names:
-        existing_tag = Tag.query.filter_by(name = tag_name)
+        existing_tag = Tag.query.filter_by(name = tag_name).first()
         product.all_tags.append(existing_tag)
-        return existing_tag
+        db.session.commit()
+        return existing_tag.to_dict()
     else:
         form = TagForm()
         form['csrf_token'].data = request.cookies['csrf_token']
@@ -145,9 +146,9 @@ def add_one_tag(productId):
             tag = Tag(
                 name = form.data["name"]
             )
+            product.all_tags.append(tag)
             db.session.add(tag)
             db.session.commit()
-            product.all_tags.append(tag)
             return tag.to_dict()
         return {"errors": validation_errors_to_error_messages(form.errors)}, 400
 

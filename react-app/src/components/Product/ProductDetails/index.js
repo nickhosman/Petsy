@@ -90,6 +90,8 @@ console.log(allProductTags)
     if (response.ok) {
       const tag = await response.json()
       dispatch(createProductTag(tag))
+      dispatch(fetchProductDetail(productId))
+      setTagInput("")
     } else {
       console.error(response.errors)
     }
