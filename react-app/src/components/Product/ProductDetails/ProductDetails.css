@@ -74,8 +74,10 @@
 }
 
 .productdetails-information {
-  width: fit-content;
-  height: 340px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  width: 380px;
+  height: 400px;
   margin-top: 100px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.09);
   padding-left: 14px;
@@ -119,6 +121,7 @@
 .productdetails-sidebar-container {
   width: 400px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .productdetails-reviewbutton {
@@ -190,6 +193,11 @@
   font-size: 12px;
 }
 
+.productdetails-tagcontainer {
+  position: absolute;
+  bottom: 30px;
+}
+
 ._add-tag-btn {
   background-color: rgb(230, 230, 230);
   display: flex;
@@ -212,4 +220,9 @@
 
 .hidden {
   display: none;
+}
+
+.productdetails-tags {
+  position: absolute;
+  bottom: 94px;
 }

@@ -104,7 +104,7 @@ function ProductUpdateForm() {
           <option value={5}>Others</option>
         </select>
       </label>
-      <button type="submit">Update Listing</button>
+      <button className="button-form" type="submit">Update Listing</button>
     </form>
   </div>
   )

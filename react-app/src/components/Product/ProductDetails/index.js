@@ -31,10 +31,8 @@ function ProductDetails() {
   }
   for(const tag of allProductTags){
     tagArr.push(tag.name)
-  console.log(tag.name)
   }
-  console.log(tagArr)
-console.log(allProductTags)
+
   useEffect(() => {
     dispatch(fetchProductDetail(productId));
     dispatch(getAllReviewsThunk(productId));
@@ -66,9 +64,8 @@ console.log(allProductTags)
   const handleRemoveTag = async (e) => {
     e.preventDefault()
     const tagId = e.target.className
-    console.log("AAAAA", tagId)
-
     await dispatch(thunkRemoveTag(product.id, tagId))
+    setAddTagBtn("show")
   }
 
   const handleClickAddTagBtn = (e) => {
@@ -96,6 +93,7 @@ console.log(allProductTags)
         dispatch(createProductTag(tag))
         dispatch(fetchProductDetail(productId))
         setTagInput("")
+        setAddTagBtn("show")
       } else {
         console.error(response.errors)
       }
@@ -132,13 +130,13 @@ console.log(allProductTags)
             <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
             {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
-            <div id='product-tag-div'>
+            <div id='product-tag-div' className='productdetails-tags'>
               {allProductTags?.map(tag=>(
                 <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>
               ))}
-              {user && user?.id === product.Seller?.id && allProductTags.length < 5 ? <div className={`_add-tag-btn ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</div> : null}
+              {user && user?.id === product.Seller?.id && allProductTags.length < 5 && addTagBtn === "show" ? <div className={`_add-tag-btn ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</div> : null}
             </div>
-            <div id="custom-tag-wrapper">
+            {addTagBtn ==="hidden" && <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
               <input
                 type="text"
                 id="custom-tag-div"
@@ -147,7 +145,7 @@ console.log(allProductTags)
                 className={allProductTags.length < 5 ? customTagInputClass : "hidden"}
               />
               <p className={`add-tag-btn ${allProductTags.length < 5 ? customTagInputClass : "hidden"}`} onClick={handleAddTagClick}>Add Tag</p>
-            </div>
+            </div>}
           </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?
             <OpenModalButton
