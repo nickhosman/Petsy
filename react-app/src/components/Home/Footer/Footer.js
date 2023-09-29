@@ -16,7 +16,7 @@ function Footer() {
 
   const handleToGithub = e => {
     e.preventDefault()
-    window.location.replace('https://github.com/nickhosman/Petsy')
+    window.open('https://github.com/nickhosman/Petsy')
   }
   return (
     <div id="footer-div">
