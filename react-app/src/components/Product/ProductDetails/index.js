@@ -61,35 +61,37 @@ function ProductDetails() {
 
   return(
     <div className='product-details-container'>
-      <div className='productdetails-carousel-container'>
-        <Carousel showStatus={false} useKeyboardArrows={true}>
-        {product.ProductImages?.map((product, index) => (
-          <div className='productdetails-image-container'>
-            <img className='productdetails-image' src={product.imageUrl} alt='' key={index}></img>
-          </div>))}
-        </Carousel>
-        {user && user?.id !== product.Seller?.id &&
-        <i className={isFavorited ? "fa-solid fa-heart favoritedheart": "fa-regular fa-heart unfavoritedheart"} onClick={handleFavorite}></i>}
-        <ShowReviews product={product} user={user} productId={productId}/>
-      </div>
-      <div className='productdetails-sidebar-container'>
-        <div className='productdetails-information'>
+      <div id='upper-div'>
+        <div className='productdetails-carousel-container'>
+          <Carousel showStatus={false} useKeyboardArrows={true}>
+            {product.ProductImages?.map((product, index) => (
+              <div className='productdetails-image-container'>
+                <img className='productdetails-image' src={product.imageUrl} alt='' key={index}></img>
+              </div>))}
+          </Carousel>
+          {user && user?.id !== product.Seller?.id &&
+            <i className={isFavorited ? "fa-solid fa-heart favoritedheart" : "fa-regular fa-heart unfavoritedheart"} onClick={handleFavorite}></i>}
+        </div>
+        <div className='productdetails-sidebar-container'>
+          <div className='productdetails-information'>
             <h4 id='productdetails-price'>${product.price}</h4>
             <h4 id='productdetails-name'>{product.name}</h4>
             <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
             {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
+          </div>
+          {user && user.id !== product.sellerId && !hasReviewed() ?
+            <OpenModalButton
+              buttonText='Leave a review'
+              modalComponent={<CreateReview />}
+              styleClass='productdetails-reviewbutton'
+            />
+            :
+            (null)
+          }
         </div>
-        {user && user.id !== product.sellerId && !hasReviewed() ?
-          <OpenModalButton
-            buttonText='Leave a review'
-            modalComponent={<CreateReview />}
-            styleClass= 'productdetails-reviewbutton'
-          />
-          :
-          (null)
-        }
       </div>
+        <ShowReviews product={product} user={user} productId={productId}/>
     </div>
   )
 }

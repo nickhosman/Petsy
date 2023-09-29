@@ -28,4 +28,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+ background-color: rgba(243, 242, 240,0.5);
+ margin-top:50px;
 }
