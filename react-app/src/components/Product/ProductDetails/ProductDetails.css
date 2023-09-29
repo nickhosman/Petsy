@@ -135,25 +135,33 @@
 }
 
 .favoritedheart {
-  color: red;
+  color: rgb(210, 39, 39);;
   position: absolute;
-  top: 190px;
-  left: 606px;
-  border: 1px solid red;
+  top: 202px;
+  left: 604px;
+  border: 1px solid rgb(46, 46, 46);
   border-radius: 50%;
-  padding: 5px;
+  padding: 7px;
   font-size: 13px;
 }
 
 .unfavoritedheart {
-  color: black;
+  color: rgb(30, 30, 30);;
   position: absolute;
-  top: 190px;
-  left: 606px;
-  border: 1px solid black;
+  top: 202px;
+  left: 604px;
+  border: 1px solid rgb(46, 46, 46);
   border-radius: 50%;
-  padding: 5px;
+  padding: 7px;
   font-size: 13px;
+}
+
+.favoritedheart:hover {
+  cursor: pointer;
+}
+
+.unfavoritedheart:hover {
+  cursor: pointer;
 }
 
 #upper-div{

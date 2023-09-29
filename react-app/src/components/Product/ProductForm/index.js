@@ -129,12 +129,12 @@ function ProductFormPage() {
 
       if (displayCustomTag.length > 0 && displayCustomTag.length <= 25) {
         const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
-     
+
         setLis([newLi])
         console.log(lis)
         setTagList(prevTagList => [...prevTagList, res])
         setCustomTagInput("")
-   
+
 
       } else {
         alert("Tags cannot be empty and must be less than or equal to 25 characters")
@@ -197,7 +197,7 @@ function ProductFormPage() {
             required
           >
           </textarea>
-          {errors && errors.description && <p id='error-msg'>*{errors.description}</p>}
+          {errors && errors.description && <p id='error-msg'>{errors.description}</p>}
         </label>
         <label>
           Price
@@ -250,7 +250,7 @@ function ProductFormPage() {
               <li className={`add-tag-btn ${customTagInputClass}`} onClick={handleAddClick}>Add Tag</li>
             </div>
         </label>
-        <button type="submit">Create Listing</button>
+        <button className="button-form" type="submit">Create Listing</button>
       </form>
     </div>
   )
