@@ -1,7 +1,17 @@
+.reviews-container {
+  padding-left: 100px;
+  padding-right: 400px;
+}
+
 .reviews {
   list-style: none;
   border-bottom: solid 1px rgb(146, 144, 144);
 }
+
+.reviews > li {
+  padding-top: 10px;
+}
+
 .review-user-date{
   color: #5c5d5e;
   font-size: 13px;
@@ -9,11 +19,15 @@
 }
 
 .review-stars{
-  margin: 10px 0px 10px 0px
+  margin: 20px 0px 10px 0px;
 }
 .reviews-count-rating-header{
   margin-top: 30px;
-  /* border-top: rgb(169, 169, 169) 1px solid; */
+}
+
+.review-count-avg-rating {
+  border-bottom: 1px solid rgb(161, 161, 161);
+  width: fit-content;
 }
 
 .productdetails-update-review-reviewbuttons{
@@ -28,6 +42,9 @@
   padding-left: 0px;
   color: rgb(95, 94, 94);
 }
+.productdetails-update-reviewbutton:hover {
+  color: rgb(122, 194, 122);
+}
 
 .productdetails-delete-reviewbutton{
   background-color: transparent;
@@ -36,4 +53,6 @@
   color: rgb(95, 94, 94);
 }
 
-
+.productdetails-delete-reviewbutton:hover {
+  color: rgb(212, 25, 25);
+}
