@@ -1,0 +1,33 @@
+
+.manage-header {
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.button-remove {
+  border: 1px solid;
+  color: rgb(191, 23, 23);
+  background-color: white;
+  padding: 4px 6px;
+}
+
+.button-remove:hover {
+  cursor: pointer;
+}
+
+.button-update {
+  border: 1px solid;
+  color: rgb(61, 170, 18);
+  background-color: white;
+  padding: 4px 6px;
+}
+
+.button-update:hover {
+  cursor: pointer;
+}
+
+.manage-container h2 {
+  text-align: center;
+  margin-bottom: 600px;
+}

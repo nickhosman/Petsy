@@ -18,7 +18,6 @@ function Search() {
 
   const objProducts = useSelector((state) => state.products?.searchProducts?.Search);
 
-  console.log('XXXXX', objProducts)
   useEffect(() => {
     // setSearchInput(queryTerm)
     dispatch(fetchSearchedProducts(queryTerm))
