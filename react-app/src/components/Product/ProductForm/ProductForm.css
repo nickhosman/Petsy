@@ -95,3 +95,8 @@
 .show{
   display: block;
 }
+
+#product-tag-div{
+  display: flex;
+  
+}
