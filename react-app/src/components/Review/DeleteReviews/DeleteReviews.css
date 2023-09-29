@@ -1,0 +1,24 @@
+.confirm-popup-modal {
+  padding: 5px 10px;
+  margin: 10px 10px;
+}
+
+.cofirmation-buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+}
+
+.confirmation-header {
+  margin-top: 5px;
+}
+
+.cofirmation-buttons > button {
+  font-size: 17px;
+  padding: 0px 18px;
+  background-color: rgb(249, 234, 232);
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 5px;
+}
