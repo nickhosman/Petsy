@@ -35,7 +35,7 @@ function ProductFormPage() {
       const theseTags = await response.json()
       // console.log("TAGS BEFORE:", theseTags)
       setTagList(Object.values(theseTags.Tags))
-      // console.log("TAGS:", tagList)
+      console.log("TAGS:", tagList)
     }
   }, [])
 
@@ -100,21 +100,22 @@ function ProductFormPage() {
     e.preventDefault()
     const input = e.target.value
     setCustomTagInput(input)
-    setDisplayCustomTag(e.target.value)
+    const captalizedTag = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase()
+    setDisplayCustomTag(captalizedTag)
 
   }
 
+
   const handleAddClick = async (e) => {
     e.preventDefault()
-    const tagListItems= []
-    for(const tagObj of tagList){
+
+    const tagListItems = []
+    for (const tagObj of tagList) {
       tagListItems.push(Object.values(tagObj)[1])
-      setTagList(tagList)
     }
-    console.log(customTagInput)
-    if (tagListItems.includes(customTagInput)){
+    if (tagListItems.includes(displayCustomTag)) {
       alert("The tag already exists. Please select it from the list.")
-    }
+    } else {
       const newTag = await fetch("/api/tags/", {
         method: "POST",
         headers: {
@@ -125,38 +126,31 @@ function ProductFormPage() {
         })
       })
       const res = await newTag.json()
-      if (displayCustomTag.length <= 25) {
+
+      if (displayCustomTag.length > 0 && displayCustomTag.length <= 25) {
         const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
-        setLis([...lis, newLi])
+     
+        setLis([newLi])
+        console.log(lis)
+        setTagList(prevTagList => [...prevTagList, res])
         setCustomTagInput("")
+   
+
       } else {
-          alert("Tags must be less than or equal to 25 characters")
+        alert("Tags cannot be empty and must be less than or equal to 25 characters")
       }
+    }
+
+
+
   }
+
+
 
   // pressing enter to submit custom tag
   const handleCustomTagOnKeyPress = async (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault()
-
-      const newTag = await fetch("/api/tags/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: displayCustomTag
-        })
-      })
-      const res = await newTag.json()
-      if (displayCustomTag.length <= 25) {
-        const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
-        setLis([...lis, newLi])
-        setCustomTagInput("")
-      } else {
-        alert("Tags must be less than or equal to 25 characters")
-      }
-      // console.log(res)
+      handleAddClick(e)
     }
   }
 
@@ -237,7 +231,7 @@ function ProductFormPage() {
           Tags
           <ul className="n-tag-wrapper">
             {tagList.map((tag, idx) => <li key={idx} id={tag.id} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
-            {lis}
+            {/* {lis} */}
             {/* <form onSubmit={handleCustomTagOnSubmit}> */}
             {/* </form> */}
             <li className={`tag-add ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</li>
