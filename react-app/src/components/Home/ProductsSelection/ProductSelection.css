@@ -12,7 +12,7 @@
 #selection-img{
   width: 300px;
   height: 300px;
-  object-fit: fill;
+  object-fit: cover
 }
 
 #selection-div:hover {
@@ -65,7 +65,7 @@
 }
 
 .fa-xs {
-  color: rgb(212, 25, 25)
+  color: rgb(212, 25, 25);
 }
 
 .selection-likes {
@@ -75,12 +75,17 @@
   height: 40px;
   width: 30px;
   position: absolute;
-  top: 14px;
-  right: -42px;
+  top: 12px;
+  right: -41px;
+  row-gap: 2px;
 }
 
 .selection-likes p {
   color: rgb(212, 25, 25);
-  font-size: 11px;
-  margin-left: 1.4px;
+  font-size:11px;
+  margin-left: 1.2px;
+}
+
+.productdetail-star {
+  margin-bottom: 20px;
 }

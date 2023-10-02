@@ -23,13 +23,15 @@ function Search() {
     dispatch(fetchSearchedProducts(queryTerm))
   }, [dispatch, queryTerm])
 
+
+
   let found = true;
   if (!objProducts || Object.keys(objProducts).length === 0) found = false
 
   return (
     <div id="all-products-div">
-      <div id="all-products-title">
-        <h1>Search Result</h1>
+      <div className="all-products-title">
+        <h1 className="title-header">Search Result: {queryTerm}</h1>
       </div>
       {!found ?
       <div>

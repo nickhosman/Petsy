@@ -59,7 +59,7 @@ function ReviewForm({review, formType}) {
       </div>
       <form onSubmit={handleSubmitReview}>
         <div className="review-star-rating">
-          <h3 className="rating-star-container">Rating:
+          <h3 className="rating-star-container">
             <StarRating
               stars={stars}
               onClickStars={(index) => onClick(index)}

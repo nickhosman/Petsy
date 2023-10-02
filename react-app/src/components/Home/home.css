@@ -29,7 +29,6 @@ body {
 
 #tag-text h3:hover {
   cursor: pointer;
-  text-decoration: underline;
 }
 
 #tag-text p {
@@ -83,7 +82,8 @@ body {
 }
 
 #category-dog-img {
-  margin-top: 49px;
+  margin-top: 12px;
+  margin-right: 10px;
   height: 180px;
   width: 170px;
 }

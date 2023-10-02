@@ -5,7 +5,7 @@
 
 .reviews {
   list-style: none;
-  border-bottom: solid 1px rgb(146, 144, 144);
+  /* border-bottom: solid 1px rgb(146, 144, 144); */
 }
 
 .reviews > li {
@@ -15,7 +15,7 @@
 .review-user-date{
   color: #5c5d5e;
   font-size: 13px;
-  margin-bottom: 20px;
+  margin-top: 0px;
 }
 
 .review-stars{
@@ -23,16 +23,17 @@
 }
 .reviews-count-rating-header{
   margin-top: 30px;
-}
-
-.review-count-avg-rating {
-  border-bottom: 1px solid rgb(161, 161, 161);
-  width: fit-content;
+  position: relative;
+  width: 1000px;
 }
 
 .productdetails-update-review-reviewbuttons{
   background-color: transparent;
   border: none;
+  position: absolute;
+  top: 57px;
+  left: 111px;
+  width: 1000px;
 }
 
 .productdetails-update-reviewbutton{
@@ -55,4 +56,29 @@
 
 .productdetails-delete-reviewbutton:hover {
   color: rgb(212, 25, 25);
+}
+
+.singlereview-container {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgb(198, 198, 198);
+}
+
+.singlereview-info {
+  display: flex;
+  flex-direction: column;
+  height: 120px;
+}
+
+.review-profilepicture {
+  margin-bottom: 46px;
+  margin-right: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.review-details {
+  margin-top: 6px;
 }

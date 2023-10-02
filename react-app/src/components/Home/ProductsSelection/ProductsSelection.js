@@ -1,6 +1,8 @@
 import React from 'react'
 import './ProductSelection.css'
 import { useHistory } from 'react-router-dom'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const ProductsSelection = ({ product }) => {
   const history = useHistory()
@@ -12,11 +14,13 @@ const ProductsSelection = ({ product }) => {
 
   if(!product) return null
 
-  let fullStars;
-  if(product && product?.averageRating) {
-    let average = product?.averageRating;
-    fullStars = Math.floor(average);
-  }
+  const starArray = [...Array(5).keys()].map(star => star + 1)
+  const starRating = (rating) => starArray.map(star =>
+    <FontAwesomeIcon
+      key={star}
+      icon={faStar}
+      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
+      )
 
   return (
     <div id="selection-div" onClick={handleViewProductDetail} >
@@ -26,15 +30,14 @@ const ProductsSelection = ({ product }) => {
             <div className='selection-info'>
               <div className='selection-name-likes'>
               <p className='selection-name'>{product?.name}</p>
-                <div className='selection-likes'>
+                {/* <div className='selection-likes'>
                 <i onClick={() => alert('Favoriting from home feature coming soon!')} class="fa-regular fa-heart fa-xs"></i>
                 <p>{Math.floor(Math.random() * 500) + 100}</p>
-                </div>
+                </div> */}
               </div>
               <p className='selection-seller'>{product?.seller.username}</p>
               <div className="star-rating-container">
-              {Array.from({length: fullStars}).map((star, index) => (
-              <i key={index} className="fa-solid fa-star fa-reviewstar"></i>))}
+              {starRating(product?.averageRating)}
               </div>
             </div>
           </div>

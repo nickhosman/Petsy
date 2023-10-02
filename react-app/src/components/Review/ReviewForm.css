@@ -1,11 +1,16 @@
 .review-form{
   margin: 20px;
-
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-title {
   text-align: center;
   color:rgb(210, 39, 39);
+  margin-bottom: 0px;
 }
 
 .product-name-img{
@@ -15,7 +20,6 @@
 
 .product-name {
   color: rgb(84, 83, 83);
-
 }
 
 .product-img{
@@ -26,6 +30,10 @@
 .on {
   border: none;
   color:rgb(210, 39, 39);
+}
+
+.on:hover {
+  cursor: pointer;
 }
 
 .off{
@@ -41,11 +49,13 @@
 .rating-star-container{
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding-top: 20px;
 }
 
 .product-review-textbox-header{
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .update-create-submit-button{
@@ -57,8 +67,27 @@
 
 .update-create-submit-button > button {
   background-color: rgb(254, 251, 251);
-  border: 1px solid black;
+  border: 1px solid rgb(161, 8, 8);
+  color: rgb(161, 8, 8);
   border-radius: 5px;
   size: 2px;
-  font-size: 15px;
+  font-size: 13px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.update-create-submit-button > button:hover {
+  background-color: rgb(161, 8, 8);
+  border: 1px solid rgb(161, 8, 8);
+  color: white;
+  border-radius: 5px;
+  size: 2px;
+  font-size: 13px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.reviewratingstar {
+  width: 23px;
+  height: 23px;
 }

@@ -9,7 +9,7 @@
   justify-content: center;
   border:1px solid rgb(204, 204, 204);
   box-shadow: rgba(100, 100, 111, 0.15) 0px 7px 29px 0px;
-  height: 150px;
+  max-height: 300px;
   width:fit-content;
   border-radius: 15px;
   background-color: white;
@@ -17,15 +17,22 @@
 }
 
 .petsy-logo {
-  width: 126px;
-  height: 110px;
+  width: 146px;
+  height: 120px;
 }
 
 .profile-dropdown button{
-  background-color: transparent;
+  background-color: white;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.profile-dropdown button:hover {
+cursor: pointer;
+font-weight: bold;
 }
 
 .hidden {
@@ -211,13 +218,20 @@
   position: absolute;
   height: 57px;
   top: 9px;
-  right: 600px;
+  right: 640px;
 }
 
 .underline-name {
   text-decoration: underline;
 }
 
-/* .nav-login-button {
+.signup-login-btn {
+  font-size: 10px;
+  max-width: 200px;
+  margin-top: 10px;
+}
 
-} */
+.signup-login-btn:hover{
+  cursor: pointer;
+  text-decoration: none;
+  }

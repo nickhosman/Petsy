@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { fetchProductDetail, fetchUpdateProduct, getAllReviewsThunk } from "../../../store/product";
+import catto from '../../images/catto.svg'
 
 function ProductUpdateForm() {
   const history = useHistory();
@@ -65,7 +66,8 @@ function ProductUpdateForm() {
     <h1>Update Your Listing</h1>
     <form onSubmit={handleSubmit}>
       <label>
-        What are you selling?
+      <h2 className='form-header'>What are you selling?</h2>
+      <p className="form-subheader">Give your listing a creative name for all (animals included) to see!</p>
         <input
           type="text"
           value={name}
@@ -74,7 +76,8 @@ function ProductUpdateForm() {
         />
       </label>
       <label>
-        Product description
+        <h2 className='form-header'>Care to share the details?</h2>
+        <p className="form-subheader">Describe what makes your product special to fellow customers:</p>
         <textarea
           autoComplete="off"
           placeholder="Please write at least 20 characters"
@@ -85,7 +88,8 @@ function ProductUpdateForm() {
       {errors && errors.description && <p id='error-msg'> {errors.description} </p>}
       </label>
       <label>
-        Price
+        <h2 className='form-header'>Do you have a price in mind?</h2>
+        <p className="form-subheader">Competitive pricing may help your product stand out and be seen more frequently.</p>
         <input
           type="number"
           value={price}
@@ -95,7 +99,8 @@ function ProductUpdateForm() {
       </label>
       {errors && errors.price && <p id='error-msg'>{errors.price}</p>}
       <label>
-        Category
+        <h2 className='form-header'>Who's it for?</h2>
+        <p className="form-subheader">Choose a category that fits the type of animal your product is suited for.</p>
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value={1}>Dog</option>
           <option value={2}>Cat</option>
@@ -104,7 +109,7 @@ function ProductUpdateForm() {
           <option value={5}>Others</option>
         </select>
       </label>
-      <button className="button-form" type="submit">Update Listing</button>
+      <button className="button-form" type="submit">Update Listing!</button>
     </form>
   </div>
   )

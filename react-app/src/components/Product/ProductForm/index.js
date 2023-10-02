@@ -4,6 +4,8 @@ import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import './ProductForm.css'
 import { fetchCreateProduct, fetchAddImageToProduct, fetchProductDetail, CreateProductTag } from "../../../store/product";
+import catto from '../../images/catto.svg'
+
 
 function ProductFormPage() {
   const dispatch = useDispatch();
@@ -149,7 +151,6 @@ function ProductFormPage() {
     setCustomTagInput(input)
     const captalizedTag = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase()
     setDisplayCustomTag(captalizedTag)
-
   }
 
 
@@ -159,8 +160,6 @@ function ProductFormPage() {
     for (const tagObj of tagList) {
       tagListItems.push(Object.values(tagObj)[1])
     }
-
-    console.log(displayCustomTag)
 
     if (tagListItems.includes(displayCustomTag)) {
       alert("The tag already exists. Please select it from the list.")
@@ -183,15 +182,12 @@ function ProductFormPage() {
         console.log(lis)
         setTagList(prevTagList => [...prevTagList, res])
         setCustomTagInput("")
-
+        setAddTagBtn("show")
 
       } else {
         alert("Tags cannot be empty and must be less than or equal to 25 characters")
       }
     }
-
-
-
   }
 
 
@@ -227,17 +223,21 @@ function ProductFormPage() {
       <h1>Create A Listing</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          What are you selling?
+          <h2 className='form-header'>What are you selling?</h2>
+          <p className="form-subheader">Give your listing a creative name for all (animals included) to see!</p>
           <input
             type="text"
             value={name}
+            placeholder="Name"
             onChange={(e) => setName(e.target.value)}
             required
           />
         </label>
         {errors && errors.name && <p id='error-msg'>*{errors.name}</p>}
-        <label>
-          Product description
+        <label className="catto-container">
+        <h2 className='form-header'>Care to share the details?</h2>
+        <p className="form-subheader">Describe what makes your product special to fellow customers:</p>
+        <img className="catto" src={catto}></img>
           <textarea
             autoComplete="off"
             placeholder="Please write at least 20 characters"
@@ -249,7 +249,8 @@ function ProductFormPage() {
           {errors && errors.description && <p id='error-msg'>{errors.description}</p>}
         </label>
         <label>
-          Price
+        <h2 className='form-header'>Do you have a price in mind?</h2>
+        <p className="form-subheader">Competitive pricing may help your product stand out and be seen more frequently.</p>
           <input
             type="number"
             value={price}
@@ -259,7 +260,8 @@ function ProductFormPage() {
         </label>
         {errors && errors.price && <p id='error-msg'>{errors.price}</p>}
         <label>
-          Category
+        <h2 className='form-header'>Who's it for?</h2>
+        <p className="form-subheader">Choose a category that fits the type of animal your product is suited for.</p>
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value={1}>Dog</option>
             <option value={2}>Cat</option>
@@ -268,7 +270,10 @@ function ProductFormPage() {
             <option value={5}>Others</option>
           </select>
         </label>
-        <label>Add Images</label>
+        <label>
+          <h2 className='form-header'>Can we see it?</h2>
+          <p className="form-subheader">Add some photos to liven up your listing and show a lucky pet what they could be getting.</p>
+          </label>
         <div className="form-imagescontainer">
         <input value={previewImage} required type='url' onChange={(e) => setPreviewImage(e.target.value)} placeholder="Preview Image URL"></input>
           {imgErrs && imgErrs.image_url && <p id='error-msg'>*{imgErrs.image_url}</p>}
@@ -281,10 +286,11 @@ function ProductFormPage() {
             {imgErrs3 && imgErrs3.image_url && <p id='error-msg'>*{imgErrs3.image_url}</p>}
           <input value={otherImage4} onChange={(e) => setOtherImage4(e.target.value)} placeholder="(optional)"></input>
             {imgErrs4 && imgErrs4.image_url && <p id='error-msg'>*{imgErrs4.image_url}</p>}
-        </div>
+          </div>
         </div>
         <label className="tag-container">
-          Tags
+          <h2 className='form-header'>Got tags?</h2>
+          <p className="form-subheader formdescription-tags">Add or create some descriptive keywords to help customers find your product! </p>
           <ul className="n-tag-wrapper">
             {tagList.map((tag, idx) => <li key={idx} id={tag.id} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
             {/* {lis} */}
@@ -292,7 +298,7 @@ function ProductFormPage() {
             {/* </form> */}
             <li className={`tag-add ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</li>
             </ul>
-            <div id="custom-tag-wrapper">
+            {addTagBtn === "hidden" && <div id="custom-tag-wrapper">
               <input
                 type="text"
                 id="custom-tag-div"
@@ -302,9 +308,9 @@ function ProductFormPage() {
                 onKeyPress={handleCustomTagOnKeyPress}
               />
               <li className={`add-tag-btn ${customTagInputClass}`} onClick={handleAddClick}>Add Tag</li>
-            </div>
+            </div>}
         </label>
-        <button className="button-form" type="submit">Create Listing</button>
+        <button className="button-form" type="submit">Create Listing!</button>
       </form>
     </div>
   )
