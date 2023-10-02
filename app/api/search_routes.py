@@ -1,7 +1,7 @@
 from flask import Blueprint,request
 from app.models import Category, db
 from flask_login import login_required
-from app.models import Product, Category
+from app.models import Product, Category, Tag, product_tags
 from sqlalchemy import or_
 
 search_routes = Blueprint("search", __name__)
@@ -9,24 +9,21 @@ search_routes = Blueprint("search", __name__)
 @search_routes.route("/")
 def search():
   q = request.args.get("q")
- 
-  
   if q:
-    print("qqqqqqqqqqqqqqqqqqq",q)
-    # print('Yoooooooooooooooooooooo',Product.query.get(category_id))
-   
-    # result = Product.query.join(Category).filter(Product.name.ilike(f'%{q}%').or_(Category.name.ilike(f'%{q}%'))).limit(100).all()
-   
-    result = Product.query.join(Category).filter(or_(Product.name.ilike(f'%{q}%'),Category.name.ilike(f'%{q}%'))).limit(100).all()
-    print("resultttttttttttttttttttt",result)
-    
-    # print(Category.name)
-    print("xxxxxxxxxxxxxxxxxxxxxx",result)
+
+    result = (Product.query
+              .join(Category)
+              .join(product_tags, Product.id == product_tags.c.product_id)
+              .join(Tag, Tag.id == product_tags.c.tag_id)
+              .filter(or_(Product.name.ilike(f'%{q}%'), Category.name.ilike(f'%{q}%'),Tag.name.ilike(f'%{q}%')))).limit(100).all()
+
     search_dict={}
     for product in result:
         data=product.to_dict()
         images = product.product_images
         reviews = product.reviews
+        seller = product.seller
+        data['seller'] = seller.to_dict()
         total_review = len(reviews)
         if total_review == 0:
             data["averageRating"] = 'No reviews'
@@ -38,10 +35,8 @@ def search():
                 data["previewImage"] = image.image_url
                 break
         search_dict[str(product.id)]=data
-    print("working!!!!!!!!!!",search_dict)
+
     return {"Search":search_dict}
 
   else:
     result=[]
-  
-

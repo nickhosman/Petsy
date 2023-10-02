@@ -71,12 +71,13 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  width: 60%;
 }
 
 .productdetails-information {
   box-sizing: border-box;
   word-wrap: break-word;
-  width: 380px;
+  width: 390px;
   height: 400px;
   margin-top: 100px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.09);
@@ -85,7 +86,6 @@
   display: flex;
   flex-direction: column;
   margin-left: 90px;
-
 }
 
 .productdetails-information > h4 {
@@ -106,7 +106,8 @@
 
 #productdetails-seller {
   margin-bottom: 10px;
-  color: rgb(138, 138, 138)
+  color: rgb(177, 177, 177);
+  font-weight: 500;
 }
 
 #productdetails-rating {
@@ -125,20 +126,24 @@
 }
 
 .productdetails-reviewbutton {
-  margin-left: 142px;
+  margin-left: 224px;
   margin-top: 34px;
-  padding: 10px 50px;
-  background-color: white;
-  border-radius: 40px;
-  border: 1px solid rgb(151, 151, 151)
+  padding: 10px 18px;
+  background-color: rgb(255, 255, 255);;
+  border: 1px solid rgb(203, 40, 40);
+  color: rgb(203, 40, 40);;
 }
 
 .productdetails-reviewbutton:hover {
   cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  border: 1px solid rgb(203, 40, 40);;
 }
 
 #upper-div{
-  position: relative
+  position: relative;
+  z-index: 0;
 }
 
 .favoritedheart {
@@ -146,11 +151,11 @@
   position: absolute;
   top: 82px;
   left: 600px;
-  border: 1px solid rgb(46, 46, 46);
+  border: 1px solid rgb(210, 39, 39);
   border-radius: 50%;
   padding: 7px;
   font-size: 13px;
-  z-index: 100;
+  z-index: 1;
 }
 
 .unfavoritedheart {
@@ -162,7 +167,7 @@
   border-radius: 50%;
   padding: 7px;
   font-size: 13px;
-  z-index: 100;
+  z-index: 1;
 }
 
 .favoritedheart:hover {
@@ -186,13 +191,15 @@
 
 #individual-tag{
   background-color: rgb(230, 230, 230);
+  position: relative;
   display: flex;
-  gap: .5rem;
   align-items: center;
   justify-content: center;
-  padding: .25rem;
   border-radius: 30px;
   font-size: 12px;
+  padding: 4px 13px;
+  background-color: rgb(179, 17, 17);
+  color: white;
 }
 
 .productdetails-tagcontainer {
@@ -201,7 +208,8 @@
 }
 
 ._add-tag-btn {
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(182, 23, 23);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -215,6 +223,13 @@
   cursor: pointer;
 }
 
+#remove-tag {
+  position: absolute;
+  top: -2px;
+  right: 5px;
+  font-size: 12px;
+}
+
 #remove-tag:hover {
   cursor: pointer;
   color: red;
@@ -226,5 +241,5 @@
 
 .productdetails-tags {
   position: absolute;
-  bottom: 94px;
+  bottom: 90px;
 }

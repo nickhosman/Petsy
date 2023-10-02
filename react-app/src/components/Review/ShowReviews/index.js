@@ -54,23 +54,28 @@ const ShowReviews = ({product, user, productId}) => {
         {reviewCount()}
         {Object.values(allReviews).sort(sortReviewDates).map((review) => (
           <li className="reviews" key={review.id}>
+            <div className="singlereview-container">
+            <img className='loggedin-defaultprofilepic review-profilepicture' src='https://i.ibb.co/1LCJZZZ/Default-pfp-svg.png'></img>
+            <div className="singlereview-info">
             <h6 className="review-stars">{starRating(review.stars)}</h6>
             <p className="review-user-date">{review.User?.firstName} | {review.createdAt}</p>
-            <p>{review.details}</p>
+            <p className="review-details">{review.details}</p>
+            </div>
             {user && user.id === review.userId ?
             <div className="productdetails-update-review-reviewbuttons">
               <OpenModalButton
                 buttonText='Edit'
                 modalComponent={<UpdateReview reviewId={review.id}/>}
                 styleClass='productdetails-update-reviewbutton'
-              />
+                />
               <OpenModalButton
                 buttonText='Delete'
                 modalComponent={<DeleteReviewModal reviewId={review.id} productId={productId} />}
                 styleClass='productdetails-delete-reviewbutton'
-              />
+                />
             </div>
             : null}
+            </div>
           </li>
         ))}
       </div>

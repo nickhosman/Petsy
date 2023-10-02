@@ -13,7 +13,6 @@
   display: flex;
   flex-direction: column;
   width: 90%;
-
 }
 
 #signup-modal-form label {
@@ -42,14 +41,10 @@
   border-radius: 5px;
 }
 
-#signup-login-btn:hover{
-cursor: pointer;
-text-decoration: underline;
-}
-
 #error-msg{
   color:red;
   margin:0;
+  margin-top: 5px;
   font-size: 12px;
 }
 

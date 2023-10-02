@@ -1,7 +1,7 @@
 .n-product-form-wrapper {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 500px;
   margin: auto;
   align-items: center;
   justify-self: center;
@@ -10,17 +10,17 @@
 
 .n-product-form-wrapper h1 {
   margin-bottom: 0px;
+  font-size: 27px;
 }
 
 .n-product-form-wrapper label {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  row-gap: 10px;
+  width: 400px;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .n-product-form-wrapper textarea {
@@ -40,10 +40,11 @@
 }
 
 .tag-untoggled {
-  background-color: lightgray;
+  background-color: rgb(255, 211, 211);
   width: fit-content;
   border-radius: 30px;
-  padding: .25rem;
+  font-size: 13px;
+  padding: 4px 10px
 }
 
 .tag-untoggled:hover {
@@ -54,8 +55,9 @@
 .tag-toggled {
   width: fit-content;
   border-radius: 30px;
-  padding: .25rem;
-  background-color: rgb(82, 79, 79);
+  font-size: 14px;
+  padding: 4px 10px;
+  background-color: rgb(151, 25, 25);
   color: white;
 }
 
@@ -64,7 +66,7 @@
 }
 
 .tag-add {
-  background-color: lightgray;
+  background-color: rgb(255, 211, 211);
   width: 1rem;
   height: 1rem;
   line-height: 1rem;
@@ -83,14 +85,15 @@
 
 .add-tag-btn {
   width: fit-content;
-  background-color: rgb(158, 189, 158);
+  background-color: rgb(173, 12, 12);
   border-radius: 5px;
-  padding: .25rem;
+  padding: 5px 12px;
+  font-size: 12px;
   color: white;
 }
 .add-tag-btn:hover {
   cursor: pointer;
-  background-color: rgb(76, 128, 76);
+  background-color: rgb(142, 12, 12);
 }
 
 #custom-tag-wrapper {
@@ -114,7 +117,7 @@
 }
 
 .form-imagescontainer {
-  margin-top: 6px;
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -124,17 +127,18 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin-bottom: 8px;
 }
 
 .button-form {
   margin-top: 30px;
-  margin-left: 90px;
+  margin-left: 140px;
   color: white;
   background-color:rgb(173, 12, 12);
   border-radius: 4px;
   border: rgb(210, 39, 39);
   width: 140px;
-  height: 30px;
+  height: 34px;
 }
 
 .button-form:hover {
@@ -144,4 +148,36 @@
 
 .tag-container {
   align-items: center;
+}
+
+.formdescription-tags {
+  text-align: center;
+}
+
+.form-header {
+  margin: 0px;
+  font-size: 19px;
+}
+
+.form-subheader {
+  color: rgb(151, 151, 151);
+  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+textarea {
+  resize: none;
+}
+
+.catto-container {
+  position: relative;
+}
+
+.catto {
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  right: -52px;
+  top: 80px;
 }

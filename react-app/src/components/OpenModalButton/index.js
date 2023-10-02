@@ -17,7 +17,7 @@ function OpenModalButton({
   };
 
   return (
-    <button id="signup-login-btn" className={styleClass} onClick={onClick}>{buttonText}</button>
+    <button className={styleClass} onClick={onClick}>{buttonText}</button>
   );
 }
 

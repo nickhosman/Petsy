@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import './home.css'
 import { fetchAllCategories } from '../../store/category';
@@ -8,8 +8,6 @@ import ProductsSelection from './ProductsSelection/ProductsSelection';
 import Trending from './Trending/Trending';
 import { useSearchContext } from '../../context/Search';
 import Tooltip from '../Tooltip/Tooltip';
-
-
 
 const Home = ({ searchInput, setSearchInput }) => {
   const dispatch = useDispatch();
@@ -62,18 +60,19 @@ const Home = ({ searchInput, setSearchInput }) => {
     }
   }
 
+  console.log(allProducts)
   // Our Selection Section
-  const productsInSelection = [];
-  for (let i = 0; i < 10; i++) {
-    if (productsInSelection.length < 6) {
-    const randomIdx = Math.floor(Math.random() * allProducts.length);
+  const productsInSelection = [ allProducts[1], allProducts[17], allProducts[5], allProducts[25], allProducts[9], allProducts[22]];
+  // for (let i = 0; i < 10; i++) {
+  //   if (productsInSelection.length < 6) {
+  //   const randomIdx = Math.floor(Math.random() * allProducts.length);
 
-    const selectRandomProduct = allProducts[randomIdx];
-    if (!productsInSelection.includes(selectRandomProduct)) {
-      productsInSelection.push(selectRandomProduct);
-    }
-    }
-  }
+  //   const selectRandomProduct = allProducts[randomIdx];
+  //   if (!productsInSelection.includes(selectRandomProduct)) {
+  //     productsInSelection.push(selectRandomProduct);
+  //   }
+  //   }
+  // }
 // Trending Section
   const productsInTrending = [];
   for (let i = 0; i < 20; i++) {
@@ -106,23 +105,31 @@ const Home = ({ searchInput, setSearchInput }) => {
   return (
     <div>
       {sessionUser && <p className='homepage-userwelcome'> <span>Welcome back,</span> <strong className='underline-name'>{sessionUser.firstName}</strong>!</p>}
-      {/* <div id="tag-div">
+      <div id="tag-div">
         <div id="tag-text">
           <p>|</p>
+          <NavLink style={{ textDecoration: "none" }} exact to='/search?q=Halloween'>
           <h3>The Halloween Shop</h3>
+          </NavLink>
           <p>|</p>
-          <h3>Pet Clothing</h3>
+          <NavLink style={{ textDecoration: "none" }}  exact to='/search?q=Clothing'>
+          <h3>Clothing</h3>
+          </NavLink>
           <p>|</p>
+          <NavLink style={{ textDecoration: "none" }}  exact to='/search?q=Toy'>
           <h3>Toys</h3>
+          </NavLink>
           <p>|</p>
+          <NavLink style={{ textDecoration: "none" }}  exact to='/search?q=Treat'>
           <h3>Treats</h3>
+          </NavLink>
           <p>|</p>
         </div>
-      </div> */}
+      </div>
       <div id="category-div" >
         <div className="category-card" id="Dog" onClick={handleGoToCategory}>
           <div className="category-img-card" >
-            <img id="category-dog-img" src="https://i.etsystatic.com/5632914/r/il/8ba30a/4272623729/il_794xN.4272623729_orkx.jpg" alt="Picture_of_Dog" />
+            <img id="category-dog-img" src="https://i.ibb.co/1MXKL6k/F7-OCo-A2-Xc-AAa-R5-A.jpg" alt="Picture_of_Dog" />
           </div>
           <p>For Dogs</p>
         </div>

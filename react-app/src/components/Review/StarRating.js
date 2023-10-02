@@ -18,7 +18,7 @@ export const StarRating = ({stars, onClickStars}) => {
             onMouseLeave={() => setHover(stars)}
           >
             <span className='star'>
-              <FontAwesomeIcon icon={faStar} />
+              <FontAwesomeIcon className='reviewratingstar' icon={faStar} />
             </span>
           </button>
         )

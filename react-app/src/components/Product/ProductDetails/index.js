@@ -9,6 +9,8 @@ import './ProductDetails.css'
 import ShowReviews from '../../Review/ShowReviews/index.js';
 import CreateReview from '../../Review/CreateReviews/index'
 import OpenModalButton from '../../OpenModalButton';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -110,6 +112,15 @@ function ProductDetails() {
     }
     return userReview
   }
+
+  const starArray = [...Array(5).keys()].map(star => star + 1)
+  const starRating = (rating) => starArray.map(star =>
+    <FontAwesomeIcon
+      key={star}
+      icon={faStar}
+      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
+      )
+
   return(
     <div className='product-details-container'>
       <div id='upper-div'>
@@ -128,7 +139,9 @@ function ProductDetails() {
             <h4 id='productdetails-price'>${product.price}</h4>
             <h4 id='productdetails-name'>{product.name}</h4>
             <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
-            {product.averageRating > 0 ? <h4> {product.averageRating.toFixed(1)} ★</h4> : <h4>New Listing!</h4>}
+            {product.averageRating > 0 ? <div className="star-rating-container productdetail-star">
+              {starRating(product?.averageRating)}
+              </div> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
             <div id='product-tag-div' className='productdetails-tags'>
               {allProductTags?.map(tag=>(
@@ -136,7 +149,7 @@ function ProductDetails() {
               ))}
               {user && user?.id === product.Seller?.id && allProductTags.length < 5 && addTagBtn === "show" ? <div className={`_add-tag-btn ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</div> : null}
             </div>
-            {addTagBtn ==="hidden" && <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
+            {addTagBtn === "hidden" && <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
               <input
                 type="text"
                 id="custom-tag-div"

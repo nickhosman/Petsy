@@ -22,7 +22,7 @@ function Footer() {
     <div id="footer-div">
       <div id="footer-top">
         {<OpenModalButton
-          buttonText="ABOUT PETSY"
+          buttonText="About Petsy"
           styleClass='join-us-btn'
           modalComponent={<AboutPetsyModal />}
         />
@@ -30,22 +30,24 @@ function Footer() {
 
 
         {<OpenModalButton
-          buttonText="JOIN PETSY"
+          buttonText="Join Petsy"
           styleClass='join-us-btn'
           modalComponent={<SignupFormModal />}
         />
         }
 
-        <div onClick={handleToGithub}>
-          <h4>CONTACT PETSY </h4>
-          <FontAwesomeIcon icon={faGithub} color="black" size="2x" />
+        <div className='footer-contactus' onClick={handleToGithub}>
+          <h4>Contact Us </h4>
+          <FontAwesomeIcon className='githubicon' icon={faGithub} color="black" size="2x" />
         </div>
-        <div>
-          <h4>STACK</h4>
+        <div className='footer-stack'>
+          <h4>Stack</h4>
+          <div>
           <FontAwesomeIcon icon={faReact} color="#add8e6" size="2x" />
           <FontAwesomeIcon icon={faPython} color="#2f5284" size="2x" />
           <FontAwesomeIcon icon={faHtml5} color="red" size="2x" />
           <FontAwesomeIcon icon={faCss3} color="#b2c248" size="2x" />
+          </div>
         </div>
       </div>
       <div id="copyright-div">
