@@ -30,6 +30,11 @@ const Home = ({ searchInput, setSearchInput }) => {
     history.push(`/products`)
   }
 
+  const handleGoToBanner = e => {
+    e.preventDefault()
+    history.push(`/search?q=Halloween`)
+  }
+
   const handleGoToCategory = e => {
     e.preventDefault()
     if (!isNavigated) {
@@ -102,7 +107,7 @@ const Home = ({ searchInput, setSearchInput }) => {
   return (
     <div className='home-wrapper'>
       {sessionUser && <p className='homepage-userwelcome'> <span>Welcome back,</span> <strong className='underline-name'>{sessionUser.firstName}</strong>!</p>}
-      <div className='home-banner'></div>
+      <div className='home-banner' onClick={handleGoToBanner}></div>
       <div id="tag-div">
         <div id="tag-text">
           <p>|</p>
