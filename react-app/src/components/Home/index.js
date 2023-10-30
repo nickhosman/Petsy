@@ -102,6 +102,7 @@ const Home = ({ searchInput, setSearchInput }) => {
   return (
     <div className='home-wrapper'>
       {sessionUser && <p className='homepage-userwelcome'> <span>Welcome back,</span> <strong className='underline-name'>{sessionUser.firstName}</strong>!</p>}
+      <div className='home-banner'></div>
       <div id="tag-div">
         <div id="tag-text">
           <p>|</p>
