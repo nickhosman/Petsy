@@ -6,6 +6,9 @@ body {
   background-color: 	#fdfdfd
 }
 
+.home-wrapper {
+  margin-bottom: 10vh;
+}
 
 #tag-div {
   width: 100%;

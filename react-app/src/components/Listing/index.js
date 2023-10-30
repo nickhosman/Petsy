@@ -8,8 +8,6 @@ function ListingPage() {
   const { userId } = useParams();
   const dispatch = useDispatch();
   const listingObj = useSelector((state) => state.user.Listings)
-  console.log(listingObj)
-
   useEffect(() => {
     dispatch(fetchUserListings(userId))
   }, [dispatch, userId]);

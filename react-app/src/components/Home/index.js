@@ -53,14 +53,12 @@ const Home = ({ searchInput, setSearchInput }) => {
           return
         }
       })
-      console.log(filterId)
       if (filterId) {
         setFilterCategoryId(filterId)
       }
     }
   }
 
-  console.log(allProducts)
   // Our Selection Section
   const productsInSelection = [ allProducts[1], allProducts[17], allProducts[5], allProducts[25], allProducts[9], allProducts[22]];
   // for (let i = 0; i < 10; i++) {
@@ -90,7 +88,6 @@ const Home = ({ searchInput, setSearchInput }) => {
 
   useEffect(() => {
     const filteredItems = allProducts.filter(product => product.categoryId === filterCategoryId)
-    console.log(filteredItems)
   }, [filterCategoryId, allProducts])
 
   useEffect(() => {
@@ -103,7 +100,7 @@ const Home = ({ searchInput, setSearchInput }) => {
   }
 
   return (
-    <div>
+    <div className='home-wrapper'>
       {sessionUser && <p className='homepage-userwelcome'> <span>Welcome back,</span> <strong className='underline-name'>{sessionUser.firstName}</strong>!</p>}
       <div id="tag-div">
         <div id="tag-text">
