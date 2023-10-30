@@ -22,7 +22,6 @@ function LoginFormModal() {
     }
 
   };
-  console.log(errors)
 
   const handledemoUserLogin = (e) => {
     e.preventDefault()

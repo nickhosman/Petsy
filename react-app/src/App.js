@@ -23,45 +23,47 @@ function App() {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
   return (
-    <>
-      <Navigation isLoaded={isLoaded} />
-      <div id="gray-bar"></div>
-      {isLoaded && (
-        <Switch>
-          <Route exact path='/users/:userId/products'>
-            <ListingPage />
-          </Route>
-          <Route exact path='/users/:userId/favorites'>
-            <FavoritePage />
-          </Route>
-          <Route exact path='/products'>
-            <ProductIndex/>
-          </Route>
-          <Route exact path='/products/new'>
-            <ProductFormPage/>
-          </Route>
-          <Route exact path='/products/:productId/edit'>
-            <ProductUpdateForm/>
-          </Route>
-          <Route exact path='/products/:productId'>
-            <ProductDetails/>
-          </Route>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route path={`/search`} >
-            <Search />
-          </Route>
-          <Route path="/">
-            <Home searchInput={searchInput}  setSearchInput={setSearchInput} />
-          </Route>
-        </Switch>
-      )}
+    <div id='page-container'>
+      <div id='content-wrap'>
+        <Navigation isLoaded={isLoaded} />
+        <div id="gray-bar"></div>
+        {isLoaded && (
+          <Switch>
+            <Route exact path='/users/:userId/products'>
+              <ListingPage />
+            </Route>
+            <Route exact path='/users/:userId/favorites'>
+              <FavoritePage />
+            </Route>
+            <Route exact path='/products'>
+              <ProductIndex/>
+            </Route>
+            <Route exact path='/products/new'>
+              <ProductFormPage/>
+            </Route>
+            <Route exact path='/products/:productId/edit'>
+              <ProductUpdateForm/>
+            </Route>
+            <Route exact path='/products/:productId'>
+              <ProductDetails/>
+            </Route>
+            <Route path="/login" >
+              <LoginFormPage />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route path={`/search`} >
+              <Search />
+            </Route>
+            <Route path="/">
+              <Home searchInput={searchInput}  setSearchInput={setSearchInput} />
+            </Route>
+          </Switch>
+        )}
+      </div>
         <Footer isLoaded={isLoaded} />
-    </>
+    </div>
   );
 }
 

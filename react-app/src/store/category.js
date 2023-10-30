@@ -17,7 +17,6 @@ export const fetchAllCategories = () => async (dispatch) => {
     const categories = await res.json()
 
     dispatch(loadCategories(categories))
-    // console.log("fetch categorys action creator", categories)
     return categories
   } else {
     const errors = await res.json()
@@ -30,7 +29,7 @@ const initialState={}
 const categoryReducer = (state=initialState,action)=>{
   switch (action.type){
     case LOAD_CATEGORIES:
-     
+
       const updatedState = {
         ...action.categories
       }

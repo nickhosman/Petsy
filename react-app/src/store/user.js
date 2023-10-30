@@ -84,7 +84,6 @@ export const fetchAddFavorite = productId => async(dispatch) => {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(productId) });
   if(response.ok) {
-    console.log(response)
     const data = await response.json()
     return data
   } else {
@@ -112,12 +111,10 @@ const userReducer = (state = initialState, action) => {
       delete newState.Listings[action.productId]
       return newState
     case LOAD_FAVORITES:
-      console.log('first', newState)
       newState = {
         ...state,
         "Favorites" : {...action.products}
       }
-      console.log('second', newState)
       return newState
     case REMOVE_FAVORITE:
       newState = {

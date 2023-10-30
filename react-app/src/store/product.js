@@ -264,16 +264,13 @@ export const thunkRemoveTag = (productId, tagId) => async (dispatch) => {
     },
     body: JSON.stringify({tagId: tagId}),
   })
-  // console.log("RESPONSE", response.json())
 
   if (response.ok) {
     const message = {"message": "Successfully removed tag"}
     dispatch(removeTag(tagId))
     return message
   } else {
-    // console.log("ERRORS")
     let errors = await response.json()
-    console.log(errors)
     return errors
   }
 }
@@ -288,7 +285,6 @@ const productReducer = (state = initialState, action) => {
         ...state,
         ...action.products
       }
-      console.log(newState)
       return newState
     case SEARCH_PRODUCTS:
       newState = {
@@ -297,7 +293,6 @@ const productReducer = (state = initialState, action) => {
           ...action.products
         }
       }
-      console.log(newState)
       return newState
     case GET_PRODUCT:
       newState = {
@@ -318,7 +313,6 @@ const productReducer = (state = initialState, action) => {
         return {...state, singleProduct: {...state.singleProduct, ProductReviews: {...state.singleProduct.ProductReviews, [newReview.id]: {...newReview, User: action.payload.user}}}}
       case DELETE_REVIEW:
         newState = {...state}
-        console.log("NEW STATE", newState)
         delete newState.singleProduct.ProductReviews[action.reviewId]
         return newState
       case LOAD_PRODUCTTAG:
@@ -340,7 +334,6 @@ const productReducer = (state = initialState, action) => {
       }
       case REMOVE_TAG:
         const newTags = {...state.singleProduct["tags"]}
-        console.log("NEW TAGS", newTags)
         delete newTags[action.payload]
         newState={
           ...state,

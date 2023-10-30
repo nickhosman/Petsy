@@ -15,15 +15,13 @@ function SignupFormModal() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
-	
+
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			console.log(firstname)
 			const data = await dispatch(signUp(username, email, password, firstname, lastname));
 			if (data) {
-				console.log(data)
 				setErrors(data);
 			} else {
 				closeModal();
@@ -77,7 +75,6 @@ function SignupFormModal() {
 						value={firstname}
 						onChange={(e) => {
 							setFirstname(e.target.value)
-							console.log(e.target.value)
 						}}
 						required
 					/>
@@ -93,7 +90,6 @@ function SignupFormModal() {
 						value={lastname}
 						onChange={(e) => {
 							setLastname(e.target.value)
-							console.log(lastname)
 						}}
 						required
 					/>

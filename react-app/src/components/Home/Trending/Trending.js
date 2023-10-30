@@ -7,7 +7,6 @@ const Trending = ({product}) => {
   const history = useHistory()
   const handleViewProductDetail = e => {
     e.preventDefault()
-    console.log(e.target)
     history.push(`/products/${product.id}`)
   }
   return (

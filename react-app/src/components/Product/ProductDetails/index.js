@@ -20,7 +20,6 @@ function ProductDetails() {
   const user = useSelector((state) => state.session.user)
   const favorites = useSelector((state) => state.user.Favorites)
   const productTagObj = useSelector(state=>state.products?.singleProduct?.tags)
-  console.log(productTagObj)
   const [isFavorited, setIsFavorited] = useState(false)
   const [customTagInputClass, setCustomTagInputClass] = useState("hidden");
   const [addTagBtn, setAddTagBtn] = useState("show")

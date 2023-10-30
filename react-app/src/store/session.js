@@ -48,8 +48,6 @@ export const login = (email, password) => async (dispatch) => {
 	} else if (response.status < 500) {
 		const data = await response.json();
 		if (data.errors) {
-			console.log("data.errors",data.errors)
-			console.log("data.status", response.status)
 			return data.errors;
 		}
 	} else {
@@ -79,7 +77,7 @@ export const signUp = (username, email, password, firstname, lastname) => async 
 			username,
 			email,
 			password,
-			first_name:firstname, 
+			first_name:firstname,
 			last_name:lastname
 		}),
 	});
