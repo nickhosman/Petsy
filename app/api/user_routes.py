@@ -40,6 +40,33 @@ def get_favorites(id):
 
     return fav_dict
 
+@user_routes.route('/<int:id>/cart')
+@login_required
+def get_cart(id):
+    """
+    Get a user's shopping cart
+    """
+    curr_user=User.query.get(id)
+    if not curr_user:
+        return {'errors':"User not found"}, 404
+
+    user_cart_products=curr_user.cart_products
+
+    cart_dict = {}
+
+    for item in user_cart_products:
+        data = item.to_dict()
+        images = item.product_images
+        for image in images:
+            if image.preview:
+                data["previewImage"] = image.image_url
+                break
+        cart_dict[str(item.id)] = data
+
+    return cart_dict
+
+
+
 @user_routes.route('/<int:id>/products')
 @login_required
 def get_user_products(id):

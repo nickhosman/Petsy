@@ -312,3 +312,18 @@ def add_favorite(productId):
     product.users.append(current_user)
     db.session.commit()
     return {"message": "Successfully added to favorites"}
+
+
+@product_routes.route('/<int:productId>/cart',methods=["POST"])
+@login_required
+def add_to_cart(productId):
+    """
+    add items to user shopping cart
+    """
+
+    product = Product.query.get(productId)
+    if product.seller_id == current_user.id:
+        return {"errors": "User cannot purchase a product they have listed"}, 400
+    product.cart_users.append(current_user)
+    db.session.commit()
+    return {"message": "Successfully added product to cart"}
