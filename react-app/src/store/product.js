@@ -105,7 +105,7 @@ export const fetchProductDetail = productId => async (dispatch) => {
     return productDetails
   } else {
     let errors = await response.json()
-    return errors
+    throw new Error(errors)
   }
 }
 

@@ -6,8 +6,8 @@ import { fetchAllCategories } from '../../store/category';
 import { fetchAllProducts } from '../../store/product';
 import ProductsSelection from './ProductsSelection/ProductsSelection';
 import Trending from './Trending/Trending';
-import { useSearchContext } from '../../context/Search';
 import Tooltip from '../Tooltip/Tooltip';
+import Loader from '../Loader';
 
 const Home = ({ searchInput, setSearchInput }) => {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const Home = ({ searchInput, setSearchInput }) => {
   const [isNavigated, setIsNavigated] = useState(false)
   const [filterCategoryId, setFilterCategoryId] = useState(null)
   const sessionUser = useSelector(state => state.session.user);
+  const [loading, setLoading] = useState(true);
 
 
   // GET ALL CATEGORIES
@@ -85,25 +86,33 @@ const Home = ({ searchInput, setSearchInput }) => {
       if (!productsInTrending.includes(selectRandomProduct)) {
         productsInTrending.push(selectRandomProduct);
       }
-
     }
-
   }
-
 
   useEffect(() => {
     const filteredItems = allProducts.filter(product => product.categoryId === filterCategoryId)
   }, [filterCategoryId, allProducts])
 
   useEffect(() => {
-    dispatch(fetchAllCategories())
-    dispatch(fetchAllProducts())
+    const fetchData = async() => {
+      setLoading(true);
+      try {
+        await dispatch(fetchAllCategories())
+        await dispatch(fetchAllProducts())
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData();
   }, [dispatch])
 
   if (!Object.values(allCategories).length) {
     return null
   }
 
+  if(loading) return <Loader />
   return (
     <div className='home-wrapper'>
       {sessionUser && <p className='homepage-userwelcome'> <span>Welcome back,</span> <strong className='underline-name'>{sessionUser.firstName}</strong>!</p>}
