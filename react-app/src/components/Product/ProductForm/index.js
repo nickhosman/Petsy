@@ -27,6 +27,7 @@ function ProductFormPage() {
   const [customTagInputClass, setCustomTagInputClass]=useState("hidden")
   const [displayCustomTag, setDisplayCustomTag]=useState("")
   const [lis, setLis] = useState([]);
+  const [loading, setLoading] = useState(false);
 
 
   const [tags, setTags] = useState([]);
@@ -38,12 +39,22 @@ function ProductFormPage() {
   const [imgErrs4, setImgErrs4] = useState([])
 
   useEffect(async () => {
-    const response = await fetch("/api/tags")
-    if (response.ok) {
-      const theseTags = await response.json()
-      setTagList(Object.values(theseTags.Tags))
+    const fetchData = async() => {
+      setLoading(true)
+      try {
+        const response = await fetch("/api/tags")
+        if (response.ok) {
+          const theseTags = await response.json()
+          setTagList(Object.values(theseTags.Tags))
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
     }
-  }, [])
+   fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -268,9 +279,14 @@ function ProductFormPage() {
             {imgErrs4 && imgErrs4.image_url && <p id='error-msg'>*{imgErrs4.image_url}</p>}
           </div>
         </div>
+
+
         <label className="tag-container">
-          <h2 className='form-header'>Got tags?</h2>
+        <h2 className='form-header'>Got tags?</h2>
           <p className="form-subheader formdescription-tags">Add or create some descriptive keywords to help customers find your product! </p>
+          {loading ?
+          <div class="lds-heart"><div></div></div> :
+          <>
           <ul className="n-tag-wrapper">
             {tagList.map((tag, idx) => <li key={idx} id={tag.id} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
             {/* {lis} */}
@@ -289,6 +305,8 @@ function ProductFormPage() {
               />
               <li className={`add-tag-btn ${customTagInputClass}`} onClick={handleAddClick}>Add Tag</li>
             </div>}
+          </>
+          }
         </label>
         <button className="button-form" type="submit">Create Listing!</button>
       </form>
