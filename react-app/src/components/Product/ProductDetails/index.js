@@ -11,6 +11,7 @@ import CreateReview from '../../Review/CreateReviews/index'
 import OpenModalButton from '../../OpenModalButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import Loader from '../../Loader/index.js';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -24,6 +25,8 @@ function ProductDetails() {
   const [customTagInputClass, setCustomTagInputClass] = useState("hidden");
   const [addTagBtn, setAddTagBtn] = useState("show")
   const [tagInput, setTagInput] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [productFound, setProductFound] = useState(true);
 
   const allProductTags = []
   const tagArr=[]
@@ -35,11 +38,20 @@ function ProductDetails() {
   }
 
   useEffect(() => {
-    dispatch(fetchProductDetail(productId));
-    dispatch(getAllReviewsThunk(productId));
-    if(user) {
-      dispatch(fetchUserFavorites(user.id));
+    const fetchData = async() => {
+      setLoading(true);
+      try {
+        await dispatch(fetchProductDetail(productId));
+        await dispatch(getAllReviewsThunk(productId));
+        if(user) await dispatch(fetchUserFavorites(user.id));
+      } catch (error) {
+        console.error(error);
+        setProductFound(false);
+      } finally {
+        setLoading(false)
     }
+  }
+    fetchData();
   }, [dispatch, user, productId]);
 
   useEffect(() => {
@@ -50,7 +62,7 @@ function ProductDetails() {
     }
   }, [favorites, product]);
 
-  if(!allReviews || !product || Object.keys(product).length === 0) return null;
+  // if(!allReviews || !product || Object.keys(product).length === 0) return null;
 
   const handleFavorite = async (e) => {
     e.preventDefault()
@@ -120,8 +132,12 @@ function ProductDetails() {
       color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
       )
 
+  if (loading) return <Loader />;
+
   return(
-    <div className='product-details-container'>
+    <>
+    {productFound ?
+      <div className='product-details-container'>
       <div id='upper-div'>
         <div className='productdetails-carousel-container'>
           <Carousel showStatus={false} useKeyboardArrows={true}>
@@ -172,6 +188,13 @@ function ProductDetails() {
       </div>
         <ShowReviews product={product} user={user} productId={productId}/>
     </div>
+      :
+    <div className='product-not-found'>
+      <h4>Product not found</h4>
+      <img src="https://media.tenor.com/vu7LC08jRmwAAAAC/where-are-you-lost.gif"></img>
+    </div>
+    }
+    </>
   )
 }
 export default ProductDetails

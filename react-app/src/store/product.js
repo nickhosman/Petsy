@@ -71,7 +71,6 @@ export const removeTag = tagId => ({
 })
 
 
-
 /** Thunk Action Creators: */
 export const fetchAllProducts = () => async (dispatch) => {
   const response = await fetch('/api/products')
@@ -95,7 +94,7 @@ export const fetchSearchedProducts = (searchTerm) => async (dispatch) => {
     const errors = await res.json()
     return errors
   }
-}
+};
 
 export const fetchProductDetail = productId => async (dispatch) => {
   const response = await fetch(`/api/products/${productId}`)
@@ -105,9 +104,9 @@ export const fetchProductDetail = productId => async (dispatch) => {
     return productDetails
   } else {
     let errors = await response.json()
-    return errors
+    throw new Error('product not found')
   }
-}
+};
 
 export const fetchCreateProduct = product => async (dispatch) => {
   const response = await fetch("/api/products/new", {

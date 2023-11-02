@@ -21,6 +21,7 @@ body {
   font-weight: bold;
   height: 170px;
   width: 100%;
+  border: 1px solid red;
 }
 
 .home-banner:hover {

@@ -1,32 +1,41 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchedProducts } from "../../store/product";
 import ProductCard from "../Product/ProductCard";
 import { useLocation  } from 'react-router-dom'
-
 import { useSearchContext } from "../../context/Search";
-import '../Product/ProductIndex/ProductIndex.css'
+import '../Product/ProductIndex/ProductIndex.css';
+import Loader from "../Loader";
 
 
 function Search() {
   const dispatch = useDispatch();
-
   // const { searchInput, setSearchInput } = useSearchContext()
-
   const location = useLocation();
   const queryTerm = new URLSearchParams(location.search).get('q');
-
   const objProducts = useSelector((state) => state.products?.searchProducts?.Search);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // setSearchInput(queryTerm)
-    dispatch(fetchSearchedProducts(queryTerm))
+    const fetchData = async() => {
+      setLoading(true);
+      try {
+        await dispatch(fetchSearchedProducts(queryTerm))
+      } catch(error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
   }, [dispatch, queryTerm])
 
 
 
   let found = true;
   if (!objProducts || Object.keys(objProducts).length === 0) found = false
+  if (loading) return <Loader />;
 
   return (
     <div id="all-products-div">
