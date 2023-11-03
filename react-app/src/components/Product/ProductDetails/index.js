@@ -27,6 +27,7 @@ function ProductDetails() {
   const [tagInput, setTagInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [productFound, setProductFound] = useState(true);
+  const [errors, setErrors] = useState({})
 
   const allProductTags = []
   const tagArr=[]
@@ -88,9 +89,12 @@ function ProductDetails() {
   }
 
   const handleAddTagClick = async (e) => {
-    e.preventDefault()
-    if (tagArr.includes(tagInput)) {
-      alert("Tag already exists for product")
+    e.preventDefault();
+
+    const captalizedTag = tagInput.charAt(0).toUpperCase() + tagInput.slice(1).toLowerCase();
+
+    if (tagArr.includes(captalizedTag)) {
+      setErrors({tagInput: "Tag already exists for this product"})
       setTagInput("")
     } else {
       const response = await fetch(`/api/products/${product.id}/tags/add`, {
@@ -98,7 +102,7 @@ function ProductDetails() {
         headers: {
           "Content-Type" : "application/json"
         },
-        body: JSON.stringify({name: tagInput})
+        body: JSON.stringify({name: captalizedTag})
       })
 
       if (response.ok) {
@@ -107,8 +111,11 @@ function ProductDetails() {
         dispatch(fetchProductDetail(productId))
         setTagInput("")
         setAddTagBtn("show")
+        setErrors({})
       } else {
-        console.error(response.errors)
+        // console.error(response.errors)
+        const errorsObj = await response.json()
+        setErrors({otherErrors: errorsObj.errors.name})
       }
     }
   }
@@ -174,6 +181,8 @@ function ProductDetails() {
               />
               <p className={`add-tag-btn ${allProductTags.length < 5 ? customTagInputClass : "hidden"}`} onClick={handleAddTagClick}>Add Tag</p>
             </div>}
+            {errors.otherErrors && <p id="error-msg">{errors.otherErrors}</p>}
+            {errors.tagInput && <p id="error-msg">{errors.tagInput}</p>}
           </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?
             <OpenModalButton

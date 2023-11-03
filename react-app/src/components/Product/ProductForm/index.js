@@ -27,6 +27,7 @@ function ProductFormPage() {
   const [customTagInputClass, setCustomTagInputClass]=useState("hidden")
   const [displayCustomTag, setDisplayCustomTag]=useState("")
   const [lis, setLis] = useState([]);
+  const [tagInput, setTagInput] = useState("");
   const [loading, setLoading] = useState(false);
 
 
@@ -157,7 +158,8 @@ function ProductFormPage() {
     }
 
     if (tagListItems.includes(displayCustomTag)) {
-      alert("The tag already exists. Please select it from the list.")
+      setErrors({tagInput: "Tag already exists for this product"})
+      setTagInput("")
     } else {
       const newTag = await fetch("/api/tags/", {
         method: "POST",
@@ -179,7 +181,8 @@ function ProductFormPage() {
         setAddTagBtn("show")
 
       } else {
-        alert("Tags cannot be empty and must be less than or equal to 25 characters")
+        setErrors({tagInput: "Tags cannot be empty and must be less than or equal to 25 characters"})
+        setTagInput("")
       }
     }
   }
@@ -305,6 +308,7 @@ function ProductFormPage() {
               />
               <li className={`add-tag-btn ${customTagInputClass}`} onClick={handleAddClick}>Add Tag</li>
             </div>}
+            {errors.tagInput && <p id="error-msg" className="taginput-error">{errors.tagInput}</p>}
           </>
           }
         </label>

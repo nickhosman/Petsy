@@ -60,7 +60,7 @@
 
 .singlereview-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: 500px;
   padding-bottom: 25px;
   border-bottom: 1px solid rgb(198, 198, 198);
@@ -69,16 +69,24 @@
 .singlereview-info {
   display: flex;
   flex-direction: column;
-  height: 120px;
+  max-height: 700px;
+  width: 400px;
 }
 
 .review-profilepicture {
-  margin-bottom: 46px;
+  margin-top: 2ch;
+  margin-bottom: 16px;
   margin-right: 10px;
   height: 30px;
   width: 30px;
+  display: flex;
 }
 
 .review-details {
   margin-top: 6px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  max-height: 400px;
 }

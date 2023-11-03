@@ -218,6 +218,11 @@ textarea {
   top: -24px;
   border-radius: 50% 50% 0 0;
 }
+
+.taginput-error {
+  padding-top: 1vh;
+}
+
 @keyframes lds-heart {
   0% {
     transform: scale(0.95);

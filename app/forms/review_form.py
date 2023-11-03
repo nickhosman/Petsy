@@ -13,7 +13,8 @@ class ReviewForm(FlaskForm):
   def validate_details(form, field):
       if len(field.data) < 15:
           raise ValidationError('Review text must be at least 15 characters.')
-
+      if len(field.data) > 500:
+          raise ValidationError('Review cannot exceed 500 characters.')
 # {
 #  "message": "Bad Request",
 #  "errors": {
