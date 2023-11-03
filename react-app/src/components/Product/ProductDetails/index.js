@@ -89,8 +89,11 @@ function ProductDetails() {
   }
 
   const handleAddTagClick = async (e) => {
-    e.preventDefault()
-    if (tagArr.includes(tagInput)) {
+    e.preventDefault();
+
+    const captalizedTag = tagInput.charAt(0).toUpperCase() + tagInput.slice(1).toLowerCase();
+
+    if (tagArr.includes(captalizedTag)) {
       setErrors({tagInput: "Tag already exists for this product"})
       setTagInput("")
     } else {
@@ -99,7 +102,7 @@ function ProductDetails() {
         headers: {
           "Content-Type" : "application/json"
         },
-        body: JSON.stringify({name: tagInput})
+        body: JSON.stringify({name: captalizedTag})
       })
 
       if (response.ok) {
@@ -177,9 +180,9 @@ function ProductDetails() {
                 className={allProductTags.length < 5 ? customTagInputClass : "hidden"}
               />
               <p className={`add-tag-btn ${allProductTags.length < 5 ? customTagInputClass : "hidden"}`} onClick={handleAddTagClick}>Add Tag</p>
-              {errors.tagInput && <p id="error-msg">{errors.tagInput}</p>}
-              {errors.otherErrors && <p id="error-msg">{errors.otherErrors}</p>}
             </div>}
+            {errors.otherErrors && <p id="error-msg">{errors.otherErrors}</p>}
+            {errors.tagInput && <p id="error-msg">{errors.tagInput}</p>}
           </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?
             <OpenModalButton
