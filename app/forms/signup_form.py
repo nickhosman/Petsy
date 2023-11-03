@@ -26,3 +26,7 @@ class SignUpForm(FlaskForm):
     first_name = StringField('first_name', validators=[DataRequired()])
     last_name = StringField('last_name', validators=[DataRequired()])
     password = StringField('password', validators=[DataRequired()])
+
+    def validate_password(form,field):
+        if len(field.data)<6:
+            raise ValidationError('Password cannot be shorter than 6 characters.')
