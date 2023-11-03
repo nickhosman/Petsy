@@ -72,6 +72,7 @@ function ProductUpdateForm() {
           required
         />
       </label>
+      {errors && errors.name && <p id='error-msg'>*{errors.name}</p>}
       <label>
         <h2 className='form-header'>Care to share the details?</h2>
         <p className="form-subheader">Describe what makes your product special to fellow customers:</p>
