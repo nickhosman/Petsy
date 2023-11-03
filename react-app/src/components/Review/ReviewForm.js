@@ -37,16 +37,19 @@ function ReviewForm({review, formType}) {
       closeModal()
 
     } else if (formType === 'Create A Review') {
-      try {
-        const newReview = await dispatch(createReviewThunk(product.id, user, stars, details))
-        if(newReview) {
-          dispatch(fetchProductDetail(product.id))
+      if(!stars) setErrors({'stars': 'Please select a star rating'})
+      else {
+        try {
+          const newReview = await dispatch(createReviewThunk(product.id, user, stars, details))
+          if(newReview) {
+            dispatch(fetchProductDetail(product.id))
+          }
+        } catch (error){
+          setErrors(error.errors)
+          return
         }
-      } catch (error){
-        setErrors(error.errors)
-        return
+        closeModal()
       }
-      closeModal()
     }
   }
 
@@ -66,6 +69,7 @@ function ReviewForm({review, formType}) {
               className='review-star-buttons'
             />
           </h3>
+          {errors.stars && <p id='error-msg' className="stars-error">{errors.stars}</p>}
         </div>
         <div>
         <p className="product-review-textbox-header">Please write product review here:</p>
@@ -79,7 +83,7 @@ function ReviewForm({review, formType}) {
             onChange={(e) => setDetails(e.target.value)}
             required
           />
-        {errors.details && <p id='error-msg'>*{errors.details}</p>}
+        {errors.details && <p id='error-msg'>{errors.details}</p>}
         </div>
         <div className='update-create-submit-button'>
           <button onSubmit={handleSubmitReview} type='submit'>{formType === 'Create A Review' ? 'Create Review' : 'Update Review'}</button>

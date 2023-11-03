@@ -91,3 +91,9 @@
   width: 23px;
   height: 23px;
 }
+
+.stars-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

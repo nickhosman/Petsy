@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, NumberRange,ValidationError
 
 
 class ProductForm(FlaskForm):
-    name = StringField('name', validators=[DataRequired(), Length(max=255)])
+    name = StringField('name', validators=[DataRequired(), Length(max=120)])
     description = TextAreaField('description', validators=[
                                 DataRequired(), Length(max=400)])
     price = DecimalField('price', validators=[DataRequired(), NumberRange(min=0, max=10000)])
