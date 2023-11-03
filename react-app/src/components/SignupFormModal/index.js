@@ -106,6 +106,9 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
+				{errors && errors.password &&
+					<p id="error-msg">{errors.password}</p>
+				}
 				<label>
 					Confirm Password
 					<input
