@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 function ProductCard({ product }) {
-
-  // console.log(product)
   const history = useHistory()
   const handleViewProductDetail = e => {
     e.preventDefault()

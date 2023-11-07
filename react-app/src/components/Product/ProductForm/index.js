@@ -27,6 +27,7 @@ function ProductFormPage() {
   const [customTagInputClass, setCustomTagInputClass]=useState("hidden")
   const [displayCustomTag, setDisplayCustomTag]=useState("")
   const [lis, setLis] = useState([]);
+  const [loading, setLoading] = useState(false);
 
 
   const [tags, setTags] = useState([]);
@@ -38,14 +39,22 @@ function ProductFormPage() {
   const [imgErrs4, setImgErrs4] = useState([])
 
   useEffect(async () => {
-    const response = await fetch("/api/tags")
-    if (response.ok) {
-      const theseTags = await response.json()
-      // console.log("TAGS BEFORE:", theseTags)
-      setTagList(Object.values(theseTags.Tags))
-      console.log("TAGS:", tagList)
+    const fetchData = async() => {
+      setLoading(true)
+      try {
+        const response = await fetch("/api/tags")
+        if (response.ok) {
+          const theseTags = await response.json()
+          setTagList(Object.values(theseTags.Tags))
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
     }
-  }, [])
+   fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -58,7 +67,6 @@ function ProductFormPage() {
 
     const newProduct = await dispatch(fetchCreateProduct(payload));
     if(newProduct.errors) {
-      console.log(newProduct.errors)
       setErrors(newProduct.errors)
     };
 
@@ -69,42 +77,31 @@ function ProductFormPage() {
       const otherImg2=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage2, false));
       const otherImg3=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage3, false));
       const otherImg4=await dispatch(fetchAddImageToProduct(newProduct.id, otherImage4, false));
-      // console.log(newProduct.id)
       if (previewImg?.errors){
-
-        // console.log(previewImg.errors)
         setImgErrs(previewImg?.errors)
         return
       }else{
         setImgErrs([])
       }
       if (otherImg1?.errors){
-
-        // console.log(previewImg.errors)
         setImgErrs1(otherImg1?.errors)
         return
       } else {
         setImgErrs1([])
       }
       if (otherImg2?.errors){
-
-        // console.log(previewImg.errors)
         setImgErrs2(otherImg2?.errors)
         return
       } else {
         setImgErrs2([])
       }
       if (otherImg3?.errors){
-
-        // console.log(previewImg.errors)
         setImgErrs3(otherImg3?.errors)
         return
       } else {
         setImgErrs3([])
       }
       if (otherImg4?.errors){
-
-        // console.log(previewImg.errors)
         setImgErrs4(otherImg4?.errors)
         return
       } else {
@@ -115,7 +112,6 @@ function ProductFormPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: productTagList }),
       })
-      console.log(productTagList)
       dispatch(fetchProductDetail(newProduct.id))
       history.push(`/products/${newProduct.id}`)
     }
@@ -126,7 +122,6 @@ function ProductFormPage() {
     if (e.target.className === "tag-untoggled") {
       if (!(productTagList.length >= 5)) {
         e.target.className = "tag-toggled"
-        console.log(e.target.id)
         setProductTagList([...productTagList, e.target.id])
       }
     } else {
@@ -179,7 +174,6 @@ function ProductFormPage() {
         const newLi = <li className="tag-untoggled" id={res.id} key={lis.length} onClick={handleTagClick}>{displayCustomTag}</li>
 
         setLis([newLi])
-        console.log(lis)
         setTagList(prevTagList => [...prevTagList, res])
         setCustomTagInput("")
         setAddTagBtn("show")
@@ -200,7 +194,6 @@ function ProductFormPage() {
   }
 
   // const handleTagClick = async (e) => {
-  //   console.log("FIRST", tags)
   //   if (e.target.className === "tag-untoggled") {
   //     e.target.className = "tag-toggled"
   //   } else {
@@ -212,10 +205,8 @@ function ProductFormPage() {
   //     newTags.splice(valIdx, 1)
   //     setTags(newTags)
   //   } else {
-  //     console.log("AAAAAAAAAAAAAAAAAAAA")
   //     setTags([...tags, e.target.textContent])
   //   }
-  //   console.log("tags:", tags)
   // }
 
   return (
@@ -288,9 +279,14 @@ function ProductFormPage() {
             {imgErrs4 && imgErrs4.image_url && <p id='error-msg'>*{imgErrs4.image_url}</p>}
           </div>
         </div>
+
+
         <label className="tag-container">
-          <h2 className='form-header'>Got tags?</h2>
+        <h2 className='form-header'>Got tags?</h2>
           <p className="form-subheader formdescription-tags">Add or create some descriptive keywords to help customers find your product! </p>
+          {loading ?
+          <div class="lds-heart"><div></div></div> :
+          <>
           <ul className="n-tag-wrapper">
             {tagList.map((tag, idx) => <li key={idx} id={tag.id} onClick={handleTagClick} className={"tag-untoggled"}>{tag.name}</li>)}
             {/* {lis} */}
@@ -309,6 +305,8 @@ function ProductFormPage() {
               />
               <li className={`add-tag-btn ${customTagInputClass}`} onClick={handleAddClick}>Add Tag</li>
             </div>}
+          </>
+          }
         </label>
         <button className="button-form" type="submit">Create Listing!</button>
       </form>

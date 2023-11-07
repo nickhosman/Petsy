@@ -3,15 +3,26 @@ import {useDispatch, useSelector} from "react-redux"
 import { useParams } from 'react-router-dom';
 import { fetchUserListings } from '../../store/user';
 import ProductManage from '../Product/ProductManage';
+import Loader from '../Loader';
 
 function ListingPage() {
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const listingObj = useSelector((state) => state.user.Listings)
-  console.log(listingObj)
+  const listingObj = useSelector((state) => state.user.Listings);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchUserListings(userId))
+    const fetchData = async() => {
+      setLoading(true);
+      try {
+        await dispatch(fetchUserListings(userId))
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false)
+    }
+  }
+    fetchData();
   }, [dispatch, userId]);
 
   let hasListings = true
@@ -19,6 +30,7 @@ function ListingPage() {
     hasListings = false
   }
 
+  if (loading) return <Loader />;
   return(
     <div className='manage-container'>
       <h1 className='manage-header'>Listed Items</h1>

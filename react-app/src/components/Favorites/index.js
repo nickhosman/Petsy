@@ -1,23 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { fetchUserFavorites } from '../../store/user'
 import ProductManage from '../Product/ProductManage'
 import './Manage.css'
+import Loader from '../Loader'
 
 function FavoritePage() {
-  const { userId } = useParams()
-  const dispatch = useDispatch()
-  const favoritesObj = useSelector(state => state.user.Favorites)
+  const { userId } = useParams();
+  const dispatch = useDispatch();
+  const favoritesObj = useSelector(state => state.user.Favorites);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchUserFavorites(userId))
+    const fetchData = async() => {
+      setLoading(true);
+      try {
+        await dispatch(fetchUserFavorites(userId))
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false)
+    }
+  }
+    fetchData();
   }, [ dispatch, userId ])
 
   let hasFavorites = true
   if(!favoritesObj || Object.values(favoritesObj).length === 0) {
     hasFavorites = false
-  }
+  };
+
+  if (loading) return <Loader />;
   return (
     <div className='manage-container'>
       <h1 className='manage-header'>Favorited Items</h1>

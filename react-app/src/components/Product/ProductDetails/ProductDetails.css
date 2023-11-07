@@ -71,6 +71,7 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 22vh;
   width: 60%;
 }
 
@@ -242,4 +243,19 @@
 .productdetails-tags {
   position: absolute;
   bottom: 90px;
+}
+
+.product-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-not-found h4 {
+  font-size: 32px;
+}
+
+.product-not-found img {
+  width: 400px;
+  /* border-radius: 50%; */
 }

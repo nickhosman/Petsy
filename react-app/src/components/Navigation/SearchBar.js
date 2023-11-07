@@ -31,10 +31,8 @@ const SearchBar = ({ searchInput,setSearchInput }) => {
       }
     }).then(data => {
       const sData = data?.products?.Search
-      console.log(sData)
       return sData
     })
-    console.log(data)
     history.push(`/search?q=${searchInput}`)
     setSearchInput('')
   }
@@ -45,7 +43,6 @@ const SearchBar = ({ searchInput,setSearchInput }) => {
   //   // filter by product name
   //   allProducts.forEach(product => {
   //     if (product.name.includes(searchInput) && !filteredProductIdArr.includes(product.id)) {
-  //       console.log(product)
   //       filteredProductIdArr.push(product.id)
   //     }
   //     // filter by category
@@ -65,7 +62,6 @@ const SearchBar = ({ searchInput,setSearchInput }) => {
 
   //   })
   // }
-  // // console.log(filteredProductIdArr)
   // useEffect(() => {
   //   dispatch(fetchAllProducts())
   // }, [dispatch])

@@ -6,6 +6,35 @@ body {
   background-color: 	#fdfdfd
 }
 
+.home-wrapper {
+  margin-bottom: 10vh;
+}
+
+.home-banner {
+  background-color: #fc2d47;
+  background-image: url('https://i.ibb.co/B6q6MgJ/banner.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 20px 0;
+  font-size: 20px;
+  font-weight: bold;
+  height: 170px;
+  width: 100%;
+  border: 1px solid red;
+}
+
+.home-banner:hover {
+  cursor: pointer;
+}
+
+.banner-1 {
+  font-weight: normal;
+}
+
+.banner-2 {
+  font-weight: normal;
+}
 
 #tag-div {
   width: 100%;

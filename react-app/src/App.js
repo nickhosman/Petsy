@@ -14,55 +14,78 @@ import FavoritePage from "./components/Favorites";
 import Home from "./components/Home";
 import Search from "./components/Search/Search";
 import Footer from "./components/Home/Footer/Footer";
+import { Drawer } from "@mui/material";
+import { useCartContext } from "./context/Cart";
 
 function App() {
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
-  useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
-  }, [dispatch]);
-  return (
-    <>
-      <Navigation isLoaded={isLoaded} />
-      <div id="gray-bar"></div>
-      {isLoaded && (
-        <Switch>
-          <Route exact path='/users/:userId/products'>
-            <ListingPage />
-          </Route>
-          <Route exact path='/users/:userId/favorites'>
-            <FavoritePage />
-          </Route>
-          <Route exact path='/products'>
-            <ProductIndex/>
-          </Route>
-          <Route exact path='/products/new'>
-            <ProductFormPage/>
-          </Route>
-          <Route exact path='/products/:productId/edit'>
-            <ProductUpdateForm/>
-          </Route>
-          <Route exact path='/products/:productId'>
-            <ProductDetails/>
-          </Route>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route path={`/search`} >
-            <Search />
-          </Route>
-          <Route path="/">
-            <Home searchInput={searchInput}  setSearchInput={setSearchInput} />
-          </Route>
-        </Switch>
-      )}
-        <Footer isLoaded={isLoaded} />
-    </>
-  );
+    const dispatch = useDispatch();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
+    const { showCart, setShowCart } = useCartContext();
+
+    useEffect(() => {
+        dispatch(authenticate()).then(() => setIsLoaded(true));
+    }, [dispatch]);
+
+    return (
+        <div id="page-container">
+            <Drawer
+                anchor="right"
+                open={showCart}
+                onClose={() => {
+                    setShowCart(false);
+                }}
+            >
+                <p>Test</p>
+                <p>Test</p>
+                <p>Test</p>
+                <p>Test</p>
+                <p>Test</p>
+            </Drawer>
+            <div id="content-wrap">
+                <Navigation isLoaded={isLoaded} />
+                <div id="gray-bar"></div>
+                {isLoaded && (
+                    <Switch>
+                        <Route exact path="/users/:userId/products">
+                            <ListingPage />
+                        </Route>
+                        <Route exact path="/users/:userId/favorites">
+                            <FavoritePage />
+                        </Route>
+                        <Route exact path="/products">
+                            <ProductIndex />
+                        </Route>
+                        <Route exact path="/products/new">
+                            <ProductFormPage />
+                        </Route>
+                        <Route exact path="/products/:productId/edit">
+                            <ProductUpdateForm />
+                        </Route>
+                        <Route exact path="/products/:productId">
+                            <ProductDetails />
+                        </Route>
+                        <Route path="/login">
+                            <LoginFormPage />
+                        </Route>
+                        <Route path="/signup">
+                            <SignupFormPage />
+                        </Route>
+                        <Route path={`/search`}>
+                            <Search />
+                        </Route>
+                        <Route path="/">
+                            <Home
+                                searchInput={searchInput}
+                                setSearchInput={setSearchInput}
+                            />
+                        </Route>
+                    </Switch>
+                )}
+            </div>
+            <Footer isLoaded={isLoaded} />
+        </div>
+    );
 }
 
 export default App;

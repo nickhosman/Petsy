@@ -42,7 +42,6 @@ function ProductUpdateForm() {
     //   }
     // })
     // .catch(async(error) => {
-    //   console.log('xxxxxxxxxxxxxxxxxx', error)
     //   const data = await error.json()
     //   if (data && data.errors) {
     //     setErrors(data.errors)
@@ -58,8 +57,6 @@ function ProductUpdateForm() {
       history.push(`/products/${response.id}`)
     }
   }
-
-  console.log('ERRORS', errors)
 
   return(
     <div className="n-product-form-wrapper">

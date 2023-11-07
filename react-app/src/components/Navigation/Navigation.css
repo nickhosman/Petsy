@@ -217,7 +217,7 @@ font-weight: bold;
 .nav-peekingdoggo {
   position: absolute;
   height: 57px;
-  top: 9px;
+  top: 0.5px;
   right: 640px;
 }
 
@@ -235,3 +235,15 @@ font-weight: bold;
   cursor: pointer;
   text-decoration: none;
   }
+
+ @media (min-width: 2200px) {
+  .nav-peekingdoggo {
+    display: none;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .nav-peekingdoggo {
+      display: none;
+      }
+    }

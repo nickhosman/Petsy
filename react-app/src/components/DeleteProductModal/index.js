@@ -11,7 +11,6 @@ function DeleteProductModal({ listing }) {
 
   const handleDeleteProduct = async(e) => {
     e.preventDefault();
-    console.log(listing.id)
     await dispatch(fetchDeleteListing(listing.id))
     closeModal()
   }
