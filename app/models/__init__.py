@@ -8,3 +8,5 @@ from .product import Product
 from .review import Review
 from .tag import Tag
 from .user_favorite_product import favorites
+from .cart import Cart
+from .cart_product import cart_products
