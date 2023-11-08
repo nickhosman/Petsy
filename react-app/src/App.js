@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
@@ -16,55 +16,21 @@ import Search from "./components/Search/Search";
 import Footer from "./components/Home/Footer/Footer";
 import { Drawer } from "@mui/material";
 import { useCartContext } from "./context/Cart";
+import CartDrawer from "./components/Cart/CartDrawer";
 
 function App() {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const [searchInput, setSearchInput] = useState("");
     const { showCart, setShowCart } = useCartContext();
-    const cartRef = useRef();
 
     useEffect(() => {
         dispatch(authenticate()).then(() => setIsLoaded(true));
     }, [dispatch]);
 
-    useEffect(() => {
-        const handleDrawerClick = (e) => {
-            const drawer = document.querySelector(".MuiDrawer-root");
-            if (!drawer.contains(e.target)) setShowCart(false);
-        };
-
-        if (showCart) {
-            document.addEventListener("mousedown", handleDrawerClick);
-        }
-    }, [showCart]);
-
-    const closeCart = () => {
-        setShowCart(!showCart);
-    };
-
     return (
         <div id="page-container">
-            <Drawer
-                anchor="right"
-                open={showCart}
-                onClose={() => {
-                    setShowCart(false);
-                }}
-                variant="persistent"
-                hideBackdrop={false}
-                ref={cartRef}
-            >
-                <div id="cart-close" onClick={closeCart}>
-                    X
-                </div>
-                <p className="cart-item"> Test </p>
-                <p className="cart-item"> Test </p>
-                <p className="cart-item"> Test </p>
-                <p className="cart-item"> Test </p>
-                <p className="cart-item"> Test </p>
-                <p className="cart-item"> Test </p>
-            </Drawer>
+            <CartDrawer showCart={showCart} setShowCart={setShowCart}/>
             <div id="content-wrap">
                 <Navigation isLoaded={isLoaded} />
                 <div id="gray-bar"></div>
