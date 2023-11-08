@@ -14,7 +14,7 @@ import { useCartContext } from "../../context/Cart";
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
     const { searchInput, setSearchInput } = useSearchContext();
-    const { setShowCart } = useCartContext();
+    const { showCart, setShowCart } = useCartContext();
 
     return (
         <>
@@ -50,7 +50,9 @@ function Navigation({ isLoaded }) {
                                 </NavLink>
                                 <IconButton
                                     aria-label="cart"
-                                    onClick={() => setShowCart(true)}
+                                    onClick={() => {
+                                        setShowCart(!showCart);
+                                    }}
                                 >
                                     <Badge badgeContent={3}>
                                         <ShoppingCartIcon />

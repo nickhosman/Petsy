@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
@@ -22,10 +22,26 @@ function App() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [searchInput, setSearchInput] = useState("");
     const { showCart, setShowCart } = useCartContext();
+    const cartRef = useRef();
 
     useEffect(() => {
         dispatch(authenticate()).then(() => setIsLoaded(true));
     }, [dispatch]);
+
+    useEffect(() => {
+        const handleDrawerClick = (e) => {
+            const drawer = document.querySelector(".MuiDrawer-root");
+            if (!drawer.contains(e.target)) setShowCart(false);
+        };
+
+        if (showCart) {
+            document.addEventListener("mousedown", handleDrawerClick);
+        }
+    }, [showCart]);
+
+    const closeCart = () => {
+        setShowCart(!showCart);
+    };
 
     return (
         <div id="page-container">
@@ -35,12 +51,19 @@ function App() {
                 onClose={() => {
                     setShowCart(false);
                 }}
+                variant="persistent"
+                hideBackdrop={false}
+                ref={cartRef}
             >
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
+                <div id="cart-close" onClick={closeCart}>
+                    X
+                </div>
+                <p className="cart-item"> Test </p>
+                <p className="cart-item"> Test </p>
+                <p className="cart-item"> Test </p>
+                <p className="cart-item"> Test </p>
+                <p className="cart-item"> Test </p>
+                <p className="cart-item"> Test </p>
             </Drawer>
             <div id="content-wrap">
                 <Navigation isLoaded={isLoaded} />

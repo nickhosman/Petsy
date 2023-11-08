@@ -15,7 +15,6 @@ function ProfileButton({ user }) {
     const openMenu = () => {
         if (showMenu) return;
         setShowMenu(true);
-        console.log("BUTTON IS WORKING");
     };
 
     useEffect(() => {
@@ -24,8 +23,6 @@ function ProfileButton({ user }) {
         const closeMenu = (e) => {
             if (!ulRef.current?.contains(e.target)) {
                 setShowMenu(false);
-                console.log("")
-                console.log("CLOSE MENU", e.target);
             }
         };
 

@@ -19,3 +19,7 @@ html, body {
 #content-wrap {
   flex: 1;
 }
+
+.cart-item {
+  width: 20vw;
+}
