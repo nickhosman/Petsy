@@ -12,6 +12,9 @@ import OpenModalButton from '../../OpenModalButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../../Loader/index.js';
+import { useCartContext } from '../../../context/Cart.js';
+import { InputLabel, MenuItem, FormControl, Select } from '@mui/material';
+import { thunkAddToCart } from '../../../store/cart.js';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -20,23 +23,25 @@ function ProductDetails() {
   const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
   const user = useSelector((state) => state.session.user)
   const favorites = useSelector((state) => state.user.Favorites)
-  const productTagObj = useSelector(state=>state.products?.singleProduct?.tags)
+  const productTagObj = useSelector(state=>state.products?.singleProduct?.tags);
+  const { showCart, setShowCart } = useCartContext();
+  const [quantity, setQuantity] = useState('');
   const [isFavorited, setIsFavorited] = useState(false)
   const [customTagInputClass, setCustomTagInputClass] = useState("hidden");
   const [addTagBtn, setAddTagBtn] = useState("show")
   const [tagInput, setTagInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [productFound, setProductFound] = useState(true);
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
+  const allProductTags = [];
+  const tagArr=[];
 
-  const allProductTags = []
-  const tagArr=[]
   for (const key in productTagObj){
     allProductTags.push(productTagObj[key])
   }
   for(const tag of allProductTags){
     tagArr.push(tag.name)
-  }
+  };
 
   useEffect(() => {
     const fetchData = async() => {
@@ -63,8 +68,6 @@ function ProductDetails() {
     }
   }, [favorites, product]);
 
-  // if(!allReviews || !product || Object.keys(product).length === 0) return null;
-
   const handleFavorite = async (e) => {
     e.preventDefault()
     if(isFavorited){
@@ -73,7 +76,18 @@ function ProductDetails() {
       await dispatch(fetchAddFavorite(product.id))
       setIsFavorited(!isFavorited);
     }
-  }
+  };
+
+  const handleAddToCart = async(e) => {
+    e.preventDefault()
+    try {
+      await dispatch(thunkAddToCart(user.id, productId, quantity))
+    } catch (errors) {
+      console.error(errors)
+    } finally {
+    }
+    setShowCart(!showCart)
+  };
 
   const handleRemoveTag = async (e) => {
     e.preventDefault()
@@ -113,12 +127,11 @@ function ProductDetails() {
         setAddTagBtn("show")
         setErrors({})
       } else {
-        // console.error(response.errors)
         const errorsObj = await response.json()
         setErrors({otherErrors: errorsObj.errors.name})
       }
     }
-  }
+  };
 
   const hasReviewed = () => {
     let userReview = false
@@ -129,7 +142,7 @@ function ProductDetails() {
       }
     }
     return userReview
-  }
+  };
 
   const starArray = [...Array(5).keys()].map(star => star + 1)
   const starRating = (rating) => starArray.map(star =>
@@ -139,8 +152,8 @@ function ProductDetails() {
       color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
       )
 
+  console.log('tttttest', user.id, productId, quantity)
   if (loading) return <Loader />;
-
   return(
     <>
     {productFound ?
@@ -165,6 +178,24 @@ function ProductDetails() {
               {starRating(product?.averageRating)}
               </div> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
+            <FormControl sx={{ width: 100 }} fullWidth={false}>
+              <InputLabel id="number-select-label">Quantity</InputLabel>
+              <Select
+                labelId="number-select-label"
+                id="number-select"
+                value={quantity}
+                label="Quantity"
+                onChange={(e) => setQuantity(e.target.value)}
+                MenuProps={{ disableScrollLock: true }}
+              >
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+              </Select>
+            </FormControl>
+            <button onClick={handleAddToCart}>Add to Cart</button>
             <div id='product-tag-div' className='productdetails-tags'>
               {allProductTags?.map(tag=>(
                 <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>

@@ -32,15 +32,15 @@ def add_to_cart():
   cart = Cart.query.filter_by(user_id=current_user.id).first()
   if not cart:
     cart = Cart(user_id=user_id)
-
+    db.session.add(cart)
   # check if cart product already exists
-  cart_product = CartProduct.query.filter(cart_id=cart.id, product_id=product_id)
+  cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product_id).first()
   # if product is already in cart, update quantity
   if cart_product:
     cart_product.quantity += quantity
   # if produc is not in cart, create cart product
   else:
-    new_cart_product = CartProduct(cart_id=cart.id, product_id=product_id, quantity=quantity)
+    new_cart_product = CartProduct(cart_id=cart.id, product_id=product_id, quantity=quantity, purchased=False)
     db.session.add(new_cart_product)
 
   db.session.commit()
