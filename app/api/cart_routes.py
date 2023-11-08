@@ -7,6 +7,9 @@ cart_routes = Blueprint('cart', __name__)
 @cart_routes.route('/')
 @login_required
 def get_cart():
+  """
+  GET A USERS CURRENT CART
+  """
   cart = Cart.query.filter_by(user_id=current_user.id).first()
   if cart:
     return jsonify(cart.to_dict()), 200
@@ -19,7 +22,6 @@ def add_to_cart():
   """
   ADD A PRODUCT TO CART
   """
-
   # get data from request
   data = request.get_json()
   user_id = data.get('userId')
@@ -50,7 +52,6 @@ def remove_from_cart():
   """
   REMOVE A PRODUCT FROM CART
   """
-
   # get data from request
   data = request.get_json()
   user_id = data.get('userId')
@@ -84,7 +85,6 @@ def empty_cart(cartId):
   """
   CHECKOUT A CART, CRETE AN ORDER
   """
-
   #find cart from cartId
   cart = Cart.query.filter_by(id=cartid, user_id=current_user.id).first()
   if not cart:
