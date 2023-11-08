@@ -75,3 +75,10 @@ def remove_from_cart():
   # extra precaution incase product cannot be found
   else:
     return jsonify({'error': 'Product not found'}), 404
+
+@cart_routes.route('/checkout', methods=['DELETE'])
+@login_required
+def checkout_cart():
+  """
+  CHECKOUT A CART
+  """
