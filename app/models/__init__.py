@@ -10,3 +10,5 @@ from .tag import Tag
 from .user_favorite_product import favorites
 from .cart import Cart
 from .cart_product import CartProduct
+from .order import Order
+from .order_product import OrderProduct

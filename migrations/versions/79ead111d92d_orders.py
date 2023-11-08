@@ -1,8 +1,8 @@
-"""cart
+"""orders
 
-Revision ID: a95c96dd3122
+Revision ID: 79ead111d92d
 Revises:
-Create Date: 2023-11-06 18:05:34.567573
+Create Date: 2023-11-07 21:21:23.995246
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = 'a95c96dd3122'
+revision = '79ead111d92d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -61,6 +61,15 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE carts SET SCHEMA {SCHEMA};")
+    op.create_table('orders',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    if environment == "production":
+        op.execute(f"ALTER TABLE orders SET SCHEMA {SCHEMA};")
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
@@ -80,6 +89,7 @@ def upgrade():
     sa.Column('cart_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
+    sa.Column('purchased', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['cart_id'], ['carts.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.PrimaryKeyConstraint('cart_id', 'product_id')
@@ -95,6 +105,16 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE favorites SET SCHEMA {SCHEMA};")
+    op.create_table('order_products',
+    sa.Column('order_id', sa.Integer(), nullable=False),
+    sa.Column('product_id', sa.Integer(), nullable=False),
+    sa.Column('quantity', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
+    sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('order_id', 'product_id')
+    )
+    if environment == "production":
+        op.execute(f"ALTER TABLE order_products SET SCHEMA {SCHEMA};")
     op.create_table('product_images',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('preview', sa.Boolean(), nullable=True),
@@ -138,9 +158,11 @@ def downgrade():
     op.drop_table('reviews')
     op.drop_table('product_tags')
     op.drop_table('product_images')
+    op.drop_table('order_products')
     op.drop_table('favorites')
     op.drop_table('cart_products')
     op.drop_table('products')
+    op.drop_table('orders')
     op.drop_table('carts')
     op.drop_table('users')
     op.drop_table('tags')

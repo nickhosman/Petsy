@@ -68,6 +68,7 @@ def get_user_products(id):
 
     return owned_dict
 
+
 @user_routes.route('/<int:id>')
 @login_required
 def user(id):

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Product, db, Cart, CartProduct
+from app.models import User, Product, db, Cart, CartProduct, Order, OrderProduct
 
 cart_routes = Blueprint('cart', __name__)
 
@@ -19,6 +19,7 @@ def add_to_cart():
   """
   ADD A PRODUCT TO CART
   """
+
   # get data from request
   data = request.get_json()
   user_id = data.get('userId')
@@ -49,6 +50,7 @@ def remove_from_cart():
   """
   REMOVE A PRODUCT FROM CART
   """
+
   # get data from request
   data = request.get_json()
   user_id = data.get('userId')
@@ -76,9 +78,30 @@ def remove_from_cart():
   else:
     return jsonify({'error': 'Product not found'}), 404
 
-@cart_routes.route('/checkout', methods=['DELETE'])
+@cart_routes.route('/<int:cartId>/checkout', methods=['POST'])
 @login_required
-def checkout_cart():
+def empty_cart(cartId):
   """
-  CHECKOUT A CART
+  CHECKOUT A CART, CRETE AN ORDER
   """
+
+  #find cart from cartId
+  cart = Cart.query.filter_by(id=cartid, user_id=current_user.id).first()
+  if not cart:
+    return jsonify({'error': 'Cart not found'}), 404
+
+  # create an order
+  order = Order(user_id=current_user.id)
+  db.session.add(order)
+
+  # get all products from using purchased = false
+  cart_products = CartProduct.query.filter_by(cart_id=cart.id, purchased=False).all()
+  for cart_product in cart_products:
+    # add each product into an orders products
+    order_product = OrderProduct(order_id=order.id, product_id=cart_product.product_id, quantity=cart_product.quantity)
+    db.session.add(order_product)
+    # change the cart product to true so we cant see it anymore in cart
+    cart_product.purchased = True
+
+  db.session.commit()
+  return jsonify({'message': 'Checkout successful'}), 200

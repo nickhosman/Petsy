@@ -9,7 +9,6 @@ class Cart(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
-  # is_active = db.Column(db.Boolean, default=True)
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
   updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
@@ -20,15 +19,15 @@ class Cart(db.Model):
       cart_data = {
           'id': self.id,
           'userId': self.user_id,
-          'isActive': self.is_active,
           'createdAt': self.created_at,
           'updatedAt': self.updated_at,
           'products': []
       }
 
       for cart_product in self.cart_products:
-         product_dict = cart_product.product.to_dict()
-         product_dict['quantity'] = cart_product.quantity
-         cart_data['products'].append(product_dict)
+        if not cart_product.purchased:
+          product_dict = cart_product.product.to_dict()
+          product_dict['quantity'] = cart_product.quantity
+          cart_data['products'].append(product_dict)
 
       return cart_data
