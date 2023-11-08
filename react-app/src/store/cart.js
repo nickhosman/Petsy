@@ -8,8 +8,7 @@ export const loadCart = (cart) => {
 }
 
 export const thunkLoadCart = () => async(dispatch) => {
-  const response = await fetch('/api/cart');
-  console.log('res', response)
+  const response = await fetch('/api/cart/get');
   if(response.ok) {
     const data = await response.json();
     await dispatch(loadCart(data))

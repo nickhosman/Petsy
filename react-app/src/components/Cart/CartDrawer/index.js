@@ -16,7 +16,7 @@ function CartDrawer({ showCart, setShowCart }) {
             setLoading(true)
             try{
                 console.log('zzzzzz')
-                await dispatch(thunkLoadCart())
+                await dispatch(thunkLoadCart(user.id))
             } catch(error) {
                 console.error(error);
             } finally {
