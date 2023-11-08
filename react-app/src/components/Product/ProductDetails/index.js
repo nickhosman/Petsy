@@ -14,7 +14,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../../Loader/index.js';
 import { useCartContext } from '../../../context/Cart.js';
 import { InputLabel, MenuItem, FormControl, Select } from '@mui/material';
-import { thunkAddToCart } from '../../../store/cart.js';
+import { thunkAddToCart, thunkLoadCart } from '../../../store/cart.js';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -82,11 +82,12 @@ function ProductDetails() {
     e.preventDefault()
     try {
       await dispatch(thunkAddToCart(user.id, productId, quantity))
+      await dispatch(thunkLoadCart())
     } catch (errors) {
       console.error(errors)
     } finally {
+      setShowCart(!showCart)
     }
-    setShowCart(!showCart)
   };
 
   const handleRemoveTag = async (e) => {
@@ -152,7 +153,6 @@ function ProductDetails() {
       color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
       )
 
-  console.log('tttttest', user.id, productId, quantity)
   if (loading) return <Loader />;
   return(
     <>

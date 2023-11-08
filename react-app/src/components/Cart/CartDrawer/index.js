@@ -7,13 +7,15 @@ import { thunkLoadCart } from "../../../store/cart";
 function CartDrawer({ showCart, setShowCart }) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cart);
     const drawerRef = useRef();
+    const user = useSelector(state => state.session.user);
 
     useEffect(() => {
         const fetchData = async() => {
             setLoading(true)
             try{
+                console.log('zzzzzz')
                 await dispatch(thunkLoadCart())
             } catch(error) {
                 console.error(error);
@@ -22,7 +24,7 @@ function CartDrawer({ showCart, setShowCart }) {
             }
         }
         fetchData();
-    }, [])
+    }, [showCart, setShowCart, dispatch])
 
     useEffect(() => {
     const handleDrawerClickOutside = (e) => {
@@ -43,6 +45,9 @@ function CartDrawer({ showCart, setShowCart }) {
     const closeCart = () => {
         setShowCart(!showCart);
     };
+
+
+    console.log('carttt', cart)
     return (
         <Drawer
         anchor="right"

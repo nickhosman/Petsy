@@ -11,6 +11,7 @@ def get_cart():
   GET A USERS CURRENT CART
   """
   cart = Cart.query.filter_by(user_id=current_user.id).first()
+  print('xxxxxxxxxxxxxxxxxxxx', cart)
   if cart:
     return jsonify(cart.to_dict()), 200
   else:
