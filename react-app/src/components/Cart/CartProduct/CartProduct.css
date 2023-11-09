@@ -1,0 +1,12 @@
+#cartproduct-container {
+  display: flex;
+  border: 1px solid red;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#cartproduct-img {
+  width: 100px;
+  object-fit: contain;
+}

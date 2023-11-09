@@ -4,14 +4,13 @@ from app.models import User, Product, db, Cart, CartProduct, Order, OrderProduct
 
 cart_routes = Blueprint('cart', __name__)
 
-@cart_routes.route('/get')
+@cart_routes.route('/')
 @login_required
 def get_cart():
   """
   GET A USERS CURRENT CART
   """
   cart = Cart.query.filter_by(user_id=current_user.id).first()
-  print('xxxxxxxxxxxxxxxxxxxx', cart)
   if cart:
     return jsonify(cart.to_dict()), 200
   else:
@@ -65,7 +64,7 @@ def remove_from_cart():
     return jsonify({'error': 'Cart not found'}), 404
 
   # find cart_product
-  cart_product = CartProduct.query.filter(cart_id=cart.id, product_id=product_id)
+  cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product_id)
   # remove quantity from cart
   if cart_product:
     cart_product.quantity -= quantity

@@ -54,7 +54,7 @@ function Navigation({ isLoaded }) {
                                         setShowCart(!showCart);
                                     }}
                                 >
-                                    <Badge badgeContent={3}>
+                                    <Badge badgeContent={0}>
                                         <ShoppingCartIcon />
                                     </Badge>
                                 </IconButton>
@@ -66,22 +66,6 @@ function Navigation({ isLoaded }) {
                     </div>
                 )}
             </ul>
-            {/* <Drawer
-                anchor="right"
-                open={showDrawer}
-                ModalProps={{
-                    keepMounted: false,
-                }}
-                onClose={() => {
-                    setShowDrawer(false);
-                }}
-            >
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-                <p>Test</p>
-            </Drawer> */}
         </>
     );
 }
