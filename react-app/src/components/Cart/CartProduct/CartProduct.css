@@ -11,3 +11,42 @@
   width: 80px;
   object-fit: contain;
 }
+
+.quantity-button {
+  width: 36px;
+  padding: 0;
+  padding-bottom: 10px;
+  height: 30px;
+  line-height: 28px;
+  text-align: center;
+  border: 1px solid rgb(237, 237, 237);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  vertical-align: middle;
+  outline: none;
+}
+
+.qb-left{
+  border-top-left-radius: 40%;
+  border-bottom-left-radius: 40%;
+}
+
+.qb-right {
+  border-top-right-radius: 40%;
+  border-bottom-right-radius: 40%;
+}
+
+.input-class:hover {
+  cursor: default;
+}
+
+.input-class::-webkit-inner-spin-button,
+.input-class::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-class {
+  -moz-appearance: textfield;
+}

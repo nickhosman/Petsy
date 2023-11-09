@@ -32,14 +32,32 @@ function CartProduct({product}) {
         <p>{product.name}</p>
         <p>${product.price}</p>
         <Box>
-          <Button variant="outlined" onClick={handleDecrement}> - </Button>
+          <button onClick={handleDecrement}  className="quantity-button qb-left" > - </button>
           <TextField
           value={product.quantity}
           onChange={(e) => setQuantity(e.target.value)}
-          inputProps={{ step: 1, min: 0, type: 'number', 'aria-labelledby': 'quantity-field' }}
-          style={{ margin: '0 4px', width: '100px' }}
+          InputProps={{
+            sx: {
+              width: '38px',
+              height: '31px',
+              fontSize: '12px',
+              textAlign: 'center',
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgb(237, 237, 237)',
+              },
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgb(237, 237, 237)',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'rgb(237, 237, 237)',
+              },
+            },
+            readOnly: true
+          }}
+          inputProps={{ step: 1, min: 0, type: 'number', 'aria-labelledby': 'quantity-field', className: "input-class" }}
+          className="quantity-input"
           />
-          <Button variant="outlined" onClick={handleIncrement}> + </Button>
+          <button onClick={handleIncrement} className="quantity-button qb-right"> + </button>
         </Box>
       </div>
       <div id='cartproduct-price'>
