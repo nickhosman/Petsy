@@ -64,7 +64,7 @@ def remove_from_cart():
     return jsonify({'error': 'Cart not found'}), 404
 
   # find cart_product
-  cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product_id)
+  cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product_id).first()
   # remove quantity from cart
   if cart_product:
     cart_product.quantity -= quantity
@@ -75,6 +75,7 @@ def remove_from_cart():
     else:
       db.session.merge(cart_product)
     db.session.commit()
+    return jsonify({'message': 'Product removed from cart'}), 200
   # extra precaution incase product cannot be found
   else:
     return jsonify({'error': 'Product not found'}), 404

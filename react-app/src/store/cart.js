@@ -29,7 +29,6 @@ export const thunkAddToCart = (userId, productId, quantity) => async(dispatch) =
       quantity
     })
   });
-
   if(response.ok) {
     const data = await response.json();
     return data
@@ -37,6 +36,25 @@ export const thunkAddToCart = (userId, productId, quantity) => async(dispatch) =
     throw await response.json()
   };
 };
+
+export const thunkRemoveFromCart = (userId, productId, quantity) => async(dispatch) => {
+  const response = await fetch('/api/cart/remove', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      "userId": userId,
+      "productId": productId,
+      quantity
+    })
+  });
+  if(response.ok) {
+    const data = await response.json()
+    return data
+  } else {
+    throw await response.json();
+  };
+
+}
 
 const initialState = {};
 const cartReducer = (state = initialState, action) => {

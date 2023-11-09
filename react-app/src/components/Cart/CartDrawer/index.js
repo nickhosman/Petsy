@@ -32,11 +32,9 @@ function CartDrawer({ showCart, setShowCart }) {
             setShowCart(false);
         }
     };
-
     if (showCart) {
         document.addEventListener("mousedown", handleDrawerClickOutside);
     }
-
     return () => {
         document.removeEventListener("mousedown", handleDrawerClickOutside);
         };
@@ -45,6 +43,14 @@ function CartDrawer({ showCart, setShowCart }) {
     const closeCart = () => {
         setShowCart(!showCart);
     };
+
+    function calculateTotal() {
+        let total = 0;
+        cart.products.map(product => {
+            total += (product.price * product.quantity)
+        })
+        return total.toFixed(2)
+    }
     if(!cart || !cart.products) return null
     console.log('carttt', cart.products)
     return (
@@ -63,6 +69,7 @@ function CartDrawer({ showCart, setShowCart }) {
                 <CartProduct key={product.id} product={product} />
             ))}
         </div>
+    <p>Your Total: ${calculateTotal()}</p>
     </Drawer>
     );
 }
