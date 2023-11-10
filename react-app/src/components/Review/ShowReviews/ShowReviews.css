@@ -31,7 +31,7 @@
   background-color: transparent;
   border: none;
   position: absolute;
-  top: 57px;
+  top: 90px;
   left: 111px;
   width: 1000px;
 }
@@ -44,7 +44,8 @@
   color: rgb(95, 94, 94);
 }
 .productdetails-update-reviewbutton:hover {
-  color: rgb(122, 194, 122);
+  cursor: pointer;
+  color: rgb(212, 25, 25);;
 }
 
 .productdetails-delete-reviewbutton{
@@ -55,6 +56,7 @@
 }
 
 .productdetails-delete-reviewbutton:hover {
+  cursor: pointer;
   color: rgb(212, 25, 25);
 }
 

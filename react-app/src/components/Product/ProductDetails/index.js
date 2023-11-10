@@ -205,14 +205,14 @@ function ProductDetails() {
               {isFavorited ? <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Remove from Favorites</button> :
               <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Add to Favorites</button>}
             </>}
-
             <div id='product-tag-div' className='productdetails-tags'>
               {allProductTags?.map(tag=>(
                 <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>
               ))}
               {user && user?.id === product.Seller?.id && allProductTags.length < 5 && addTagBtn === "show" ? <div className={`_add-tag-btn ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</div> : null}
             </div>
-            {addTagBtn === "hidden" && <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
+            {addTagBtn === "hidden" &&
+            <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
               <input
                 type="text"
                 id="custom-tag-div"

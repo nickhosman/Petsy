@@ -1,5 +1,5 @@
 * {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Spectral', serif;
 }
 
 body {
@@ -11,17 +11,57 @@ body {
 }
 
 .home-banner {
-  background-color: #fc2d47;
-  background-image: url('https://i.ibb.co/B6q6MgJ/banner.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  padding: 20px 0;
+  background-color: rgb(49, 104, 41);
+  padding-top: 10px;
+  padding-bottom: 27px;
   font-size: 20px;
   font-weight: bold;
-  height: 170px;
+  height: 240px;
   width: 100%;
-  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#banner-upto {
+  font-size: 70px;
+  font-weight: 100;
+  font-style: italic;
+  color: rgb(240, 240, 240);
+  text-align: center;
+}
+
+#banner-holiday {
+  font-size: 45px;
+  font-weight: 500;
+  font-family: 'Roboto';
+  color: rgb(238, 238, 238);
+  text-align: center;
+}
+
+#banner-button {
+  color: white;
+  width: 220px;
+  font-size: 17px;
+  background-color: rgb(179, 29, 29);
+  border: 1px solid rgb(210, 39, 39);
+  padding: 7px 25px;
+  border-radius: 20px;
+  margin-top: 2vh;
+  transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+#banner-button:hover {
+  cursor: pointer;
+  background-color: rgb(143, 18, 18);
+  border: 1px solid rgb(143, 18, 18);
+}
+
+#banner-terms {
+  color: white;
+  font-weight: 100;
+  font-size: 12px;
+  margin-top: .8vh;
 }
 
 .home-banner:hover {
@@ -50,14 +90,17 @@ body {
 }
 
 #tag-text h3 {
+  margin-top: 8px;
   font-size: 15px;
   color: rgb(210, 39, 39);
   padding-left: 40px;
   padding-right: 40px;
+  transition: text-decoration 0.2s ease-in-out;
 }
 
 #tag-text h3:hover {
   cursor: pointer;
+  text-decoration: underline;
 }
 
 #tag-text p {

@@ -65,14 +65,14 @@ const ShowReviews = ({product, user, productId}) => {
         <div className="productdetails-reviewcont">
           {reviewCount()}
           {user && user.id !== product.sellerId && !hasReviewed() ?
-              <>
+              <div className="i-am-tired">
               <p>Have you tried this product?</p>
               <OpenModalButton
                 buttonText='Leave a review'
                 modalComponent={<CreateReview />}
                 styleClass='petsy-button review-button'
               />
-              </>
+              </div>
               :
               (null)
             }

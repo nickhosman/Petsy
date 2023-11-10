@@ -142,10 +142,14 @@ const Home = ({ searchInput, setSearchInput }) => {
                     !
                 </p>
             )}
-            <div className="home-banner" onClick={handleGoToBanner}></div>
+            <div className="home-banner">
+                <div id='banner-upto'>Up to 40% off</div>
+                <div id='banner-holiday'>The Holiday Sales Event is here!</div>
+                <button  onClick={handleGoToBanner} id='banner-button'>Shop now</button>
+                <div id='banner-terms'>Participating sellers only. Terms apply.</div>
+            </div>
             <div id="tag-div">
                 <div id="tag-text">
-                    <p>|</p>
                     <NavLink
                         style={{ textDecoration: "none" }}
                         exact
@@ -153,7 +157,6 @@ const Home = ({ searchInput, setSearchInput }) => {
                     >
                         <h3>The Halloween Shop</h3>
                     </NavLink>
-                    <p>|</p>
                     <NavLink
                         style={{ textDecoration: "none" }}
                         exact
@@ -161,7 +164,6 @@ const Home = ({ searchInput, setSearchInput }) => {
                     >
                         <h3>Clothing</h3>
                     </NavLink>
-                    <p>|</p>
                     <NavLink
                         style={{ textDecoration: "none" }}
                         exact
@@ -169,7 +171,6 @@ const Home = ({ searchInput, setSearchInput }) => {
                     >
                         <h3>Toys</h3>
                     </NavLink>
-                    <p>|</p>
                     <NavLink
                         style={{ textDecoration: "none" }}
                         exact
@@ -177,7 +178,6 @@ const Home = ({ searchInput, setSearchInput }) => {
                     >
                         <h3>Treats</h3>
                     </NavLink>
-                    <p>|</p>
                 </div>
             </div>
             <div id="category-div">
