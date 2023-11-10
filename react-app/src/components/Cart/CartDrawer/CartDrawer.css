@@ -18,3 +18,33 @@
   padding: 10px;
   margin-bottom: 0px;
 }
+
+.petsy-button {
+  background-color:rgb(194, 39, 39);
+  border-radius: 24px;
+  border: rgb(194, 39, 39);
+  color: white;
+  padding: 8px 14px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.petsy-button:hover {
+  cursor: pointer;
+  background-color: rgb(174, 23, 23);
+}
+
+#cartdrawer-container::-webkit-scrollbar {
+  width: 2px;
+}
+
+#cartdrawer-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+#cartdrawer-container::-webkit-scrollbar-thumb {
+  background: #cd2424;
+}
+
+#cartdrawer-container::-webkit-scrollbar-thumb:hover {
+  background: #cf2121;
+}

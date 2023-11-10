@@ -17,6 +17,7 @@ import Footer from "./components/Home/Footer/Footer";
 import { Drawer } from "@mui/material";
 import { useCartContext } from "./context/Cart";
 import CartDrawer from "./components/Cart/CartDrawer";
+import CartCheckout from "./components/Cart/CartCheckout";
 
 function App() {
     const dispatch = useDispatch();
@@ -41,6 +42,9 @@ function App() {
                         </Route>
                         <Route exact path="/users/:userId/favorites">
                             <FavoritePage />
+                        </Route>
+                        <Route exact path='/users/:userId/cart'>
+                            <CartCheckout />
                         </Route>
                         <Route exact path="/products">
                             <ProductIndex />

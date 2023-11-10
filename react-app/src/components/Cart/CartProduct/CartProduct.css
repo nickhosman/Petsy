@@ -69,12 +69,13 @@
   padding: 8px 12px;
   border-radius: 20px;
   font-size: 10px;
-  border: 1px solid rgb(178, 178, 178);
+  color: rgb(195, 65, 65);
+  border: 1px solid rgb(195, 65, 65);
 }
 
 .cart-remove-button:hover {
   cursor: pointer;
-  border: 1px solid gray;
+  border: 1px solid rgb(210, 39, 39);;
   font-weight: bold;
 }
 

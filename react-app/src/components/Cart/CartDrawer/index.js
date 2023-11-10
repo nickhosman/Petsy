@@ -5,12 +5,15 @@ import Loader from '../../Loader/index.js';
 import { thunkLoadCart } from "../../../store/cart";
 import CartProduct from "../CartProduct/index.js";
 import './CartDrawer.css'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min.js";
 
 function CartDrawer({ showCart, setShowCart }) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     const cart = useSelector(state => state.cart);
+    const user = useSelector(state => state.session.user)
     const drawerRef = useRef();
+    const history = useHistory();
 
     useEffect(() => {
         const fetchData = async() => {
@@ -50,6 +53,11 @@ function CartDrawer({ showCart, setShowCart }) {
             total += (product.price * product.quantity)
         })
         return total.toFixed(2)
+    };
+
+    function handleCartCheckout(e) {
+        e.preventDefault();
+        history.push(`/users/${user.id}/cart`)
     }
     if(!cart || !cart.products) return null
 
@@ -71,7 +79,7 @@ function CartDrawer({ showCart, setShowCart }) {
         </div>
         <div id="checkout-container">
             <p>Your Total: ${calculateTotal()}</p>
-            <button>Checkout</button>
+            <button onClick={handleCartCheckout} className="petsy-button">Checkout</button>
         </div>
     </Drawer>
     );
