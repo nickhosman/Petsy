@@ -10,6 +10,27 @@
 #cartproduct-img {
   width: 80px;
   object-fit: contain;
+  margin-top: 2vh;
+}
+
+#cartproduct-details {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+#cartproduct-details p {
+  margin: 0;
+  font-size: 14px;
+  margin-top: 1vh;
+}
+
+#cartproduct-price {
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 1.4vh;
+  width: 60px;
+  text-align: center;
 }
 
 .quantity-button {
@@ -25,6 +46,11 @@
   font-size: 15px;
   vertical-align: middle;
   outline: none;
+  transition: background-color 0.2s ease-in-out
+}
+
+.quantity-button:hover {
+  background-color: rgb(222, 222, 222);
 }
 
 .qb-left{
@@ -35,6 +61,35 @@
 .qb-right {
   border-top-right-radius: 40%;
   border-bottom-right-radius: 40%;
+}
+
+.cart-remove-button {
+  margin-left: 14px;
+  background-color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  border: 1px solid rgb(178, 178, 178);
+}
+
+.cart-remove-button:hover {
+  cursor: pointer;
+  border: 1px solid gray;
+  font-weight: bold;
+}
+
+.cartproduct-box {
+  margin-top: 1.5vh;
+}
+
+.cartproduct-name {
+  text-decoration: underline;
+  transition: color 0.2s ease-in-out;
+}
+
+.cartproduct-name:hover {
+  cursor: pointer;
+  color:  rgb(196, 79, 79)
 }
 
 .input-class:hover {

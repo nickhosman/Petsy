@@ -3,3 +3,18 @@
   margin-left: 10px;
   overflow-y: auto;
 }
+
+#checkout-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.cartdrawer-title {
+  border: 1px solid rgb(135, 132, 132);
+  width: 100px;
+  padding: 10px;
+  margin-bottom: 0px;
+}

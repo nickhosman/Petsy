@@ -52,7 +52,7 @@ function CartDrawer({ showCart, setShowCart }) {
         return total.toFixed(2)
     }
     if(!cart || !cart.products) return null
-    console.log('carttt', cart.products)
+
     return (
         <Drawer
         anchor="right"
@@ -64,12 +64,15 @@ function CartDrawer({ showCart, setShowCart }) {
         sx={{ width: 490 }}
         PaperProps={{ style: { width: 490 } }}>
         <div id='cartdrawer-container'>
-            <p>Your Cart ({cart.products.length})</p>
+            <p className="cartdrawer-title">Your Cart ({cart.products.length})</p>
             {cart && cart.products.map(product => (
                 <CartProduct key={product.id} product={product} />
             ))}
         </div>
-    <p>Your Total: ${calculateTotal()}</p>
+        <div id="checkout-container">
+            <p>Your Total: ${calculateTotal()}</p>
+            <button>Checkout</button>
+        </div>
     </Drawer>
     );
 }
