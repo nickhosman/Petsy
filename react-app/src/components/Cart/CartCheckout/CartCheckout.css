@@ -1,0 +1,41 @@
+#cartcheckout-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1000px;
+}
+
+.cartcheckout-username {
+  font-weight: 500;
+  font-size: 26px;
+  padding-bottom: 1.4vh;
+  border-bottom: 1px solid rgb(191, 191, 191);
+  margin-bottom: 0;
+}
+
+.cartcheckout-manageheader {
+  margin: 0px;
+  color: white;
+  background-color: rgb(189, 22, 22);
+  font-size: 14.3px;
+  width: 297px;
+  text-align: center;
+  padding: 5px 10px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 14px;
+}
+
+.cartcheckout-cartcontainer {
+  margin-top: 4vh;
+}
+
+.cartcheckout-image {
+  width: 140px;
+}
+
+.error-text {
+  color: rgb(255, 10, 10);
+}
+
+.cart-petsy-button {
+  margin-left: 20px;
+}

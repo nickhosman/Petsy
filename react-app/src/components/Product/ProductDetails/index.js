@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { createProductTag, fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
+import productReducer, { createProductTag, fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
 import { fetchUserFavorites, fetchDeleteFavorite, fetchAddFavorite } from '../../../store/user';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import './ProductDetails.css'
 import ShowReviews from '../../Review/ShowReviews/index.js';
-import CreateReview from '../../Review/CreateReviews/index'
-import OpenModalButton from '../../OpenModalButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../../Loader/index.js';
@@ -25,7 +23,7 @@ function ProductDetails() {
   const favorites = useSelector((state) => state.user.Favorites)
   const productTagObj = useSelector(state=>state.products?.singleProduct?.tags);
   const { showCart, setShowCart } = useCartContext();
-  const [quantity, setQuantity] = useState('');
+  const [quantity, setQuantity] = useState(1);
   const [isFavorited, setIsFavorited] = useState(false)
   const [customTagInputClass, setCustomTagInputClass] = useState("hidden");
   const [addTagBtn, setAddTagBtn] = useState("show")
@@ -134,24 +132,12 @@ function ProductDetails() {
     }
   };
 
-  const hasReviewed = () => {
-    let userReview = false
-    for(let i = 0; i < Object.values(allReviews).length; i++) {
-      let review = Object.values(allReviews)[i]
-      if (user?.id === review?.userId) {
-        userReview = true
-      }
-    }
-    return userReview
-  };
-
   const starArray = [...Array(5).keys()].map(star => star + 1)
   const starRating = (rating) => starArray.map(star =>
     <FontAwesomeIcon
       key={star}
       icon={faStar}
-      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
-      )
+      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />)
 
   if (loading) return <Loader />;
   return(
@@ -178,24 +164,48 @@ function ProductDetails() {
               {starRating(product?.averageRating)}
               </div> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
-            <FormControl sx={{ width: 100 }} fullWidth={false}>
-              <InputLabel id="number-select-label">Quantity</InputLabel>
-              <Select
-                labelId="number-select-label"
-                id="number-select"
-                value={quantity}
-                label="Quantity"
-                onChange={(e) => setQuantity(e.target.value)}
-                MenuProps={{ disableScrollLock: true }}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-              </Select>
-            </FormControl>
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            {product.sellerId !== user.id &&
+            <>
+              <div className='productdetails-cart'>
+                <FormControl sx={{ width: 70 }} fullWidth={false}>
+                  <InputLabel id="number-select-label">Amount</InputLabel>
+                  <Select
+                    labelId="number-select-label"
+                    id="number-select"
+                    value={quantity}
+                    label="Quantity"
+                    onChange={(e) => setQuantity(e.target.value)}
+                    MenuProps={{ disableScrollLock: true }}
+                    sx={{
+                      height: '30px',
+                      fontSize: '1rem',
+                      '& .MuiSelect-select': {
+                        paddingTop: '4px',
+                        paddingBottom: '4px',
+                      },
+                      '& .MuiSvgIcon-root': {
+                        width: '1rem',
+                        height: '1rem',
+                      }
+                    }}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={6}>6</MenuItem>
+                    <MenuItem value={7}>7</MenuItem>
+                    <MenuItem value={8}>8</MenuItem>
+                    <MenuItem value={9}>9</MenuItem>
+                  </Select>
+                </FormControl>
+                <button className='petsy-button cart-petsy-button' onClick={handleAddToCart}>Add to Cart</button>
+              </div>
+              {isFavorited ? <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Remove from Favorites</button> :
+              <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Add to Favorites</button>}
+            </>}
+
             <div id='product-tag-div' className='productdetails-tags'>
               {allProductTags?.map(tag=>(
                 <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>
@@ -215,18 +225,9 @@ function ProductDetails() {
             {errors.otherErrors && <p id="error-msg">{errors.otherErrors}</p>}
             {errors.tagInput && <p id="error-msg">{errors.tagInput}</p>}
           </div>
-          {user && user.id !== product.sellerId && !hasReviewed() ?
-            <OpenModalButton
-              buttonText='Leave a review'
-              modalComponent={<CreateReview />}
-              styleClass='productdetails-reviewbutton'
-            />
-            :
-            (null)
-          }
         </div>
       </div>
-        <ShowReviews product={product} user={user} productId={productId}/>
+      <ShowReviews product={product} user={user} productId={productId}/>
     </div>
       :
     <div className='product-not-found'>

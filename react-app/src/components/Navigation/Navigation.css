@@ -110,6 +110,7 @@ font-weight: bold;
 
 #user-profile-li{
   margin-right:40px;
+  margin-left: 10px;
 }
 
 #log-out-btn{
@@ -229,6 +230,10 @@ font-weight: bold;
   font-size: 10px;
   max-width: 200px;
   margin-top: 10px;
+}
+
+.nav-cart{
+  margin-right: 10px;
 }
 
 .signup-login-btn:hover{

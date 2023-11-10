@@ -58,6 +58,7 @@ function CartDrawer({ showCart, setShowCart }) {
     function handleCartCheckout(e) {
         e.preventDefault();
         history.push(`/users/${user.id}/cart`)
+        setShowCart(!showCart)
     }
     if(!cart || !cart.products) return null
 

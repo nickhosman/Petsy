@@ -22,7 +22,7 @@ function CartProduct({product}) {
         await dispatch(thunkLoadCart())
         setErrors([]);
       } else {
-        setErrors({'error': ' limited to 9 per customer!'})
+        setErrors({'error': 'Limited to 9 per customer!'})
       }
   }
 
@@ -50,7 +50,7 @@ function CartProduct({product}) {
       <div id='cartproduct-details'>
         <p onClick={(product) => handleProductPage(product)} className="cartproduct-name">{product.name}</p>
         <p>${product.price}</p>
-        {errors && errors.error && <p>{errors.error}</p>}
+        {errors && errors.error && <p className="error-text">{errors.error}</p>}
         <Box className='cartproduct-box'>
           <button onClick={handleDecrement}  className="quantity-button qb-left" > - </button>
           <TextField

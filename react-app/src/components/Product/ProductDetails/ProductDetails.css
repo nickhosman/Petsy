@@ -79,7 +79,7 @@
   box-sizing: border-box;
   word-wrap: break-word;
   width: 390px;
-  height: 400px;
+  height: 462px;
   margin-top: 100px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.09);
   padding-left: 14px;
@@ -87,6 +87,11 @@
   display: flex;
   flex-direction: column;
   margin-left: 90px;
+  border: 1px solid rgb(226, 226, 226);
+}
+
+.productdetails-cart {
+  margin-top: 3vh;
 }
 
 .productdetails-information > h4 {
@@ -124,6 +129,7 @@
   width: 400px;
   box-sizing: border-box;
   position: relative;
+  height: 540px;
 }
 
 .productdetails-reviewbutton {
@@ -185,6 +191,8 @@
 }
 
 #product-tag-div {
+  position: absolute;
+  bottom: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -199,18 +207,20 @@
   border-radius: 30px;
   font-size: 12px;
   padding: 4px 13px;
-  background-color: rgb(179, 17, 17);
-  color: white;
+  background-color: rgb(255, 255, 255);
+  color: rgb(182, 23, 23);
+  border: 1px solid rgb(182, 23, 23);
 }
 
 .productdetails-tagcontainer {
   position: absolute;
-  bottom: 30px;
+  bottom: 60px;
 }
 
 ._add-tag-btn {
-  background-color: rgb(182, 23, 23);
-  color: white;
+  background-color: white;
+  border: 1px solid rgb(182, 23, 23);
+  color: rgb(182, 23, 23);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,7 +230,7 @@
 }
 
 ._add-tag-btn:hover {
-  background-color: rgb(196, 183, 183);
+  color: rgb(208, 16, 16);
   cursor: pointer;
 }
 
@@ -258,4 +268,38 @@
 .product-not-found img {
   width: 400px;
   /* border-radius: 50%; */
+}
+
+.cart-petsy-button {
+  margin-left: 20px;
+  width: 170px;
+}
+
+.productdetails-reviewcont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(210, 204, 204);
+  width: 500px;
+  padding-bottom: 1vh;
+}
+
+.productdetails-reviewcont p {
+  color: rgb(156, 154, 154);
+  font-size: 13px;
+  margin-left: 60px;
+  margin-right: 0;
+}
+
+.review-button {
+  margin-left: 0px;
+}
+
+#fav-button {
+  margin-top: 2vh;
+  background-color: rgb(124, 122, 122)
+}
+
+#fav-button:hover {
+  background-color: rgb(88, 86, 86);
 }

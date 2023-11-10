@@ -40,5 +40,6 @@ class Product(db.Model):
             "categoryId": self.category_id,
             "createdAt": self.created_at,
             "updatedAt": self.updated_at,
-            'image': self.product_images[0].image_url
+            'image': self.product_images[0].image_url,
+            'seller': self.seller.username
         }

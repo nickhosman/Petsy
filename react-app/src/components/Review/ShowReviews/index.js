@@ -8,6 +8,7 @@ import "./ShowReviews.css"
 import UpdateReview from "../UpdateReviews/index"
 import OpenModalButton from "../../OpenModalButton";
 import DeleteReviewModal from "../DeleteReviews/DeleteReviewModal";
+import CreateReview from "../CreateReviews";
 
 const ShowReviews = ({product, user, productId}) => {
   const dispatch = useDispatch()
@@ -41,6 +42,16 @@ const ShowReviews = ({product, user, productId}) => {
     return dateB - dateA
   }
 
+  const hasReviewed = () => {
+    let userReview = false
+    for(let i = 0; i < Object.values(allReviews).length; i++) {
+      let review = Object.values(allReviews)[i]
+      if (user?.id === review?.userId) {
+        userReview = true
+      }
+    }
+    return userReview
+  };
   // const upateReview = () => {
   //   if (user.id === Object.keys(allReviews.userId)) {
   //     for()
@@ -51,7 +62,21 @@ const ShowReviews = ({product, user, productId}) => {
   return (
     <div className="reviews-container">
       <div className="reviews-count-rating-header">
-        {reviewCount()}
+        <div className="productdetails-reviewcont">
+          {reviewCount()}
+          {user && user.id !== product.sellerId && !hasReviewed() ?
+              <>
+              <p>Have you tried this product?</p>
+              <OpenModalButton
+                buttonText='Leave a review'
+                modalComponent={<CreateReview />}
+                styleClass='petsy-button review-button'
+              />
+              </>
+              :
+              (null)
+            }
+        </div>
         {Object.values(allReviews).sort(sortReviewDates).map((review) => (
           <li className="reviews" key={review.id}>
             <div className="singlereview-container">
