@@ -23,7 +23,7 @@ function Navigation({ isLoaded }) {
         dispatch(thunkLoadCart())
     }, [dispatch])
 
-    if(!cart || !cart.products) return null
+
     return (
         <>
         <ul id="navigation-bar">
@@ -45,8 +45,8 @@ function Navigation({ isLoaded }) {
                         <NavLink style={{ textDecoration: "none", color: "black",}} exact to={`/users/${sessionUser?.id}/favorites`}>
                             <i id="nav-heart-icon" class="fa-sharp fa-regular fa-heart"></i>
                         </NavLink>
-                        <IconButton aria-label="cart" onClick={() => { setShowCart(!showCart)}}>
-                            <Badge badgeContent={cart.products.length}>
+                        <IconButton aria-label="cart" onClick={() => {setShowCart(!showCart)}}>
+                            <Badge badgeContent={cart.products ? cart.products.length : ""}>
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
@@ -55,7 +55,7 @@ function Navigation({ isLoaded }) {
                     <li id="user-profile-li">
                         <ProfileButton user={sessionUser} />
                     </li>
-                </div>
+                    </div>
                 )}
             </ul>
         </>
