@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchContext } from "../../context/Search";
-import { Badge, Drawer, IconButton } from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ProfileButton from "./ProfileButton";
 import SearchBar from "./SearchBar";
