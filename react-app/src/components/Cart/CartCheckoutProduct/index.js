@@ -1,7 +1,32 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux";
+import { thunkRemoveFromCart, thunkLoadCart, thunkAddToCart } from "../../../store/cart";
 
-function CartCheckoutProduct({product}) {
-  const [quantity, setQuantity] = useState(product.quantity)
+function CartCheckoutProduct({product, user}) {
+  const [quantity, setQuantity] = useState(product.quantity);
+  const dispatch = useDispatch();
+
+  async function handleRemoveProduct() {
+    let quantity = product.quantity
+    await dispatch(thunkRemoveFromCart(user.id, product.id, quantity));
+    await dispatch(thunkLoadCart());
+  }
+
+  async function handleChangeQuantity(e) {
+    e.preventDefault();
+    let quantity = e.target.value
+    if(quantity > product.quantity) {
+      quantity = quantity - product.quantity;
+      await dispatch(thunkAddToCart(user.id, product.id, quantity))
+      await dispatch(thunkLoadCart());
+      setQuantity(product.quantity)
+    } else {
+      quantity = product.quantity - quantity;
+      await dispatch(thunkRemoveFromCart(user.id, product.id, quantity));
+      await dispatch(thunkLoadCart());
+      setQuantity(product.quantity)
+    }
+  };
 
   return(
     <div className="cartcheckout-productcont-flex">
@@ -12,7 +37,7 @@ function CartCheckoutProduct({product}) {
               <p>{product.seller}</p>
               </div>
               <img className="cartcheckout-image" src={product.image} alt=''/>
-              <button id='cartcheckout-remove' className="petsy-button">× Remove</button>
+              <button onClick={handleRemoveProduct} id='cartcheckout-remove' className="petsy-button">× Remove</button>
             </div>
           <div className="cartcheckout-right">
                 <p>{product.name}</p>
@@ -21,8 +46,8 @@ function CartCheckoutProduct({product}) {
                   <label htmlFor="number-select">Quantity</label>
                   <select
                     id="number-select"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    value={product.quantity}
+                    onChange={(e) => handleChangeQuantity(e)}
                     style={{
                       height: '30px',
                       fontSize: '1rem',

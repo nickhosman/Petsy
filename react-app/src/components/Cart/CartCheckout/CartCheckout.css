@@ -97,4 +97,38 @@
   box-shadow: rgba(224, 224, 232, 0.2) 0px 7px 29px 0px;
   border: 1px solid rgb(212, 212, 212);
   width: 400px;
+  height: 300px;
+}
+
+.cartcheckout-oneprice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin-left: 20px;
+  /* border: 1px solid red; */
+}
+
+.toponeprice {
+  margin-top: 3vh;
+}
+
+.cartcheckout-oneprice p {
+  margin: 0;
+  margin-bottom: 1vh;
+}
+
+.cart-checkout-buttoncont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4vh;
+}
+
+.cartcheckout-label {
+  color: rgb(113, 111, 111);
+}
+
+.cart-checkout-button {
+  width: 230px;
 }

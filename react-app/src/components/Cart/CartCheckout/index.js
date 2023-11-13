@@ -15,6 +15,19 @@ function CartCheckout() {
 
   if(!cart || !cart.products) return null
 
+  function calculateTotal() {
+    let total = 0;
+    cart.products.map(product => {
+        total += (product.price * product.quantity)
+    })
+    return total
+  };
+
+  function calculateTax() {
+    const total = calculateTotal();
+    return (total * 0.0725);
+  }
+
   return(
     <div id='cartcheckout-container'>
       <h4 className="cartcheckout-username">{user.firstName}'s Shopping Cart</h4>
@@ -23,23 +36,31 @@ function CartCheckout() {
       <div className="cartcheckout-cartcontainer">
         <div>
         {cart.products.map(product => (
-          <CartCheckoutProduct product={product}/>))}
+          <CartCheckoutProduct product={product} user={user}/>))}
         </div>
         <div className="cartcheckout-paymentcontainer">
-          <div>
-            <p>Item(s) total</p>
+          <div className="cartcheckout-oneprice toponeprice">
+            <p className="cartcheckout-label">Item(s) total</p>
+            <p>${calculateTotal().toFixed(2)}</p>
           </div>
-          <div>
-            <p>Shop discount</p>
+          <div className="cartcheckout-oneprice">
+            <p className="cartcheckout-label">Tax</p>
+            <p>${calculateTax().toFixed(2)}</p>
           </div>
-          <div>
-            <p>Subtotal</p>
+          <div className="cartcheckout-oneprice">
+            <p className="cartcheckout-label">Subtotal</p>
+            <p>${(calculateTotal() + calculateTax()).toFixed(2)}</p>
           </div>
-          <div>
-            <p>Shipping</p>
+          <div className="cartcheckout-oneprice">
+            <p className="cartcheckout-label">Shipping + Fees</p>
+            <p>$9.65</p>
           </div>
-          <div>
-            <p>Total</p>
+          <div className="cartcheckout-oneprice">
+            <p className="cartcheckout-label">Total</p>
+            <p>${((calculateTotal() + calculateTax()) + 9.65).toFixed(2)}</p>
+          </div>
+          <div className="cart-checkout-buttoncont">
+          <button className="petsy-button cart-checkout-button">Checkout</button>
           </div>
         </div>
       </div>

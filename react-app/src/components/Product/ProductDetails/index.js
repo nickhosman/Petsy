@@ -164,7 +164,7 @@ function ProductDetails() {
               {starRating(product?.averageRating)}
               </div> : <h4>New Listing!</h4>}
             <h4 id='productdetails-desc'>{product.description}</h4>
-            {product.sellerId !== user.id &&
+            {user && product.sellerId !== user.id &&
             <>
               <div className='productdetails-cart'>
                 <FormControl sx={{ width: 70 }} fullWidth={false}>
