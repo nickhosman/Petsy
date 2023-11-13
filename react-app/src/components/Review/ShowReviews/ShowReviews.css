@@ -1,6 +1,7 @@
 .reviews-container {
   padding-left: 100px;
   padding-right: 400px;
+  width: 100px;
 }
 
 .reviews {
@@ -24,7 +25,7 @@
 .reviews-count-rating-header{
   margin-top: 50px;
   position: relative;
-  width: 1000px;
+  width: 500px;
 }
 
 .productdetails-update-review-reviewbuttons{

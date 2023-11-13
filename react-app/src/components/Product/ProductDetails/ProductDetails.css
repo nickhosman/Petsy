@@ -340,6 +340,7 @@
 }
 
 #fav-button {
+  z-index: 100;
   margin-top: 2vh;
   background-color: rgb(124, 122, 122)
 }
