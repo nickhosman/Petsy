@@ -80,14 +80,17 @@ def remove_from_cart():
   else:
     return jsonify({'error': 'Product not found'}), 404
 
-@cart_routes.route('/<int:cartId>/checkout', methods=['POST'])
+@cart_routes.route('/checkout', methods=['POST'])
 @login_required
-def empty_cart(cartId):
+def checkout_cart():
   """
   CHECKOUT A CART, CRETE AN ORDER
   """
+  data = request.get_json()
+  cart_id = data.get('cartId')
+  user_id = data.get('userId')
   #find cart from cartId
-  cart = Cart.query.filter_by(id=cartid, user_id=current_user.id).first()
+  cart = Cart.query.filter_by(id=cart_id, user_id=current_user.id).first()
   if not cart:
     return jsonify({'error': 'Cart not found'}), 404
 
@@ -101,8 +104,8 @@ def empty_cart(cartId):
     # add each product into an orders products
     order_product = OrderProduct(order_id=order.id, product_id=cart_product.product_id, quantity=cart_product.quantity)
     db.session.add(order_product)
-    # change the cart product to true so we cant see it anymore in cart
-    cart_product.purchased = True
+    # remove product from cart_product
+    db.session.delete(cart_product)
 
   db.session.commit()
   return jsonify({'message': 'Checkout successful'}), 200

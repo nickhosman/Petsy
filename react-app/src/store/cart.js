@@ -53,7 +53,24 @@ export const thunkRemoveFromCart = (userId, productId, quantity) => async(dispat
   } else {
     throw await response.json();
   };
+};
 
+export const thunkCheckoutCart = (cartId, userId) => async(dispatch) => {
+  const response = await fetch('/api/cart/checkout', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      "cartId": cartId,
+      "userId": userId,
+    })
+  });
+  console.log('xxxx', response)
+  if(response.ok) {
+    const data = await response.json()
+    return data
+  } else {
+    throw await response.json();
+  };
 }
 
 const initialState = {};

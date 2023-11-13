@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkLoadCart } from "../../../store/cart";
+import { thunkCheckoutCart, thunkLoadCart } from "../../../store/cart";
 import './CartCheckout.css'
 import CartCheckoutProduct from "../CartCheckoutProduct";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 function CartCheckout() {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart)
   const user = useSelector(state => state.session.user);
+  const history = useHistory();
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(thunkLoadCart())
@@ -26,6 +33,20 @@ function CartCheckout() {
   function calculateTax() {
     const total = calculateTotal();
     return (total * 0.0725);
+  };
+
+  async function handleCheckout() {
+    try {
+      await dispatch(thunkCheckoutCart(cart.id, user.id))
+      setModalOpen(true)
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
+  async function handleNavigate() {
+    history.push('/')
+    setModalOpen(false)
   }
 
   return(
@@ -60,9 +81,36 @@ function CartCheckout() {
             <p>${((calculateTotal() + calculateTax()) + 9.65).toFixed(2)}</p>
           </div>
           <div className="cart-checkout-buttoncont">
-          <button className="petsy-button cart-checkout-button">Checkout</button>
+          <button className="petsy-button cart-checkout-button" onClick={handleCheckout}>Checkout</button>
           </div>
         </div>
+        <Modal
+        open={modalOpen}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box className="order-modal">
+          <h2 id="modal-modal-title">
+            Order Confirmed
+          </h2>
+          <p id="modal-modal-description">
+            An email has been sent to {user.email}.
+          </p>
+          <p id="modal-modal-description">
+            Thanks for shopping with us!
+          </p>
+          <Button
+            sx={{
+              marginTop: '1vh',
+              backgroundColor: 'white',
+              color: 'rgb(189, 22, 22)',
+              '&:hover': {
+                textDecoration: 'underline',
+                backgroundColor: 'white'
+              }
+            }}
+            onClick={handleNavigate}> Return Home </Button>
+        </Box>
+      </Modal>
       </div>
     </div>
 
