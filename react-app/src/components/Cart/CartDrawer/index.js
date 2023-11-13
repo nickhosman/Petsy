@@ -60,7 +60,6 @@ function CartDrawer({ showCart, setShowCart }) {
         history.push(`/users/${user.id}/cart`)
         setShowCart(!showCart)
     }
-    if(!cart || !cart.products) return null
 
     return (
         <Drawer
@@ -72,6 +71,15 @@ function CartDrawer({ showCart, setShowCart }) {
         ref={drawerRef}
         sx={{ width: 490 }}
         PaperProps={{ style: { width: 490 } }}>
+        {!cart.products ?
+        <div id='cartdrawer-container'>
+            <p className="cartdrawer-title">Your Cart (0)</p>
+            <div className="noproducts-cart">
+            <p>Your cart currently has no products</p>
+            </div>
+        </div>
+        :
+        <>
         <div id='cartdrawer-container'>
             <p className="cartdrawer-title">Your Cart ({cart.products.length})</p>
             {cart && cart.products.length ?
@@ -88,6 +96,8 @@ function CartDrawer({ showCart, setShowCart }) {
         <p>Your Total: ${calculateTotal()}</p>
         <button onClick={handleCartCheckout} className="petsy-button">Continue to checkout</button>
         </div> : null}
+        </>
+        }
     </Drawer>
     );
 }

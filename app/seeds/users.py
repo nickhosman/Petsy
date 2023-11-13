@@ -25,8 +25,8 @@ def seed_users():
     user = User(
     username = usernames[i],
     password = "password",
-    first_name = fake.first_name(),
-    last_name = fake.last_name(),
+    first_name = first_name,
+    last_name = last_name,
     email = emails[i],
     created_at = random_date_time,
     updated_at = random_date_time

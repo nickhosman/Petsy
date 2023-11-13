@@ -9,6 +9,7 @@ import Trending from "./Trending/Trending";
 import { useSearchContext } from "../../context/Search";
 import Tooltip from "../Tooltip/Tooltip";
 import Loader from "../Loader";
+import { thunkLoadCart } from "../../store/cart";
 
 const Home = ({ searchInput, setSearchInput }) => {
     const dispatch = useDispatch();
@@ -74,14 +75,10 @@ const Home = ({ searchInput, setSearchInput }) => {
     };
 
     // Our Selection Section
-    const productsInSelection = [
-        allProducts[1],
-        allProducts[17],
-        allProducts[5],
-        allProducts[25],
-        allProducts[9],
-        allProducts[22],
-    ];
+    const selectedProductIds = [2, 18, 6, 26, 10, 23];
+    const productsInSelection = allProducts.filter(product =>
+        selectedProductIds.includes(product.id)
+    );
     // for (let i = 0; i < 10; i++) {
     //   if (productsInSelection.length < 6) {
     //   const randomIdx = Math.floor(Math.random() * allProducts.length);

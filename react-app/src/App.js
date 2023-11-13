@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
@@ -18,15 +18,19 @@ import { Drawer } from "@mui/material";
 import { useCartContext } from "./context/Cart";
 import CartDrawer from "./components/Cart/CartDrawer";
 import CartCheckout from "./components/Cart/CartCheckout";
+import { thunkLoadCart } from "./store/cart";
 
 function App() {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const [searchInput, setSearchInput] = useState("");
     const { showCart, setShowCart } = useCartContext();
-
     useEffect(() => {
         dispatch(authenticate()).then(() => setIsLoaded(true));
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(thunkLoadCart());
     }, [dispatch]);
 
     return (
