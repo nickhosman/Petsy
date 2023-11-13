@@ -92,6 +92,8 @@ function CartCheckout() {
           <div className="modal-content">
             <h2>Order Confirmed</h2>
             <p>Thanks for shopping with us!</p>
+            <p>(and visiting our site)</p>
+            <img className="checkout-dog" src='https://static.vecteezy.com/system/resources/previews/019/196/630/original/corgi-in-a-red-scarf-corgi-dog-cartoon-illustration-cute-friendly-welsh-corgi-puppy-isolated-on-white-background-vector.jpg'></img>
             <button className="returnhome-button" onClick={handleNavigate}>Return Home</button>
           </div>
         </div>
