@@ -1,3 +1,5 @@
+
+
 .productdetails-carousel-container {
   width: 490px;
   max-height: 440px;
@@ -72,21 +74,28 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 22vh;
-  width: 60%;
+  width: 50%;
 }
 
 .productdetails-information {
   box-sizing: border-box;
   word-wrap: break-word;
   width: 390px;
-  height: 400px;
+  max-height: 700px;
   margin-top: 100px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.09);
   padding-left: 14px;
   padding-right: 30px;
+  padding-bottom: 8.5vh;
   display: flex;
   flex-direction: column;
   margin-left: 90px;
+  border: 1px solid rgb(226, 226, 226);
+  position: relative;
+}
+
+.productdetails-cart {
+  margin-top: 3vh;
 }
 
 .productdetails-information > h4 {
@@ -97,18 +106,19 @@
 
 #productdetails-price {
   font-size: 23px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 2vh;
+  margin-bottom: 1vh;
 }
 
 #productdetails-name {
-  margin-bottom: 5px;
+  margin-bottom: 1.5vh;
+  font-weight: 300;
+  font-size: 16.5px;
 }
 
 #productdetails-seller {
-  margin-bottom: 10px;
-  color: rgb(177, 177, 177);
-  font-weight: 500;
+  margin-bottom: 1vh;
+  font-weight: bold;
 }
 
 #productdetails-rating {
@@ -124,6 +134,7 @@
   width: 400px;
   box-sizing: border-box;
   position: relative;
+  height: 540px;
 }
 
 .productdetails-reviewbutton {
@@ -185,6 +196,8 @@
 }
 
 #product-tag-div {
+  position: absolute;
+  bottom: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -199,28 +212,31 @@
   border-radius: 30px;
   font-size: 12px;
   padding: 4px 13px;
-  background-color: rgb(179, 17, 17);
-  color: white;
+  background-color: rgb(255, 255, 255);
+  color: rgb(182, 23, 23);
+  border: 1px solid rgb(182, 23, 23);
 }
 
 .productdetails-tagcontainer {
   position: absolute;
-  bottom: 30px;
+  bottom: 50px;
 }
 
 ._add-tag-btn {
-  background-color: rgb(182, 23, 23);
-  color: white;
+  background-color: white;
+  border: 1px solid rgb(182, 23, 23);
+  color: rgb(182, 23, 23);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: .25rem;
   border-radius: 30px;
   font-size: 12px;
+
 }
 
 ._add-tag-btn:hover {
-  background-color: rgb(196, 183, 183);
+  color: rgb(208, 16, 16);
   cursor: pointer;
 }
 
@@ -242,7 +258,7 @@
 
 .productdetails-tags {
   position: absolute;
-  bottom: 90px;
+  bottom: 0px;
 }
 
 .product-not-found {
@@ -258,4 +274,137 @@
 .product-not-found img {
   width: 400px;
   /* border-radius: 50%; */
+}
+
+.cart-petsy-button {
+  margin-left: 20px;
+  width: 170px;
+}
+
+.productdetails-reviewcont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(210, 204, 204);
+  width: 510px;
+  padding-bottom: 1vh;
+  position: relative;
+}
+
+.productdetails-reviewcont p {
+  color: rgb(156, 154, 154);
+  font-size: 13px;
+
+  margin-right: 0;
+}
+
+.review-button {
+  margin-left: 0px;
+  width: 150px;
+}
+
+.pd-descriptiondiv {
+  margin: 0;
+  margin-top: 1.5vh;
+}
+
+.pd-descriptiondiv p {
+  margin: 0;
+  font-weight: bold;
+  margin-bottom: 1vh;
+}
+
+.pd-descriptiondiv h4 {
+  margin: 0;
+}
+
+.pd-returns {
+  color: rgb(182, 23, 23);
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.pd-sellerawardscont {
+  display: flex;
+  flex-direction: column;
+}
+
+.pd-sellerawardone {
+  border: 1px solid red;
+  display: flex;
+  width: 320px;
+}
+
+.pd-sellerawardone p {
+  font-size: 10px;
+}
+
+#fav-button {
+  z-index: 100;
+  margin-top: 2vh;
+  background-color: rgb(124, 122, 122)
+}
+
+#fav-button:hover {
+  background-color: rgb(88, 86, 86);
+}
+
+.i-am-tired {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  column-gap: 10px;
+  width: 370px;
+  position: absolute;
+  right: -80px;
+  bottom: 30px;
+}
+
+.i-am-tired p {
+  font-size: 12px;
+}
+
+@media (max-width: 1299px) {
+  .product-details-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 22vh;
+    width: 87%;
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 1550px) {
+  .product-details-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 22vh;
+    width: 72%;
+  }
+}
+
+
+@media (min-width: 1551px) and (max-width: 1600px) {
+  .product-details-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 22vh;
+    width: 60%;
+  }
+}
+
+@media (min-width: 2100px) {
+  .product-details-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 22vh;
+    width: 39%;
+  }
 }

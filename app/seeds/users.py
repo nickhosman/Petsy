@@ -15,11 +15,18 @@ def seed_users():
   for i in range(20):
     random_date_time = fake.date_time_between(start_date='-1y', end_date='now')
 
+    if i == 0:
+      first_name = "Demo"
+      last_name = "User"
+    else:
+      first_name = fake.first_name()
+      last_name = fake.last_name()
+
     user = User(
     username = usernames[i],
     password = "password",
-    first_name = fake.first_name(),
-    last_name = fake.last_name(),
+    first_name = first_name,
+    last_name = last_name,
     email = emails[i],
     created_at = random_date_time,
     updated_at = random_date_time

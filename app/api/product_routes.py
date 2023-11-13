@@ -279,7 +279,6 @@ def edit_product(productId):
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
-
 @product_routes.route("/<int:productId>", methods=["DELETE"])
 @login_required
 def delete_product(productId):

@@ -1,5 +1,5 @@
 ## Summary:
-Petsy is an online catalogue browsing website that offers custom handcrafted products for all types of pets! As a passionate team of pet lovers, we strive to provide our furry friends unique gifts with the best comfort and style. Users can browse a wide variety of products, leave reviews for items they've purchased, and curate a list of their own favorite items. Finding a product for your pet has never been easier thanks to the search and tag feature! As a seller, you have the capability of creating and editing your product listings, as well as removing any previously listed items.
+Petsy is an online catalogue browsing website that offers custom handcrafted products for all types of pets! As a passionate team of pet lovers, we strive to provide our furry friends unique gifts with the best comfort and style. Users can browse and purchase a wide variety of products, leave reviews for items they've purchased, and curate a list of their own favorite items. Finding a product for your pet has never been easier thanks to the search and tag feature! As a seller, you have the capability of creating and editing your product listings, as well as removing any previously listed items.
 
 https://petsy-kn3b.onrender.com/
 
@@ -24,8 +24,14 @@ Hosting: Render
 ## Tag Products
 ![Alt text](tags.png)
 
+## Cart
+![Alt text](cart.png)
+
+## Checkout
+![Alt text](checkout.png)
+
 ## Next Features (In Progress)
-1. Shopping cart feature that allows user to add products into their cart and complete purchases.
+1. Implement Stripe API for handling payment information when checking out (for demonstration purposes only).
 2. Allow seller to update/delete product images when for their listings.
 
 

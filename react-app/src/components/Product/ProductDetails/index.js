@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { createProductTag, fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
+import productReducer, { createProductTag, fetchProductDetail, getAllReviewsThunk, thunkRemoveTag } from '../../../store/product';
 import { fetchUserFavorites, fetchDeleteFavorite, fetchAddFavorite } from '../../../store/user';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import './ProductDetails.css'
 import ShowReviews from '../../Review/ShowReviews/index.js';
-import CreateReview from '../../Review/CreateReviews/index'
-import OpenModalButton from '../../OpenModalButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../../Loader/index.js';
+import { useCartContext } from '../../../context/Cart.js';
+import { InputLabel, MenuItem, FormControl, Select } from '@mui/material';
+import { thunkAddToCart, thunkLoadCart } from '../../../store/cart.js';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -20,23 +21,25 @@ function ProductDetails() {
   const allReviews = useSelector((state) => state.products.singleProduct?.ProductReviews)
   const user = useSelector((state) => state.session.user)
   const favorites = useSelector((state) => state.user.Favorites)
-  const productTagObj = useSelector(state=>state.products?.singleProduct?.tags)
+  const productTagObj = useSelector(state=>state.products?.singleProduct?.tags);
+  const { showCart, setShowCart } = useCartContext();
+  const [quantity, setQuantity] = useState(1);
   const [isFavorited, setIsFavorited] = useState(false)
   const [customTagInputClass, setCustomTagInputClass] = useState("hidden");
   const [addTagBtn, setAddTagBtn] = useState("show")
   const [tagInput, setTagInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [productFound, setProductFound] = useState(true);
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
+  const allProductTags = [];
+  const tagArr=[];
 
-  const allProductTags = []
-  const tagArr=[]
   for (const key in productTagObj){
     allProductTags.push(productTagObj[key])
   }
   for(const tag of allProductTags){
     tagArr.push(tag.name)
-  }
+  };
 
   useEffect(() => {
     const fetchData = async() => {
@@ -63,8 +66,6 @@ function ProductDetails() {
     }
   }, [favorites, product]);
 
-  // if(!allReviews || !product || Object.keys(product).length === 0) return null;
-
   const handleFavorite = async (e) => {
     e.preventDefault()
     if(isFavorited){
@@ -73,7 +74,20 @@ function ProductDetails() {
       await dispatch(fetchAddFavorite(product.id))
       setIsFavorited(!isFavorited);
     }
-  }
+  };
+
+  const handleAddToCart = async(e) => {
+    e.preventDefault()
+    try {
+        await dispatch(thunkAddToCart(user.id, productId, quantity))
+        await dispatch(thunkLoadCart())
+        setErrors({})
+        setShowCart(!showCart)
+    } catch (errors) {
+      setErrors({cart : 'Limited to 9 per customer.'})
+      console.error(errors)
+    }
+  };
 
   const handleRemoveTag = async (e) => {
     e.preventDefault()
@@ -113,34 +127,20 @@ function ProductDetails() {
         setAddTagBtn("show")
         setErrors({})
       } else {
-        // console.error(response.errors)
         const errorsObj = await response.json()
         setErrors({otherErrors: errorsObj.errors.name})
       }
     }
-  }
-
-  const hasReviewed = () => {
-    let userReview = false
-    for(let i = 0; i < Object.values(allReviews).length; i++) {
-      let review = Object.values(allReviews)[i]
-      if (user?.id === review?.userId) {
-        userReview = true
-      }
-    }
-    return userReview
-  }
+  };
 
   const starArray = [...Array(5).keys()].map(star => star + 1)
   const starRating = (rating) => starArray.map(star =>
     <FontAwesomeIcon
       key={star}
       icon={faStar}
-      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />
-      )
+      color={rating >= star ? "rgb(210, 39, 39)" : "lightgray"} />)
 
   if (loading) return <Loader />;
-
   return(
     <>
     {productFound ?
@@ -158,20 +158,51 @@ function ProductDetails() {
         </div>
         <div className='productdetails-sidebar-container'>
           <div className='productdetails-information'>
-            <h4 id='productdetails-price'>${product.price}</h4>
+            <h4 id='productdetails-price'>${product.price.toFixed(2)}</h4>
             <h4 id='productdetails-name'>{product.name}</h4>
-            <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
-            {product.averageRating > 0 ? <div className="star-rating-container productdetail-star">
-              {starRating(product?.averageRating)}
-              </div> : <h4>New Listing!</h4>}
-            <h4 id='productdetails-desc'>{product.description}</h4>
+            <h4 id='productdetails-seller'>Sold by {product.Seller?.username}</h4>
+            <p className='pd-returns'>✓ Returns & exchanges accepted</p>
+            <div className='pd-descriptiondiv'>
+              <p>Description:</p>
+              <h4 id='productdetails-desc'>{product.description}</h4>
+            </div>
+            {user && product.sellerId !== user.id &&
+            <>
+              <div className='productdetails-cart'>
+              {errors && errors.cart && <p id='error-msg'>{errors.cart}</p>}
+              <label className='testtting ' htmlFor="number-select">Quantity: </label>
+              <select
+                id="number-select"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                style={{
+                  height: '30px',
+                  fontSize: '1rem'}}>
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+                <option value={7}>7</option>
+                <option value={8}>8</option>
+                <option value={9}>9</option>
+                </select>
+                <button className='petsy-button cart-petsy-button' onClick={handleAddToCart}>Add to Cart</button>
+              </div>
+              {isFavorited ? <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Remove from Favorites</button> :
+              <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Add to Favorites</button>}
+            </>}
+            <div className='pd-sellerawardscont'>
+            </div>
             <div id='product-tag-div' className='productdetails-tags'>
               {allProductTags?.map(tag=>(
                 <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>
               ))}
               {user && user?.id === product.Seller?.id && allProductTags.length < 5 && addTagBtn === "show" ? <div className={`_add-tag-btn ${addTagBtn}`} onClick={handleClickAddTagBtn}>+</div> : null}
             </div>
-            {addTagBtn === "hidden" && <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
+            {addTagBtn === "hidden" &&
+            <div id="custom-tag-wrapper" className="productdetails-tagcontainer">
               <input
                 type="text"
                 id="custom-tag-div"
@@ -184,18 +215,9 @@ function ProductDetails() {
             {errors.otherErrors && <p id="error-msg">{errors.otherErrors}</p>}
             {errors.tagInput && <p id="error-msg">{errors.tagInput}</p>}
           </div>
-          {user && user.id !== product.sellerId && !hasReviewed() ?
-            <OpenModalButton
-              buttonText='Leave a review'
-              modalComponent={<CreateReview />}
-              styleClass='productdetails-reviewbutton'
-            />
-            :
-            (null)
-          }
         </div>
       </div>
-        <ShowReviews product={product} user={user} productId={productId}/>
+      <ShowReviews product={product} user={user} productId={productId}/>
     </div>
       :
     <div className='product-not-found'>
