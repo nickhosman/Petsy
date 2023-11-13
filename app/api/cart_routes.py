@@ -27,6 +27,8 @@ def add_to_cart():
   user_id = data.get('userId')
   product_id = data.get('productId')
   quantity = data.get('quantity')
+  if quantity is not None:
+    quantity = int(quantity)
 
   # find users cart, if user does not have a cart create one
   cart = Cart.query.filter_by(user_id=current_user.id).first()
@@ -37,7 +39,10 @@ def add_to_cart():
   cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product_id).first()
   # if product is already in cart, update quantity
   if cart_product:
-    cart_product.quantity += quantity
+    if cart_product.quantity + quantity >= 10:
+      return jsonify({'error': 'Limit 9 per customer'}), 404
+    else:
+      cart_product.quantity += quantity
   # if produc is not in cart, create cart product
   else:
     new_cart_product = CartProduct(cart_id=cart.id, product_id=product_id, quantity=quantity, purchased=False)

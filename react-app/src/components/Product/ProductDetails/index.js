@@ -78,13 +78,15 @@ function ProductDetails() {
 
   const handleAddToCart = async(e) => {
     e.preventDefault()
+    console.log('zzz', quantity, product.quantity)
     try {
-      await dispatch(thunkAddToCart(user.id, productId, quantity))
-      await dispatch(thunkLoadCart())
+        await dispatch(thunkAddToCart(user.id, productId, quantity))
+        await dispatch(thunkLoadCart())
+        setErrors({})
+        setShowCart(!showCart)
     } catch (errors) {
+      setErrors({cart : 'Limited to 9 per customer!'})
       console.error(errors)
-    } finally {
-      setShowCart(!showCart)
     }
   };
 
@@ -167,39 +169,25 @@ function ProductDetails() {
             {user && product.sellerId !== user.id &&
             <>
               <div className='productdetails-cart'>
-                <FormControl sx={{ width: 70 }} fullWidth={false}>
-                  <InputLabel id="number-select-label">Amount</InputLabel>
-                  <Select
-                    labelId="number-select-label"
-                    id="number-select"
-                    value={quantity}
-                    label="Quantity"
-                    onChange={(e) => setQuantity(e.target.value)}
-                    MenuProps={{ disableScrollLock: true }}
-                    sx={{
-                      height: '30px',
-                      fontSize: '1rem',
-                      '& .MuiSelect-select': {
-                        paddingTop: '4px',
-                        paddingBottom: '4px',
-                      },
-                      '& .MuiSvgIcon-root': {
-                        width: '1rem',
-                        height: '1rem',
-                      }
-                    }}
-                  >
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={6}>6</MenuItem>
-                    <MenuItem value={7}>7</MenuItem>
-                    <MenuItem value={8}>8</MenuItem>
-                    <MenuItem value={9}>9</MenuItem>
-                  </Select>
-                </FormControl>
+              {errors && errors.cart && <p id='error-msg'>{errors.cart}</p>}
+              <label className='testtting ' htmlFor="number-select">Quantity: </label>
+              <select
+                id="number-select"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                style={{
+                  height: '30px',
+                  fontSize: '1rem'}}>
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+                <option value={7}>7</option>
+                <option value={8}>8</option>
+                <option value={9}>9</option>
+                </select>
                 <button className='petsy-button cart-petsy-button' onClick={handleAddToCart}>Add to Cart</button>
               </div>
               {isFavorited ? <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Remove from Favorites</button> :

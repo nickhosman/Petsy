@@ -133,6 +133,10 @@
   width: 230px;
 }
 
+.cart-petsy-button {
+  margin-left: 30px;
+}
+
 .order-modal {
   display: flex;
   flex-direction: column;
@@ -147,6 +151,7 @@
   padding: 16px;
 }
 
+
 .order-modal p {
   margin: 0;
   margin-bottom: 1vh;
@@ -159,4 +164,8 @@
 
 .return-home {
   margin-top: 100px;
+}
+
+.testtting {
+  margin-right: 4px;
 }
