@@ -50,6 +50,8 @@ function CartCheckout() {
     setModalOpen(false)
   }
 
+  const closeModal = () => setModalOpen(false);
+
   return(
       <div id='cartcheckout-container'>
       <h4 className="cartcheckout-username">{user.firstName}'s Shopping Cart</h4>
@@ -85,33 +87,16 @@ function CartCheckout() {
           <button className="petsy-button cart-checkout-button" onClick={handleCheckout}>Checkout</button>
           </div>
         </div>
-        <Modal
-        open={modalOpen}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <Box className="order-modal">
-          <h2 id="modal-modal-title">
-            Order Confirmed
-          </h2>
-          <p id="modal-modal-description">
-            An email has been sent to {user.email}.
-          </p>
-          <p id="modal-modal-description">
-            Thanks for shopping with us!
-          </p>
-          <Button
-            sx={{
-              marginTop: '1vh',
-              backgroundColor: 'white',
-              color: 'rgb(189, 22, 22)',
-              '&:hover': {
-                textDecoration: 'underline',
-                backgroundColor: 'white'
-              }
-            }}
-            onClick={handleNavigate}> Return Home </Button>
-        </Box>
-      </Modal>
+        {modalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Order Confirmed</h2>
+            <p>An email has been sent to {user.email}.</p>
+            <p>Thanks for shopping with us!</p>
+            <button className="returnhome-button" onClick={handleNavigate}>Return Home</button>
+          </div>
+        </div>
+      )}
       </div>
         :
         <div className="noproducts-cart">

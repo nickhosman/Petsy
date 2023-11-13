@@ -21,7 +21,7 @@ def seed_products(all_users):
             name="Cat Lion Mane Costume",
             description="Elevate your pet's look with the Cat Lion Mane Costume, a Cat Wig Hat that adds a touch of whimsy and charm. Crafted for playful moments, this Funny Pets Cap is a Fancy Cosplay Costume perfect for Pet Parties and special occasions.",
             price=12.99,
-            seller_id=1,
+            seller_id=6,
             category_id=2,
             created_at=current_date,
             updated_at=current_date,
@@ -230,7 +230,7 @@ def seed_products(all_users):
             users=[all_users[1], all_users[3]]
         ),
         Product(
-            name="Crabby Dragon Outfit",
+            name="Crabby Lizard Outfit",
             description="Most of our precious bearded dragons can be quite judgmental, but is your dragon also a little crabby? Then this may be the perfect addition to your beardie wardrobe! A two part set with head piece and body costume. The head piece is adjustable with funny little googlie eyes. Body is made from fabric and pipe cleaners for adorable crab style!",
             price=40.00,
             seller_id=20,
@@ -273,7 +273,7 @@ def seed_products(all_users):
             name="Pupper Octopus Costume",
             description="Aesthetic three-dimensional octopus design, interesting hilarious clothing. There is a strong festival vibe and a straightforward, generous overall design.",
             price=13.47,
-            seller_id=11,
+            seller_id=1,
             category_id=1,
             created_at=current_date,
             updated_at=current_date,
