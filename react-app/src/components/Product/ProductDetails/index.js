@@ -78,14 +78,13 @@ function ProductDetails() {
 
   const handleAddToCart = async(e) => {
     e.preventDefault()
-    console.log('zzz', quantity, product.quantity)
     try {
         await dispatch(thunkAddToCart(user.id, productId, quantity))
         await dispatch(thunkLoadCart())
         setErrors({})
         setShowCart(!showCart)
     } catch (errors) {
-      setErrors({cart : 'Limited to 9 per customer!'})
+      setErrors({cart : 'Limited to 9 per customer.'})
       console.error(errors)
     }
   };
@@ -159,13 +158,14 @@ function ProductDetails() {
         </div>
         <div className='productdetails-sidebar-container'>
           <div className='productdetails-information'>
-            <h4 id='productdetails-price'>${product.price}</h4>
+            <h4 id='productdetails-price'>${product.price.toFixed(2)}</h4>
             <h4 id='productdetails-name'>{product.name}</h4>
-            <h4 id='productdetails-seller'>{product.Seller?.username}</h4>
-            {product.averageRating > 0 ? <div className="star-rating-container productdetail-star">
-              {starRating(product?.averageRating)}
-              </div> : <h4>New Listing!</h4>}
-            <h4 id='productdetails-desc'>{product.description}</h4>
+            <h4 id='productdetails-seller'>Sold by {product.Seller?.username}</h4>
+            <p className='pd-returns'>✓ Returns & exchanges accepted</p>
+            <div className='pd-descriptiondiv'>
+              <p>Description:</p>
+              <h4 id='productdetails-desc'>{product.description}</h4>
+            </div>
             {user && product.sellerId !== user.id &&
             <>
               <div className='productdetails-cart'>
@@ -193,6 +193,8 @@ function ProductDetails() {
               {isFavorited ? <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Remove from Favorites</button> :
               <button onClick={handleFavorite} id='fav-button' className='petsy-button'>Add to Favorites</button>}
             </>}
+            <div className='pd-sellerawardscont'>
+            </div>
             <div id='product-tag-div' className='productdetails-tags'>
               {allProductTags?.map(tag=>(
                 <span id='individual-tag'>{tag.name} {user && user?.id === product.Seller?.id ? <div id="remove-tag" className={tag.id} onClick={handleRemoveTag}>x</div> : null}</span>

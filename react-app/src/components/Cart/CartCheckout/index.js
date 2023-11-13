@@ -46,15 +46,16 @@ function CartCheckout() {
 
   async function handleNavigate() {
     history.push('/')
+    await dispatch(thunkLoadCart())
     setModalOpen(false)
   }
 
   return(
-    <div id='cartcheckout-container'>
+      <div id='cartcheckout-container'>
       <h4 className="cartcheckout-username">{user.firstName}'s Shopping Cart</h4>
       <p className="cartcheckout-manageheader">Manage all the products in your cart ({cart.products.length})</p>
-
-      <div className="cartcheckout-cartcontainer">
+      {cart && cart.products.length ?
+        <div className="cartcheckout-cartcontainer">
         <div>
         {cart.products.map(product => (
           <CartCheckoutProduct product={product} user={user}/>))}
@@ -77,8 +78,8 @@ function CartCheckout() {
             <p>$9.65</p>
           </div>
           <div className="cartcheckout-oneprice">
-            <p className="cartcheckout-label">Total</p>
-            <p>${((calculateTotal() + calculateTax()) + 9.65).toFixed(2)}</p>
+            <p className="cartcheckout-label cartcheckout-totaldue">Total Due</p>
+            <p className="cartcheckout-totaldue">${((calculateTotal() + calculateTax()) + 9.65).toFixed(2)}</p>
           </div>
           <div className="cart-checkout-buttoncont">
           <button className="petsy-button cart-checkout-button" onClick={handleCheckout}>Checkout</button>
@@ -112,8 +113,12 @@ function CartCheckout() {
         </Box>
       </Modal>
       </div>
+        :
+        <div className="noproducts-cart">
+        <p>Your cart currently has no products</p>
+      </div>
+      }
     </div>
-
   )
 };
 

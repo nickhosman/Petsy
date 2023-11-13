@@ -63,15 +63,20 @@ const ShowReviews = ({product, user, productId}) => {
     <div className="reviews-container">
       <div className="reviews-count-rating-header">
         <div className="productdetails-reviewcont">
+          <div className="reviewstar-holder">
           {reviewCount()}
+          {product.averageRating > 0 ? <div className="">
+              {starRating(product?.averageRating)}
+              </div> : <h4>New Listing!</h4>}
+          </div>
           {user && user.id !== product.sellerId && !hasReviewed() ?
               <div className="i-am-tired">
-              <p>Have you tried this product?</p>
+               <p>Have you tried this product?</p>
               <OpenModalButton
                 buttonText='Leave a review'
                 modalComponent={<CreateReview />}
                 styleClass='petsy-button review-button'
-              />
+                />
               </div>
               :
               (null)

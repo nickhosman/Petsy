@@ -22,7 +22,7 @@ function CartProduct({product}) {
         await dispatch(thunkLoadCart())
         setErrors([]);
       } else {
-        setErrors({'error': 'Limited to 9 per customer!'})
+        setErrors({'error': 'Limited to 9 per customer.'})
       }
   }
 

@@ -74,14 +74,20 @@ function CartDrawer({ showCart, setShowCart }) {
         PaperProps={{ style: { width: 490 } }}>
         <div id='cartdrawer-container'>
             <p className="cartdrawer-title">Your Cart ({cart.products.length})</p>
-            {cart && cart.products.map(product => (
+            {cart && cart.products.length ?
+            <>
+            {cart.products.map(product => (
                 <CartProduct key={product.id} product={product} />
-            ))}
+            ))} </> :
+            <div className="noproducts-cart">
+            <p>Your cart currently has no products</p>
+            </div>}
         </div>
+        {cart && cart.products.length ?
         <div id="checkout-container">
-            <p>Your Total: ${calculateTotal()}</p>
-            <button onClick={handleCartCheckout} className="petsy-button">Checkout</button>
-        </div>
+        <p>Your Total: ${calculateTotal()}</p>
+        <button onClick={handleCartCheckout} className="petsy-button">Continue to checkout</button>
+        </div> : null}
     </Drawer>
     );
 }

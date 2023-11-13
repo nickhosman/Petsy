@@ -46,7 +46,13 @@ function Navigation({ isLoaded }) {
                             <i id="nav-heart-icon" class="fa-sharp fa-regular fa-heart"></i>
                         </NavLink>
                         <IconButton aria-label="cart" onClick={() => {setShowCart(!showCart)}}>
-                            <Badge badgeContent={cart.products ? cart.products.length : ""}>
+                            <Badge badgeContent={cart.products ? cart.products.length : ""}  sx={{
+                                '& .MuiBadge-badge': {
+                                    height:'20px',
+                                    backgroundColor: 'rgb(194, 39, 39)',
+                                    color: 'white',
+                                }
+                                }}>
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>

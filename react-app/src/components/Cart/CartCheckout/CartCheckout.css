@@ -97,7 +97,7 @@
   box-shadow: rgba(224, 224, 232, 0.2) 0px 7px 29px 0px;
   border: 1px solid rgb(212, 212, 212);
   width: 400px;
-  height: 300px;
+  height: 280px;
 }
 
 .cartcheckout-oneprice {
@@ -122,7 +122,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4vh;
+  margin-top: 2vh;
 }
 
 .cartcheckout-label {
@@ -168,4 +168,14 @@
 
 .testtting {
   margin-right: 4px;
+}
+
+.cartcheckout-totaldue {
+  font-weight: bold;
+}
+
+.noproducts-cart {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
 }

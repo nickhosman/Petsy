@@ -64,7 +64,7 @@ export const thunkCheckoutCart = (cartId, userId) => async(dispatch) => {
       "userId": userId,
     })
   });
-  console.log('xxxx', response)
+
   if(response.ok) {
     const data = await response.json()
     return data
