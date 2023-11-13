@@ -91,7 +91,6 @@ function CartCheckout() {
         <div className="modal">
           <div className="modal-content">
             <h2>Order Confirmed</h2>
-            <p>An email has been sent to {user.email}.</p>
             <p>Thanks for shopping with us!</p>
             <button className="returnhome-button" onClick={handleNavigate}>Return Home</button>
           </div>
