@@ -7,9 +7,9 @@ current_date = datetime.now()
 def seed_productimages():
 
     product_images = [
-        ProductImage(product_id=1, preview=True, image_url="https://i.ibb.co/whhyxQp/1.jpg", created_at=current_date, updated_at=current_date),
-        ProductImage(product_id=1, preview=False, image_url="https://i.ibb.co/KsnpLfP/2.jpg", created_at=current_date, updated_at=current_date),
-        ProductImage(product_id=1, preview=False, image_url="https://i.ibb.co/dDYTjvD/3.jpg", created_at=current_date, updated_at=current_date),
+        ProductImage(product_id=1, preview=True, image_url="https://i.etsystatic.com/19134601/r/il/67b5ea/5522809885/il_1140xN.5522809885_82d4.jpg", created_at=current_date, updated_at=current_date),
+        ProductImage(product_id=1, preview=False, image_url="https://i.etsystatic.com/19134601/r/il/2787ef/2945701139/il_1140xN.2945701139_l8jl.jpg", created_at=current_date, updated_at=current_date),
+        ProductImage(product_id=1, preview=False, image_url="https://i.etsystatic.com/19134601/r/il/bfe76f/5522815981/il_794xN.5522815981_8tfz.jpg", created_at=current_date, updated_at=current_date),
         ProductImage(product_id=1, preview=False, image_url="https://i.etsystatic.com/19134601/r/il/be2e25/2898021458/il_794xN.2898021458_97n5.jpg", created_at=current_date, updated_at=current_date),
         ProductImage(product_id=1, preview=False, image_url="https://i.etsystatic.com/19134601/r/il/8fc1c9/4528265085/il_794xN.4528265085_c2uv.jpg", created_at=current_date, updated_at=current_date),
         ProductImage(product_id=2, preview=True, image_url="https://i.etsystatic.com/46342639/r/il/057806/5237237974/il_794xN.5237237974_9jhs.jpg", created_at=current_date, updated_at=current_date),
